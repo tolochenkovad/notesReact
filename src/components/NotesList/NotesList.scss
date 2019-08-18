@@ -1,0 +1,23 @@
+.notesList{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    &__item{
+        margin-top: 20px;
+        font-size: 24px;
+        background: #32cb56;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        list-style: none;
+        padding: 0 30px 60px 30px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+    &__text{
+        font-family: 'Indie Flower', cursive;
+    }
+}

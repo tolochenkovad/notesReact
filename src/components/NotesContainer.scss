@@ -1,0 +1,13 @@
+.notesContainer{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    &__categories{
+        width: 30%;
+        background: yellow;
+        height: 100vh;
+    }
+    &__notes{
+        width: 65%;
+    }
+}

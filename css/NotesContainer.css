@@ -1,0 +1,20 @@
+.notesContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0 20px;
+}
+
+.notesContainer__categories {
+  width: 30%;
+  background: yellow;
+  height: 100vh;
+}
+
+.notesContainer__notes {
+  width: 65%;
+}
+/*# sourceMappingURL=NotesContainer.css.map */
