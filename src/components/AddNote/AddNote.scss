@@ -14,13 +14,16 @@
         font-style: italic;
         box-shadow: inset 0 -2px 40px rgba(0,0,0,0.03);
         resize: none;
+        color: transparent;
+        text-shadow: 0 0 0 black;
+        cursor: pointer;
+        &:focus{
+          outline: none;
+        }
     }
     &__btn{
         display: none;
     }
-} 
-.fullView{
-    padding: 10px 16px 120px 60px;
 }  
   .todo-textarea::-webkit-input-placeholder {
     font-family: 'Indie Flower', cursive;

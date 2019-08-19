@@ -2,19 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './NotesList.scss';
 
-const NoteItem = ({ id, note, removeNote, addToLocalStorage }) => {
+const NoteItem = ({ id, note, removeNote, changeNoteInfo}) => {
+
+    const openNoteInfo = () => {
+        changeNoteInfo(true);
+    }
+
     return (
         <li className="notesList__item">
-            <span className="noteList__text">{note}</span>
-            <i onClick={() => removeNote(id)} className="fas fa-times" />
+            <span className="notesList__text">{note}</span>
+            <div className="notesList__icons-block">
+                <i className="notesList__icon fas fa-edit" />
+                <i onClick={() => removeNote(id)} className="notesList__icon fas fa-times" />
+            </div>   
         </li>
+
     )
 }
 
 NoteItem.propTypes = {
     id: PropTypes.number,
     note: PropTypes.string,
-    removeNote: PropTypes.func
+    removeNote: PropTypes.func,
+    changeNoteInfo: PropTypes.func
 }
 
 export default NoteItem;
