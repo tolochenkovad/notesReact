@@ -2,11 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './AddNote.scss'
 
-const AddNote = ({changeNoteInfo }) => {
+const AddNote = ({changeNoteInfo, cleanValue, cleanId }) => {
 
     const clickItem = (e) => {
         e.target.blur();
-        changeNoteInfo(true)
+        changeNoteInfo(true);
+        cleanValue();
+        cleanId();
+
     };
 
     return (

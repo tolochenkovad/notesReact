@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './NotesList.scss';
 
-const NoteItem = ({ id, note, removeNote, changeNoteInfo}) => {
+const NoteItem = ({ id, note, removeNote, changeNoteInfo, editNote}) => {
 
     const openNoteInfo = () => {
         changeNoteInfo(true);
@@ -12,11 +12,10 @@ const NoteItem = ({ id, note, removeNote, changeNoteInfo}) => {
         <li className="notesList__item">
             <span className="notesList__text">{note}</span>
             <div className="notesList__icons-block">
-                <i className="notesList__icon fas fa-edit" />
+                <i onClick={() => editNote(id, note)} className="notesList__icon fas fa-edit" />
                 <i onClick={() => removeNote(id)} className="notesList__icon fas fa-times" />
             </div>   
         </li>
-
     )
 }
 

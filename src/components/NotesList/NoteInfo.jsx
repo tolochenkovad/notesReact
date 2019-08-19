@@ -4,16 +4,15 @@ import './NotesInfo.scss';
 
 
 
-const NoteInfo = ({onCreate, changeNoteInfo}) => {
+const NoteInfo = ({addNote, changeNoteInfo, currentId, noteValue}) => {
 
-    const useInputValue = (defaultValue = '') => {
-        const [value, setValue] = useState(defaultValue);
+    const useInputValue = () => {
+        const [value, setValue] = useState(noteValue);
         return {
             bind: {
                 value,
                 onChange: e => setValue(e.target.value),
             },
-            clear: () => setValue(''),
             value: () => value
         }
     };
@@ -22,6 +21,7 @@ const NoteInfo = ({onCreate, changeNoteInfo}) => {
 
     useEffect( () => {
         refTextarea.current.focus();
+        refTextarea.current.selectionStart = refTextarea.current.value.length;
     }, [] )
 
     const refTextarea = React.createRef();
@@ -30,9 +30,11 @@ const NoteInfo = ({onCreate, changeNoteInfo}) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        if (noteValue === textarea.value().trim()) {
+            return;
+        }
         if (textarea.value().trim()) {
-            onCreate(textarea.value())
-            textarea.clear()
+            addNote(currentId, textarea.value())
         }
     };
 

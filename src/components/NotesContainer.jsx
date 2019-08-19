@@ -8,8 +8,19 @@ import NoteInfo from './NotesList/NoteInfo';
 const NotesContainer = () => {
     const [notes, setNotes] = useState(getNotesStorage() || []);
     const [isNoteInfo, setNoteInfo] = useState(false);
+    const [noteValue, setNoteValue] = useState('');
+    const [currentId, setCurrentId] = useState(null);
 
-    const addNote = (text) => {
+
+    const addNote = (id, text) => {
+       
+        if ( notes.some(note => note.id === id) ) {
+            notes.map(note => {
+                if (note.id === id) note.text = text
+            });
+            return;   
+        }
+
         setNotes(
             notes.concat([
                 {
@@ -28,6 +39,20 @@ const NotesContainer = () => {
         setNotes(notes.filter(note => note.id !== id))
     };
 
+    const editNote = (id, text) => {
+        setNoteInfo(true);
+        setNoteValue(text);
+        setCurrentId(id);
+    };
+
+    const cleanValue = () => {
+        setNoteValue('');
+    }
+
+    const cleanId = () => {
+        setCurrentId(null);
+    }
+
     const changeNoteInfo = (bool) => {
         setNoteInfo(bool)
     };
@@ -37,16 +62,25 @@ const NotesContainer = () => {
             <div className="notesContainer__categories">
             </div>
             <div className="notesContainer__notes">
-                <AddNote onCreate={addNote} changeNoteInfo={changeNoteInfo}/>
-                {notes.length
-                    ? <NotesList notes={notes} removeNote={removeNote} changeNoteInfo={changeNoteInfo} />
+                <AddNote cleanValue={cleanValue} 
+                         changeNoteInfo={changeNoteInfo}
+                         cleanId={cleanId}/>
+                {
+                    notes.length
+                    ? <NotesList notes={notes} 
+                                 removeNote={removeNote} 
+                                 editNote={editNote}
+                                 changeNoteInfo={changeNoteInfo} />
                     : <p>No note!</p>
                 }
 
             </div>  
             {
                 isNoteInfo 
-                ? <NoteInfo onCreate={addNote} changeNoteInfo={changeNoteInfo} />
+                ? <NoteInfo addNote={addNote} 
+                            changeNoteInfo={changeNoteInfo} 
+                            currentId={currentId}
+                            noteValue={noteValue}/>
                 : null
             }
         </main>
