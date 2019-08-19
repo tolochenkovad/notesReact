@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './NotesList.scss';
 import NoteItem from './NoteItem';
 
-const NotesList = ({ notes, removeNote, changeNoteInfo, editNote }) => {
+const NotesList = ({ notes, removeNote, editNote, tags }) => {
     return (
         <ul className="notesList">
             {
@@ -13,8 +13,8 @@ const NotesList = ({ notes, removeNote, changeNoteInfo, editNote }) => {
                         id={note.id}
                         key={note.id}
                         removeNote={removeNote}
-                        changeNoteInfo={changeNoteInfo}
                         editNote={editNote}
+                        tags={tags}
                     />
                 )
             }

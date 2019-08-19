@@ -3,24 +3,45 @@
     padding: 0;
     list-style: none;
     &__item{
-        position: relative;
-        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 40px;
         font-size: 24px;
         background: #32cb56;
-        min-height: 60px;
-        display: flex;
+        min-height: 120px;
         padding: 10px 30px 10px 30px;
         justify-content: space-between;     
     }
     &__text{
         font-family: 'Indie Flower', cursive;
     }
-    &__icons-block{
-        align-self: flex-end;
+    &__tools{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
     }
     &__icon{
         margin-left: 50px;
         cursor: pointer;
+    }
+    &__icons{
+        display: flex;
+        align-items: center;
+    }
+    &__tags{
+        display: flex;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    &__tag{
+        margin-left: 5px;
+        padding: 5px 20px;
+        background: #978989a1;
+        border-radius: 15px;
+        &:first-child{
+            margin-left: 0;
+        }
     }
 }
 

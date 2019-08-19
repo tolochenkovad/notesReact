@@ -10,6 +10,12 @@ const NotesContainer = () => {
     const [isNoteInfo, setNoteInfo] = useState(false);
     const [noteValue, setNoteValue] = useState('');
     const [currentId, setCurrentId] = useState(null);
+    const [tags, setTags] = useState([
+        {id: 1, tag: 'important'},
+        {id: 2, tag: 'home'},
+        {id: 3, tag: 'work'}
+    ]);
+    const [tagValue, setTagValue] = useState('');
 
 
     const addNote = (id, text) => {
@@ -57,6 +63,29 @@ const NotesContainer = () => {
         setNoteInfo(bool)
     };
 
+    const changeTag = (tag) => {
+        setTagValue(tag)
+    }
+
+    const addTag = (id, tag) => {
+
+        if ( tags.some(tag => tag.id === id) ) {
+            tags.map(tag => {
+                if (tag.id === id) tag.tag = tag
+            });
+            return;   
+        }
+
+        setTags(
+            tags.concat([
+                {
+                    id: Date.now(),
+                    tag
+                }
+            ]) 
+        );
+    }
+
     return (
         <main className="notesContainer">
             <div className="notesContainer__categories">
@@ -70,7 +99,8 @@ const NotesContainer = () => {
                     ? <NotesList notes={notes} 
                                  removeNote={removeNote} 
                                  editNote={editNote}
-                                 changeNoteInfo={changeNoteInfo} />
+                                 tags={tags}
+                                />
                     : <p>No note!</p>
                 }
 
@@ -78,8 +108,12 @@ const NotesContainer = () => {
             {
                 isNoteInfo 
                 ? <NoteInfo addNote={addNote} 
+                            addTag={addTag}
+                            tags={tags}
                             changeNoteInfo={changeNoteInfo} 
                             currentId={currentId}
+                            changeTag={changeTag}
+                            tagValue={tagValue}
                             noteValue={noteValue}/>
                 : null
             }
