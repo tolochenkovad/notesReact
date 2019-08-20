@@ -1,0 +1,34 @@
+.info{
+    padding: 0px 20px 20px 20px;
+    &__headline{
+        text-align: center;
+    }
+    &__tagsList{
+        margin: 0;
+        padding: 0;
+        list-style: none;   
+        display: flex;
+        flex-wrap: wrap;
+    }
+    &__tag{
+        margin-right: 20px;
+        margin-top: 15px;
+        padding: 5px 10px;
+        background: #978989a1;
+        border-radius: 15px;
+    }
+    &__icon-del{
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    &__icon-edit{
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    &__tag-input{
+        background:transparent;
+        border: none; 
+        outline: none;
+        font-size: 16px
+    }
+}

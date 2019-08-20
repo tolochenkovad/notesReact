@@ -61,6 +61,24 @@
         border-radius: 15px;
         font-size: 20px;
     }
+    &__form-tag{
+        position: absolute;
+        bottom: 1.2%;
+        
+    }
+    &__input-tag{
+        height: 50px;
+        left:40%;
+        font-size: 20px;
+        width: 200px;
+        outline: none;
+        font-size: 20px;
+        padding-left: 30px; 
+    }
+    &__icon-del{
+        position: absolute;
+        z-index: 15;
+    }
 } 
 
 .empty{

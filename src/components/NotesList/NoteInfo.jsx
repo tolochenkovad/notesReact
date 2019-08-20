@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './NotesInfo.scss';
 
-
-
-const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentId, noteValue, tagValue, changeTag }) => {
-
+const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteValue, 
+    tagValue, changeTag}) => {
     const useInputValue = () => {
         const [value, setValue] = useState(noteValue);
         return {
@@ -20,6 +18,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentId, noteValue,
     const textarea = useInputValue('');
 
     const [showTag, setShowTag] = useState(false);
+    const [showInputTag, setShowInputTag] = useState(false);
 
     useEffect(() => {
         refTextarea.current.focus();
@@ -29,6 +28,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentId, noteValue,
     const refTextarea = React.createRef();
     const refBtn = React.createRef();
     const refForm = React.createRef();
+    const refTag = React.createRef();
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -36,7 +36,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentId, noteValue,
             return;
         }
         if (textarea.value().trim()) {
-            addNote(currentId, textarea.value())
+            addNote(currentIdNote, textarea.value())
         }
     };
 
@@ -58,17 +58,27 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentId, noteValue,
     }
 
     const clickTag = (e) => {
-        changeTag(e.target.value);
-    }
-
-    const changeClassTag = () => {
-        
+        let value = e.target.value;
+        changeTag(value);
+        if (value === 'add') {
+            setShowTag(false);
+            setShowInputTag(true);
+        }
     }
 
     const tagClass = ['noteInfo__choosed-tag'];
 
-    if (tagValue === "") {
+    if (tagValue === "" || tagValue === "add") {
         tagClass.push('empty')
+    }
+
+    const submitHandlerTag = (e) => {
+        if (e.keyCode === 13){
+            addTag(Date.now(), e.target.value);
+            setShowInputTag(false);
+            changeTag(e.target.value);
+            refTag.current.classList.remove('empty');
+        }
     }
 
     return (
@@ -95,16 +105,27 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentId, noteValue,
                                     <option key={tag.id} value={tag.tag}>{tag.tag}</option>
                                 )
                             }
-                                <option value="">...add tag</option>
+                                <option value="add">...add tag</option>
                             </select>
                         : null
                     }
 
-                    <div className={tagClass.join(' ')}>
+                    <div ref={refTag} className={tagClass.join(' ')}>
                        {tagValue}
                     </div>
-                   
 
+                    {
+                        showInputTag
+                        ?  
+                        <div className="noteInfo__form-tag">
+                            <input className="noteInfo__input-tag" 
+                                   placeholder="Click to add tag"
+                                   onKeyDown={submitHandlerTag}
+                                   type="text"/>
+                        </div>
+                        : null
+                    }
+                    
                     <button ref={refBtn} className="noteInfo__btn" type="submit"></button>
                 </form>
             </div>
