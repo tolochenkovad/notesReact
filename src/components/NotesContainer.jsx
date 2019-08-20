@@ -18,6 +18,7 @@ const NotesContainer = () => {
     ]);
     const [tagValue, setTagValue] = useState('');
     const [currentIdTag, setCurrentIdTag] = useState(null);
+    const [tagsArrNote, setTagsArrNote] = useState([]);
 
 
     const addNote = (id, text) => {
@@ -41,7 +42,7 @@ const NotesContainer = () => {
     useEffect( () => {
         setNoteStorage(notes);
         setTagsStorage(tags);
-    } )
+    }, [notes, tags])
 
     const removeNote = (id) => {
         setNotes(notes.filter(note => note.id !== id))
@@ -63,9 +64,9 @@ const NotesContainer = () => {
     };
 
     
-
     const cleanValue = () => {
         setNoteValue('');
+        setTagValue('');
     }
 
     const cleanId = () => {
@@ -87,6 +88,10 @@ const NotesContainer = () => {
             });
             return;
         }
+        if ( tags.some(item => item.tag === tag) ) {
+            alert('This tags is already added!');
+            return;
+        }
         setTags(
             tags.concat([
                 {
@@ -97,7 +102,20 @@ const NotesContainer = () => {
         );
     }
 
-    console.log(tags);
+    const addTagsArrOfNote = (id, tag) => {
+        if ( tagsArrNote.some(item => item.tag === tag) ) {
+            alert('This tags is already added!');
+            return;
+        }
+        setTagsArrNote(
+            tagsArrNote.concat([
+                {
+                    id: Date.now(),
+                    tag
+                }
+            ]) 
+        )
+    }
 
     return (
         <main className="notesContainer">
@@ -133,6 +151,8 @@ const NotesContainer = () => {
                             currentIdNote={currentIdNote}
                             changeTag={changeTag}
                             tagValue={tagValue}
+                            addTagsArrOfNote={addTagsArrOfNote}
+                            tagsArrNote={tagsArrNote}
                             noteValue={noteValue}/>
                 : null
             }

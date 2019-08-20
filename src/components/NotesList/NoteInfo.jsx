@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './NotesInfo.scss';
 
 const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteValue, 
-    tagValue, changeTag}) => {
+    tagValue, changeTag, addTagsArrOfNote, tagsArrNote}) => {
     const useInputValue = () => {
         const [value, setValue] = useState(noteValue);
         return {
@@ -59,11 +59,16 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
 
     const clickTag = (e) => {
         let value = e.target.value;
-        changeTag(value);
-        if (value === 'add') {
+        if (value === '') return;
+        else if (value === 'add') {
             setShowTag(false);
             setShowInputTag(true);
+            return;
         }
+        changeTag(value);
+        addTagsArrOfNote(Date.now(), e.target.value);
+        e.target.value = '';
+        
     }
 
     const tagClass = ['noteInfo__choosed-tag'];
@@ -75,11 +80,25 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
     const submitHandlerTag = (e) => {
         if (e.keyCode === 13){
             addTag(Date.now(), e.target.value);
+            addTagsArrOfNote(Date.now(), e.target.value);
             setShowInputTag(false);
             changeTag(e.target.value);
             refTag.current.classList.remove('empty');
         }
+        if (e.keyCode === 27) {
+            setShowInputTag(false);
+        }
     }
+
+    const onKeyFunc = (e) => {
+        if (e.keyCode === 27) {
+            setShowTag(false);
+            refTextarea.current.focus();
+        }
+        
+    }
+
+    console.log(tagsArrNote);
 
     return (
         <div className='noteInfo-wrap'>
@@ -98,29 +117,39 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                     {
                         showTag
                         ?
-                            <select onChange={clickTag} className="noteInfo__select">
+                        <>
+                            <select onChange={clickTag} onKeyDown={onKeyFunc} className="noteInfo__select">
                                 <option value="">choose tag or add yours</option>
                             {
                                 tags.map(tag =>
                                     <option key={tag.id} value={tag.tag}>{tag.tag}</option>
                                 )
                             }
-                                <option value="add">...add tag</option>
+                                <option value="add">...add your tag</option>
                             </select>
+                             
+                        </>
                         : null
                     }
 
-                    <div ref={refTag} className={tagClass.join(' ')}>
-                       {tagValue}
-                    </div>
-
+                    <ul className="noteInfo__tags-container">
+                        {
+                            tagsArrNote.map((item, index) =>
+                                <li key={index} ref={refTag} className={tagClass.join(' ')}>
+                                    {item.tag}
+                                    <i className="info__icon-del fas fa-times" />
+                                </li>
+                        )
+                        }
+                    </ul>
+                    
                     {
                         showInputTag
                         ?  
                         <div className="noteInfo__form-tag">
                             <input className="noteInfo__input-tag" 
-                                   placeholder="Click to add tag"
                                    onKeyDown={submitHandlerTag}
+                                   autoFocus={true}
                                    type="text"/>
                         </div>
                         : null
