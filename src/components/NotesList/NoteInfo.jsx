@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './NotesInfo.scss';
 
 const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteValue, 
-    tagValue, changeTag, addTagsArrOfNote, tagsArrNote}) => {
+    tagValue, changeTag, addTagsArrOfNote, tagsArrNote, removeTagNoteInfo}) => {
     const useInputValue = () => {
         const [value, setValue] = useState(noteValue);
         return {
@@ -32,11 +32,8 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
 
     const submitHandler = (e) => {
         e.preventDefault();
-        if (noteValue === textarea.value().trim()) {
-            return;
-        }
         if (textarea.value().trim()) {
-            addNote(currentIdNote, textarea.value())
+            addNote(currentIdNote, textarea.value(), tagsArrNote)
         }
     };
 
@@ -49,6 +46,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
         if (e.keyCode === 13 || e.keyCode === 27) {
             e.preventDefault();
             refBtn.current.click();
+
             changeNoteInfo(false);
         }
     }
@@ -68,14 +66,11 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
         changeTag(value);
         addTagsArrOfNote(Date.now(), e.target.value);
         e.target.value = '';
+        refTextarea.current.focus();
         
     }
 
     const tagClass = ['noteInfo__choosed-tag'];
-
-    if (tagValue === "" || tagValue === "add") {
-        tagClass.push('empty')
-    }
 
     const submitHandlerTag = (e) => {
         if (e.keyCode === 13){
@@ -83,7 +78,6 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
             addTagsArrOfNote(Date.now(), e.target.value);
             setShowInputTag(false);
             changeTag(e.target.value);
-            refTag.current.classList.remove('empty');
         }
         if (e.keyCode === 27) {
             setShowInputTag(false);
@@ -98,7 +92,10 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
         
     }
 
-    console.log(tagsArrNote);
+    const delTag = (id) => {
+        removeTagNoteInfo(id);
+        refTextarea.current.focus();
+    }
 
     return (
         <div className='noteInfo-wrap'>
@@ -134,12 +131,12 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
 
                     <ul className="noteInfo__tags-container">
                         {
-                            tagsArrNote.map((item, index) =>
-                                <li key={index} ref={refTag} className={tagClass.join(' ')}>
+                            tagsArrNote.map(item =>
+                                <li key={item.id} ref={refTag} className={tagClass.join(' ')}>
                                     {item.tag}
-                                    <i className="info__icon-del fas fa-times" />
+                                    <i onClick={() => delTag(item.id)} className="info__icon-del fas fa-times" />
                                 </li>
-                        )
+                            )
                         }
                     </ul>
                     

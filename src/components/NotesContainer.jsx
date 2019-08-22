@@ -20,24 +20,38 @@ const NotesContainer = () => {
     const [currentIdTag, setCurrentIdTag] = useState(null);
     const [tagsArrNote, setTagsArrNote] = useState([]);
 
-
-    const addNote = (id, text) => {
-        if ( notes.some(note => note.id === id) ) {
-            notes.map(note => {
-                if (note.id === id) note.text = text
-            });
-            return;   
-        }
-
+    const addNoteToStorage = (text, tagsNote) => {
         setNotes(
             notes.concat([
                 {
                     id: Date.now(),
-                    text
+                    text,
+                    tags: tagsNote    
                 }
             ]) 
         );
+    }
+
+    const changeCurrentNote = (id, text, tagsNote) => {
+        notes.map(note => {
+            if (note.id === id){
+                note.text = text
+                note.tags = tagsNote
+            }
+        });
+        let newNotes = [...notes];
+        setNotes(newNotes);
+    }
+
+    const addNote = (id, text, tagsNote) => {
+        if ( notes.some(note => note.id === id) ) {
+            changeCurrentNote(id, text, tagsNote);
+            return;
+        }
+        addNoteToStorage(text, tagsNote);
     };
+
+    
 
     useEffect( () => {
         setNoteStorage(notes);
@@ -52,10 +66,11 @@ const NotesContainer = () => {
         setTags(tags.filter(tag => tag.id !== id))
     };
 
-    const editNote = (id, text) => {
+    const editNote = (id, text, tags) => {
         setNoteInfo(true);
         setNoteValue(text);
         setCurrentIdNote(id);
+        setTagsArrNote(tags);
     };
 
     const editTag = (id, text) => {
@@ -67,6 +82,7 @@ const NotesContainer = () => {
     const cleanValue = () => {
         setNoteValue('');
         setTagValue('');
+        setTagsArrNote([]);
     }
 
     const cleanId = () => {
@@ -85,8 +101,8 @@ const NotesContainer = () => {
         if ( tags.some(item => item.id === id) ) {
             tags.map(item => {
                 if (item.id === id) item.tag = tag 
-            });
-            return;
+                return;
+            }); 
         }
         if ( tags.some(item => item.tag === tag) ) {
             alert('This tags is already added!');
@@ -117,6 +133,11 @@ const NotesContainer = () => {
         )
     }
 
+    const removeTagNoteInfo = (id) => {
+        debugger;
+        setTagsArrNote(tagsArrNote.filter(tag => tag.id !== id))
+    }
+
     return (
         <main className="notesContainer">
             <div className="notesContainer__info">
@@ -136,7 +157,6 @@ const NotesContainer = () => {
                     ? <NotesList notes={notes} 
                                  removeNote={removeNote} 
                                  editNote={editNote}
-                                 tags={tags}
                                 />
                     : <p>No note!</p>
                 }
@@ -153,6 +173,7 @@ const NotesContainer = () => {
                             tagValue={tagValue}
                             addTagsArrOfNote={addTagsArrOfNote}
                             tagsArrNote={tagsArrNote}
+                            removeTagNoteInfo={removeTagNoteInfo}
                             noteValue={noteValue}/>
                 : null
             }

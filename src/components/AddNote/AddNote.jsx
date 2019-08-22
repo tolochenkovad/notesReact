@@ -14,7 +14,6 @@ const AddNote = ({changeNoteInfo, cleanValue, cleanId }) => {
 
     return (
         <div className="addNote">
-            <i className="fas fa-plus" />
             <form>
             <textarea
                 className = "addNote__textarea" 
