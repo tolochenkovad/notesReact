@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './NotesList.scss';
 
-const NoteItem = ({ id, note, removeNote, editNote, tags}) => {
+const NoteItem = ({ id, note, removeNote, editNote, tags, getTagValue}) => {
+
+    const selectTag = (e) => {
+        getTagValue(e.target.innerHTML);
+    }
+
     return (
         <li className="notesList__item">
             <span className="notesList__text">{note}</span>
@@ -12,7 +17,7 @@ const NoteItem = ({ id, note, removeNote, editNote, tags}) => {
                         tags
                         ?
                         tags.map( (tag, index) =>
-                         <li key={index} className="notesList__tag">{tag.tag}</li> 
+                         <li onClick={selectTag} key={index} className="notesList__tag">{tag.tag}</li> 
                         )   
                         : null
                     }

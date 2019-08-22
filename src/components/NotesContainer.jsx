@@ -19,6 +19,7 @@ const NotesContainer = () => {
     const [tagValue, setTagValue] = useState('');
     const [currentIdTag, setCurrentIdTag] = useState(null);
     const [tagsArrNote, setTagsArrNote] = useState([]);
+    const [activeTag, setActiveTag] = useState('');
 
     const addNoteToStorage = (text, tagsNote) => {
         setNotes(
@@ -138,6 +139,10 @@ const NotesContainer = () => {
         setTagsArrNote(tagsArrNote.filter(tag => tag.id !== id))
     }
 
+    const getActiveTag = (tag) => {
+        setActiveTag(tag)
+    }
+
     return (
         <main className="notesContainer">
             <div className="notesContainer__info">
@@ -146,22 +151,38 @@ const NotesContainer = () => {
                       editTag={editTag}
                       addTag={addTag}
                       currentIdTag={currentIdTag}
+                      getActiveTag={getActiveTag}
                       removeTag={removeTag}/>
             </div>
             <div className="notesContainer__notes">
                 <AddNote cleanValue={cleanValue} 
                          changeNoteInfo={changeNoteInfo}
                          cleanId={cleanId}/>
-                {
-                    notes.length
-                    ? <NotesList notes={notes} 
-                                 removeNote={removeNote} 
-                                 editNote={editNote}
-                                />
-                    : <p>No note!</p>
-                }
 
+            {
+                activeTag !== '' ?
+                <div className="notesContainer__tags-filter">
+                    <span className="notesContainer__tag">
+                        {activeTag}
+                        <i onClick={() => setActiveTag('')} className="info__icon-del fas fa-times" />
+                     </span>  
+                </div>
+                : null
+            } 
+            
+
+            {
+                notes.length
+                ? <NotesList notes={notes} 
+                                removeNote={removeNote} 
+                                getActiveTag={getActiveTag}
+                                activeTag={activeTag}
+                                editNote={editNote}
+                            />
+                : <p>No note!</p>
+            }
             </div>  
+            
             {
                 isNoteInfo 
                 ? <NoteInfo addNote={addNote} 

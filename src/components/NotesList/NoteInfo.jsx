@@ -78,9 +78,11 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
             addTagsArrOfNote(Date.now(), e.target.value);
             setShowInputTag(false);
             changeTag(e.target.value);
+            refTextarea.current.focus();
         }
         if (e.keyCode === 27) {
             setShowInputTag(false);
+            refTextarea.current.focus();
         }
     }
 

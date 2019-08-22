@@ -10,4 +10,12 @@
     &__notes{
         width: 65%;
     }
+    &__tags-filter{
+        margin-top: 30px;
+    }
+    &__tag{
+        padding: 5px 15px;
+        background: #978989a1;
+        border-radius: 15px;
+    }
 }

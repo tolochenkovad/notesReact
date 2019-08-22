@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './Info.scss'
 import EditTag from './EditTag';
 
-const Info = ({tags, removeTag, tagValue, currentIdTag, addTag, editTag}) => {
+const Info = ({tags, removeTag, tagValue, currentIdTag, addTag, editTag, getActiveTag}) => {
     const [isEditIcon, setIsEdition] = useState(false);
     const onEditTag = (id, tag) => {
         editTag(id, tag);
@@ -13,13 +13,17 @@ const Info = ({tags, removeTag, tagValue, currentIdTag, addTag, editTag}) => {
         setIsEdition(false);
     }
 
+    const getActiveFilterTag = (e) => {
+        getActiveTag(e.target.innerText)
+    }
+
     return(
         <div className="info">
-            <h1 className="info__headline">Available tags:</h1>
+            <h1 className="info__headline">Tag library</h1>
             <ul className="info__tagsList">
                 {
                     tags.map( (tag, index) =>
-                        <li key={index} className="info__tag">
+                        <li onClick={getActiveFilterTag} key={index} className="info__tag">
                             <i onClick={() => onEditTag(tag.id, tag.tag)} className="info__icon-edit fas fa-edit" />
                             {
                                 isEditIcon && currentIdTag === tag.id
