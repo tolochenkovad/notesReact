@@ -4,7 +4,7 @@ import './NotesInfo.scss';
 
 const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteValue, 
     tagValue, changeTag, addTagsArrOfNote, tagsArrNote, removeTagNoteInfo, 
-    colorArr, getColorValue, colorValue}) => {
+    colorArr, getColorValue, colorValue, getNeighboringCategory, category, getChildCategory}) => {
     const useInputValue = () => {
         const [value, setValue] = useState(noteValue);
         return {
@@ -21,6 +21,9 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
     const [showTag, setShowTag] = useState(false);
     const [showInputTag, setShowInputTag] = useState(false);
     const [showColorPicker, setColorPicker] = useState(false);
+    const [showCategory, setCategory] = useState(false);
+    const [isNeighboringCategory, setNeighboringCategory] = useState(false);
+    const [isChildCategory, setChildCategory] = useState(false);
 
     useEffect(() => {
         refTextarea.current.style.background = colorValue;
@@ -62,6 +65,10 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
         setColorPicker(true);
     }
 
+    const onPressCategory = () => {
+        setCategory(true);
+    }
+
     const clickTag = (e) => {
         let value = e.target.value;
         if (value === '') return;
@@ -71,7 +78,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
             return;
         }
         changeTag(value);
-        addTagsArrOfNote(Date.now(), e.target.value);
+        addTagsArrOfNote(e.target.value);
         e.target.value = '';
         refTextarea.current.focus();
         
@@ -87,9 +94,25 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
         refTextarea.current.focus();   
     }
 
-    const tagClass = ['noteInfo__choosed-tag'];
+    const clickCategory = (e) => {
+        let value = e.target.value;
+        if (value === '') return;
+        setCategory(false);
+        if (value === 'neighboring') setNeighboringCategory(true);
+        if (value === 'child') setChildCategory(true);
+        e.target.value = '';
+        refTextarea.current.focus();   
+    }
 
-    const submitHandlerTag = (e) => {
+    const clickNeighboringCategory = e => {
+        let value = e.target.value;
+        if (value === '') return;
+        setChildCategory(false);
+        e.target.value = '';
+        refTextarea.current.focus();   
+    }
+
+    const submitHandlerTag = e => {
         if (e.keyCode === 13){
             addTag(Date.now(), e.target.value);
             addTagsArrOfNote(Date.now(), e.target.value);
@@ -103,10 +126,36 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
         }
     }
 
+    const submitNeighboringCategory = e => {
+        if (e.keyCode === 13){
+            getNeighboringCategory(e.target.value)
+            refTextarea.current.focus();
+        }
+        if (e.keyCode === 27) {
+            setNeighboringCategory(true);
+            refTextarea.current.focus();
+        }
+    }
+
+    const arr = [
+        {
+            id: 1,
+            node: 'test'
+        }, 
+        {
+            id: 2,
+            node: 'tes2',
+            child: 'child2'
+        }
+    ]
+
+   
+
     const onKeyFunc = (e) => {
         if (e.keyCode === 27) {
             setShowTag(false);
             setColorPicker(false);
+            setCategory(false);
             refTextarea.current.focus();
         }
         
@@ -137,6 +186,12 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                         </div>
                     </div>
 
+                    <div className="noteInfo__category-wrap" onClick={onPressCategory}>
+                        <div className="noteInfo__category">
+                            <i className="noteInfo__category-icon fas fa-plus"></i>
+                        </div>
+                    </div>
+
                     {
                         showTag
                         ?
@@ -156,7 +211,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                     <ul className="noteInfo__tags-container">
                         {
                             tagsArrNote.map(item =>
-                                <li key={item.id} ref={refTag} className={tagClass.join(' ')}>
+                                <li key={item.id} ref={refTag} className="noteInfo__choosed-tag">
                                     {item.tag}
                                     <i onClick={() => delTag(item.id)} className="info__icon-del fas fa-times" />
                                 </li>
@@ -179,16 +234,55 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                     {
                         showColorPicker
                         ?
-                        <select onChange={clickColor} onKeyDown={onKeyFunc} className="noteInfo__select">
-                            <option value="">choose color theme</option>
-                            {
-                                colorArr.map((color, index) =>
-                                   <option key={index} value={color}>{color}</option> 
+                            <select onChange={clickColor} onKeyDown={onKeyFunc} className="noteInfo__select">
+                                <option value="">choose color theme</option>
+                                {
+                                    colorArr.map((color, index) =>
+                                    <option key={index} style={ {background: `${color}`} } value={color} /> 
                                     )
-                            }
-                        </select>
+                                }
+                            </select>
+                        :   null
+                    }
+
+                    {
+                        showCategory
+                        ?  
+                            <select onChange={clickCategory} onKeyDown={onKeyFunc} className="noteInfo__select">
+                                <option value="">choose neighboring or child element</option>
+                                <option value="neighboring">neighboring element</option>
+                                <option value="child">child element</option>
+                            </select>
+                        :   null
+                    }
+
+                    {
+                        isNeighboringCategory
+                        ?  
+                        <div className="noteInfo__form-tag">
+                            <input className="noteInfo__input-tag" 
+                                   onKeyDown={submitNeighboringCategory}
+                                   autoFocus={true}
+                                   type="text"/>
+                        </div>
                         : null
                     }
+
+                    {
+                        isChildCategory
+                        ?  
+                        <select onChange={clickNeighboringCategory} onKeyDown={onKeyFunc} className="noteInfo__select">
+                            <option value="">choose parent category</option>
+                            {
+                                category.map(item =>
+                                <option key={item.id} value={item.neighboringValue}>{item.neighboringValue}</option>
+                                )
+                            }
+                    </select>
+                :   null
+                    }
+
+                    
                     
                     <button ref={refBtn} className="noteInfo__btn" type="submit"></button>
                 </form>

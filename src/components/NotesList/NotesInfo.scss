@@ -33,7 +33,7 @@
     }
     &__select{
         background: #978989;
-        width: 300px;
+        width: 400px;
         height: 50px;
         border:none;
         position: absolute;
@@ -72,6 +72,21 @@
             left: 25%;
         }
     }
+    &__category{
+        width: 80px;
+        height: 40px;
+        border: 1px solid black;
+        &-wrap{
+            position: absolute;
+            top: 84%;
+            left: 25%;
+            cursor: pointer;
+        }
+        &-icon{
+            bottom: -60%;
+            left: 35%;
+        }
+    }
     &__choosed-tag{
         background: #978989;
         padding: 5px 20px;
@@ -89,7 +104,7 @@
         height: 50px;
         left:40%;
         font-size: 20px;
-        width: 200px;
+        width: 350px;
         outline: none;
         font-size: 20px;
         padding-left: 30px; 

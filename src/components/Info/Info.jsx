@@ -2,9 +2,13 @@ import React, {useState} from 'react';
 import './Info.scss'
 import EditTag from './EditTag';
 
-const Info = ({tags, removeTag, tagValue, currentIdTag, addTag, editTag, getActiveTag}) => {
+const Info = ({tags, removeTag, tagValue, currentIdTag, addTag, 
+    editTag, getActiveTag, getTagBeforeEdit, category}) => {
     const [isEditIcon, setIsEdition] = useState(false);
+    
+
     const onEditTag = (id, tag) => {
+        getTagBeforeEdit(tag);
         editTag(id, tag);
         setIsEdition(true);
     }
@@ -37,7 +41,16 @@ const Info = ({tags, removeTag, tagValue, currentIdTag, addTag, editTag, getActi
                     )
                 }
             </ul>
+            <h2 className="info__headline">Category library</h2>
+            <ul>
+                {
+                    category.map( item =>
+                        <li key={item.id}>{item.neighboringValue} - neighboringValue</li>
+                        )
+                }
+            </ul>
         </div>
+            
     )
 }
 
