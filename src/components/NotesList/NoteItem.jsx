@@ -1,15 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import './NotesList.scss';
 
-const NoteItem = ({ id, note, removeNote, editNote, tags, getTagValue}) => {
+const NoteItem = ({ id, note, color, removeNote, editNote, tags, getTagValue}) => {
+    const refLi = React.createRef();
+
+    useEffect(() => { 
+        refLi.current.style.background = color;
+    }, [color])
 
     const selectTag = (e) => {
         getTagValue(e.target.innerHTML);
     }
+   
 
     return (
-        <li className="notesList__item">
+        <li ref={refLi} className="notesList__item">
             <span className="notesList__text">{note}</span>
             <div className="notesList__tools">   
                 <ul className="notesList__tags">
@@ -24,7 +30,7 @@ const NoteItem = ({ id, note, removeNote, editNote, tags, getTagValue}) => {
                 </ul>
                 
                 <div className="notesList__icons">
-                    <i onClick={() => editNote(id, note, tags)} className="notesList__icon fas fa-edit" />
+                    <i onClick={() => editNote(id, note, tags, color)} className="notesList__icon fas fa-edit" />
                     <i onClick={() => removeNote(id)} className="notesList__icon fas fa-times" />
                 </div>
             </div>   

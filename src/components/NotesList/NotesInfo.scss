@@ -45,11 +45,31 @@
         z-index: 11;
     }
     &__tag{
+        padding: 5px 15px;
+        padding-right: 40px;
+        background: #978989a1;
+        border-radius: 15px;
         &-wrap{
             position: absolute;
             top: 82%;
             left: -1%;
             cursor: pointer;
+        }
+    }
+    &__color{
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 50%;
+        &-wrap{
+            position: absolute;
+            top: 85%;
+            left: 15%;
+            cursor: pointer;
+        }
+        &-icon{
+            bottom: -75%;
+            left: 25%;
         }
     }
     &__choosed-tag{

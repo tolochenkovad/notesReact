@@ -20,36 +20,40 @@ const NotesContainer = () => {
     const [currentIdTag, setCurrentIdTag] = useState(null);
     const [tagsArrNote, setTagsArrNote] = useState([]);
     const [activeTag, setActiveTag] = useState('');
+    const colorArr = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+    const [colorValue, setColorValue] = useState('green');
 
-    const addNoteToStorage = (text, tagsNote) => {
+    const addNoteToStorage = (text, tagsNote, color) => {
         setNotes(
             notes.concat([
                 {
                     id: Date.now(),
                     text,
-                    tags: tagsNote    
+                    tags: tagsNote,
+                    color   
                 }
             ]) 
         );
     }
 
-    const changeCurrentNote = (id, text, tagsNote) => {
+    const changeCurrentNote = (id, text, tagsNote, colorNote) => {
         notes.map(note => {
             if (note.id === id){
                 note.text = text
                 note.tags = tagsNote
+                note.color = colorNote
             }
         });
         let newNotes = [...notes];
         setNotes(newNotes);
     }
 
-    const addNote = (id, text, tagsNote) => {
+    const addNote = (id, text, tagsNote, colorNote) => {
         if ( notes.some(note => note.id === id) ) {
-            changeCurrentNote(id, text, tagsNote);
+            changeCurrentNote(id, text, tagsNote, colorNote);
             return;
         }
-        addNoteToStorage(text, tagsNote);
+        addNoteToStorage(text, tagsNote, colorNote);
     };
 
     
@@ -67,11 +71,12 @@ const NotesContainer = () => {
         setTags(tags.filter(tag => tag.id !== id))
     };
 
-    const editNote = (id, text, tags) => {
+    const editNote = (id, text, tags, color) => {
         setNoteInfo(true);
         setNoteValue(text);
         setCurrentIdNote(id);
         setTagsArrNote(tags);
+        setColorValue(color);
     };
 
     const editTag = (id, text) => {
@@ -84,6 +89,7 @@ const NotesContainer = () => {
         setNoteValue('');
         setTagValue('');
         setTagsArrNote([]);
+        setColorValue('green');
     }
 
     const cleanId = () => {
@@ -96,19 +102,9 @@ const NotesContainer = () => {
 
     const changeTag = (tag) => {
         setTagValue(tag)
-    }
+    };
 
-    const addTag = (id, tag) => {
-        if ( tags.some(item => item.id === id) ) {
-            tags.map(item => {
-                if (item.id === id) item.tag = tag 
-                return;
-            }); 
-        }
-        if ( tags.some(item => item.tag === tag) ) {
-            alert('This tags is already added!');
-            return;
-        }
+    const addTagsToStorage = (tag) => {
         setTags(
             tags.concat([
                 {
@@ -117,7 +113,25 @@ const NotesContainer = () => {
                 }
             ]) 
         );
-    }
+    };
+
+    const changeCurrentTags = (id, tag) => {
+        tags.map(item => {
+            if (item.id === id) item.tag = tag    
+        });
+        let newTags = [...tags];
+        setTags(newTags);
+    };
+
+    const addTag = (id, tag) => {
+        if ( tags.some(item => item.id === id) ) {
+            changeCurrentTags(id, tag); 
+            return
+        }
+        addTagsToStorage(tag)
+    };
+
+    
 
     const addTagsArrOfNote = (id, tag) => {
         if ( tagsArrNote.some(item => item.tag === tag) ) {
@@ -143,6 +157,10 @@ const NotesContainer = () => {
         setActiveTag(tag)
     }
 
+    const getColorValue = (color) => {
+        setColorValue(color)
+    }
+
     return (
         <main className="notesContainer">
             <div className="notesContainer__info">
@@ -159,18 +177,17 @@ const NotesContainer = () => {
                          changeNoteInfo={changeNoteInfo}
                          cleanId={cleanId}/>
 
-            {
-                activeTag !== '' ?
-                <div className="notesContainer__tags-filter">
-                    <span className="notesContainer__tag">
-                        {activeTag}
-                        <i onClick={() => setActiveTag('')} className="info__icon-del fas fa-times" />
-                     </span>  
-                </div>
-                : null
-            } 
-            
-
+                {
+                    activeTag !== '' ?
+                    <div className="notesContainer__tags-filter">
+                        <span className="notesContainer__tag">
+                            {activeTag}
+                            <i onClick={() => setActiveTag('')} className="info__icon-del fas fa-times" />
+                        </span>  
+                    </div>
+                    : null
+                } 
+               
             {
                 notes.length
                 ? <NotesList notes={notes} 
@@ -195,6 +212,9 @@ const NotesContainer = () => {
                             addTagsArrOfNote={addTagsArrOfNote}
                             tagsArrNote={tagsArrNote}
                             removeTagNoteInfo={removeTagNoteInfo}
+                            colorArr={colorArr}
+                            colorValue={colorValue}
+                            getColorValue={getColorValue}
                             noteValue={noteValue}/>
                 : null
             }
