@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import './Info.scss'
 import EditTag from './EditTag';
+import ChildrenCategory from './ChildrenCategory';
 
 const Info = ({tags, removeTag, tagValue, currentIdTag, addTag, 
-    editTag, getActiveTag, getTagBeforeEdit, category}) => {
+    editTag, getActiveTag, getTagBeforeEdit, category, removeCategory, tree}) => {
     const [isEditIcon, setIsEdition] = useState(false);
     
 
@@ -42,13 +43,30 @@ const Info = ({tags, removeTag, tagValue, currentIdTag, addTag,
                 }
             </ul>
             <h2 className="info__headline">Category library</h2>
-            <ul>
+
+            <div className="category__wrap">
                 {
-                    category.map( item =>
-                        <li key={item.id}>{item.neighboringValue} - neighboringValue</li>
-                        )
+                    category.map( item => item.children && item.parent === null 
+                        ?
+                            <div className="category__item" key={item.id}>
+                                <span className="category" >
+                                    {item.categoryValue}
+                                    <i onClick={() => removeCategory(item.id)} className="info__icon-del fas fa-times" />
+                                </span>
+                                <ChildrenCategory children={item.children} />
+                            </div>
+                        :   !item.children && item.parent === null
+                            ? 
+                                <div className="category__item" key={item.id}>
+                                    <span className="category" >
+                                    {item.categoryValue}
+                                    <i onClick={() => removeCategory(item.id)} className="info__icon-del fas fa-times" />
+                                    </span>
+                                </div>
+                            : null
+                    )
                 }
-            </ul>
+            </div>
         </div>
             
     )

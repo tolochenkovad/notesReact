@@ -7,7 +7,7 @@ const NoteItem = ({ id, note, color, removeNote, editNote, tags, getTagValue}) =
 
     useEffect(() => { 
         refLi.current.style.background = color;
-    }, [color])
+    }, [refLi, color])
 
     const selectTag = (e) => {
         getTagValue(e.target.innerHTML);

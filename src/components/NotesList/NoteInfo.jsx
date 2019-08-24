@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import './NotesInfo.scss';
 
 const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteValue, 
     tagValue, changeTag, addTagsArrOfNote, tagsArrNote, removeTagNoteInfo, 
-    colorArr, getColorValue, colorValue, getNeighboringCategory, category, getChildCategory}) => {
+    colorArr, getColorValue, colorValue, getNeighboringCategory, category, 
+    getParentCategory, getChildCategory}) => {
     const useInputValue = () => {
         const [value, setValue] = useState(noteValue);
         return {
@@ -24,6 +25,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
     const [showCategory, setCategory] = useState(false);
     const [isNeighboringCategory, setNeighboringCategory] = useState(false);
     const [isChildCategory, setChildCategory] = useState(false);
+    const [isParentHasChild, setParentChild] = useState(false);
 
     useEffect(() => {
         refTextarea.current.style.background = colorValue;
@@ -98,24 +100,25 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
         let value = e.target.value;
         if (value === '') return;
         setCategory(false);
-        if (value === 'neighboring') setNeighboringCategory(true);
+        if (value === 'category') setNeighboringCategory(true);
         if (value === 'child') setChildCategory(true);
         e.target.value = '';
         refTextarea.current.focus();   
     }
 
-    const clickNeighboringCategory = e => {
+    const clickParentCategory = e => {
         let value = e.target.value;
         if (value === '') return;
-        setChildCategory(false);
+        getParentCategory(value);
         e.target.value = '';
-        refTextarea.current.focus();   
+        setChildCategory(false);
+        setParentChild(true);    
     }
 
     const submitHandlerTag = e => {
         if (e.keyCode === 13){
             addTag(Date.now(), e.target.value);
-            addTagsArrOfNote(Date.now(), e.target.value);
+            addTagsArrOfNote(e.target.value);
             setShowInputTag(false);
             changeTag(e.target.value);
             refTextarea.current.focus();
@@ -129,27 +132,28 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
     const submitNeighboringCategory = e => {
         if (e.keyCode === 13){
             getNeighboringCategory(e.target.value)
+            e.target.value="";
+            setNeighboringCategory(false);
             refTextarea.current.focus();
         }
         if (e.keyCode === 27) {
-            setNeighboringCategory(true);
+            setNeighboringCategory(false);
+            e.target.value="";
             refTextarea.current.focus();
         }
     }
 
-    const arr = [
-        {
-            id: 1,
-            node: 'test'
-        }, 
-        {
-            id: 2,
-            node: 'tes2',
-            child: 'child2'
+    const submitChildCategory = e => {
+        if (e.keyCode === 13){
+            getChildCategory(e.target.value);
+            setParentChild(false);
+            refTextarea.current.focus();
         }
-    ]
-
-   
+        if (e.keyCode === 27) {
+            setParentChild(false);
+            refTextarea.current.focus();
+        }
+    }
 
     const onKeyFunc = (e) => {
         if (e.keyCode === 27) {
@@ -249,8 +253,8 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                         showCategory
                         ?  
                             <select onChange={clickCategory} onKeyDown={onKeyFunc} className="noteInfo__select">
-                                <option value="">choose neighboring or child element</option>
-                                <option value="neighboring">neighboring element</option>
+                                <option value="">add category or add child element</option>
+                                <option value="category">category</option>
                                 <option value="child">child element</option>
                             </select>
                         :   null
@@ -271,18 +275,28 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                     {
                         isChildCategory
                         ?  
-                        <select onChange={clickNeighboringCategory} onKeyDown={onKeyFunc} className="noteInfo__select">
-                            <option value="">choose parent category</option>
-                            {
-                                category.map(item =>
-                                <option key={item.id} value={item.neighboringValue}>{item.neighboringValue}</option>
-                                )
-                            }
-                    </select>
-                :   null
+                            <select onChange={clickParentCategory} onKeyDown={onKeyFunc} className="noteInfo__select">
+                                <option value="">choose parent category</option>
+                                {
+                                    category.map(item =>
+                                        <option key={item.id} value={item.categoryValue}>{item.categoryValue}</option>
+                                    )
+                                }
+                            </select>
+                        :   null
                     }
 
-                    
+                    {
+                        isParentHasChild
+                        ?
+                            <div className="noteInfo__form-tag">
+                                <input className="noteInfo__input-tag" 
+                                    onKeyDown={submitChildCategory}
+                                    autoFocus={true}
+                                    type="text"/>
+                            </div>
+                        :   null
+                    }
                     
                     <button ref={refBtn} className="noteInfo__btn" type="submit"></button>
                 </form>

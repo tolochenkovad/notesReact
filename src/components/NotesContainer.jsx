@@ -4,9 +4,10 @@ import './NotesContainer.scss';
 import NotesList from './NotesList/Noteslist';
 import { getNotesStorage, getTagsStorage, 
     setNoteStorage, setTagsStorage,
-    getCategoryStorage, setCategoryStorage } from '../utils/localStorage';
+    getCategoryStorage, setCategoryStorage} from '../utils/localStorage';
 import NoteInfo from './NotesList/NoteInfo';
 import Info from './Info/Info';
+import { buildTree } from '../utils/makeTree';
 
 const NotesContainer = () => {
     const [notes, setNotes] = useState(getNotesStorage() || []);
@@ -26,6 +27,15 @@ const NotesContainer = () => {
     const colorArr = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
     const [colorValue, setColorValue] = useState('orange');
     const [category, setCategory] = useState(getCategoryStorage() || []);
+    const [parentCategory, setParentCategory] = useState('');
+    const [tree, setTree] = useState([]);
+
+    useEffect( () => {
+        setNoteStorage(notes);
+        setTagsStorage(tags);
+        setCategoryStorage(category);
+        setTree(buildTree(category));
+    }, [notes, tags, category])
 
     const addNoteToStorage = (text, tagsNote, color) => {
         setNotes(
@@ -38,10 +48,10 @@ const NotesContainer = () => {
                 }
             ]) 
         );
-    }
+    };
 
     const changeCurrentNote = (id, text, tagsNote, colorNote) => {
-        notes.map(note => {
+        notes.forEach(note => {
             if (note.id === id){
                 note.text = text
                 note.tags = tagsNote
@@ -50,7 +60,7 @@ const NotesContainer = () => {
         });
         let newNotes = [...notes];
         setNotes(newNotes);
-    }
+    };
 
     const addNote = (id, text, tagsNote, colorNote) => {
         if ( notes.some(note => note.id === id) ) {
@@ -60,20 +70,16 @@ const NotesContainer = () => {
         addNoteToStorage(text, tagsNote, colorNote);
     };
 
-    
-
-    useEffect( () => {
-        setNoteStorage(notes);
-        setTagsStorage(tags);
-        setCategoryStorage(category)
-    }, [notes, tags, category])
-
     const removeNote = (id) => {
         setNotes(notes.filter(note => note.id !== id))
     };
 
     const removeTag = (id) => {
         setTags(tags.filter(tag => tag.id !== id))
+    };
+
+    const removeCategory = (id) => {
+        setCategory(category.filter(item => item.id !== id))
     };
 
     const editNote = (id, text, tags, color) => {
@@ -95,11 +101,11 @@ const NotesContainer = () => {
         setTagValue('');
         setTagsArrNote([]);
         setColorValue('orange');
-    }
+    };
 
     const cleanId = () => {
         setCurrentIdNote(null);
-    }
+    };
 
     const changeNoteInfo = (bool) => {
         setNoteInfo(bool)
@@ -121,7 +127,7 @@ const NotesContainer = () => {
     };
 
     const changeCurrentTags = (id, tag) => {
-        tags.map(item => {
+        tags.forEach(item => {
             if (item.id === id) item.tag = tag    
         });
         let newTags = [...tags];
@@ -162,23 +168,22 @@ const NotesContainer = () => {
                 }
             ]) 
         )
-    }
+    };
 
     const removeTagNoteInfo = (id) => {
-        debugger;
         setTagsArrNote(tagsArrNote.filter(tag => tag.id !== id))
-    }
+    };
 
     const getActiveTag = (tag) => {
         setActiveTag(tag)
-    }
+    };
 
     const getColorValue = (color) => {
         setColorValue(color)
     };
 
     const getNeighboringCategory = (value) => {
-        if ( category.some(item => item.neighboringValue === value) ) {
+        if ( category.some(item => item.categoryValue === value) ) {
             alert('This category is already added!');
             return;
         }
@@ -186,21 +191,41 @@ const NotesContainer = () => {
             category.concat([
                 {
                     id: Date.now(),
-                    neighboringValue: value
+                    categoryValue: value,
+                    parent: null
                 }
             ]) 
-        )
-    }
+        );
+    };
 
     const getChildCategory = (value) => {
+        let idParent = null;
+        category.forEach(item => {
+            if (item.categoryValue === parentCategory){
+                idParent = item.id;
+                setCategory(
+                    category.concat([
+                        {
+                            id: Date.now(),
+                            categoryValue: value,
+                            parent: idParent
+                        }
+                    ])
+                );  
+            }
+        });
         
-    }
+    };
 
     const getTagBeforeEdit = (currentTag) => {
-        debugger;
         setCurrentTag(currentTag)
-    }
+    };
 
+    const getParentCategory = (value) => {
+        setParentCategory(value);
+    };
+
+    console.log(tree)
 
     return (
         <main className="notesContainer">
@@ -213,6 +238,8 @@ const NotesContainer = () => {
                       getActiveTag={getActiveTag}
                       category={category}
                       getTagBeforeEdit={getTagBeforeEdit}
+                      removeCategory={removeCategory}
+                      tree={tree}
                       removeTag={removeTag}/>
             </div>
             <div className="notesContainer__notes">
@@ -259,8 +286,9 @@ const NotesContainer = () => {
                             colorValue={colorValue}
                             getColorValue={getColorValue}
                             getNeighboringCategory={getNeighboringCategory}
-                            getChildCategory={getChildCategory}
                             category={category}
+                            getParentCategory={getParentCategory}
+                            getChildCategory={getChildCategory}
                             noteValue={noteValue}/>
                 : null
             }
