@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
 import './Info.scss';
 
-const EditTag = ({tagValue, onBlurFun, addTag, id}) => {
-    const [valueTag, setValueTag] = useState(tagValue);
+const EditEl = ({elValue, onBlurFun, addEl, id}) => {
+    const [valueEl, setElTag] = useState(elValue);
 
     const onBlurEdit = () => {
         onBlurFun();
-        addTag(id, valueTag);
+        addEl(id, valueEl);
     }
     const onPressEnter = (e) => {
         if (e.keyCode === 13 || e.keyCode === 27) {
             e.preventDefault();
             onBlurFun();
-            addTag(id, valueTag);
+            addEl(id, valueEl);
         }
         return;
     }
@@ -21,12 +21,12 @@ const EditTag = ({tagValue, onBlurFun, addTag, id}) => {
             className="info__tag-input" 
             type="text" 
             autoFocus={true}
-            value={valueTag}
+            value={valueEl}
             onKeyDown={onPressEnter}
-            onChange={e => setValueTag(e.target.value)}
+            onChange={e => setElTag(e.target.value)}
             onBlur={onBlurEdit}
         />
     )
 }
 
-export default EditTag;
+export default EditEl;

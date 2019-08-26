@@ -20,6 +20,7 @@ const NotesList = ({ notes, removeNote, editNote, getActiveTag, activeTag}) => {
                             id={note.id}
                             key={note.id}
                             tags={note.tags}
+                            categories={note.categories}
                             color={note.color}
                             removeNote={removeNote}
                             editNote={editNote}
@@ -33,6 +34,7 @@ const NotesList = ({ notes, removeNote, editNote, getActiveTag, activeTag}) => {
                             id={note.id}
                             key={note.id}
                             tags={note.tags}
+                            categories={note.categories}
                             color={note.color}
                             removeNote={removeNote}
                             editNote={editNote}

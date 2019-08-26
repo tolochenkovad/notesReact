@@ -7,7 +7,7 @@
         flex-direction: column;
         margin-top: 40px;
         font-size: 24px;
-        background: #32cb56;
+        background: orange;
         min-height: 120px;
         padding: 10px 30px 10px 30px;
         justify-content: space-between;     
@@ -19,6 +19,7 @@
         display: flex;
         justify-content: space-between;
         margin-top: 30px;
+        margin-bottom: 10px;
     }
     &__icon{
         margin-left: 50px;
@@ -30,18 +31,20 @@
     }
     &__tags{
         display: flex;
+        flex-wrap: wrap;
         margin: 0;
         padding: 0;
         list-style: none;
     }
     &__tag{
-        margin-left: 5px;
+        margin-right: 5px;
+        margin-top: 10px;
         padding: 5px 20px;
         background: #978989a1;
         border-radius: 15px;
         cursor: pointer;
-        &:first-child{
-            margin-left: 0;
+        &:last-child{
+            margin-right: 0;
         }
     }
 }

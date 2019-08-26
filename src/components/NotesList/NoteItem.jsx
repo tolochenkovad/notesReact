@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import './NotesList.scss';
 
-const NoteItem = ({ id, note, color, removeNote, editNote, tags, getTagValue}) => {
+const NoteItem = ({ id, note, color, removeNote, editNote, tags, categories, getTagValue}) => {
     const refLi = React.createRef();
 
     useEffect(() => { 
@@ -22,18 +22,28 @@ const NoteItem = ({ id, note, color, removeNote, editNote, tags, getTagValue}) =
                     {
                         tags
                         ?
-                        tags.map( (tag, index) =>
-                         <li onClick={selectTag} key={index} className="notesList__tag">{tag.tag}</li> 
+                        tags.map(tag =>
+                         <li onClick={selectTag} key={tag.id} className="notesList__tag">{tag.tag}</li> 
                         )   
                         : null
                     }
                 </ul>
                 
                 <div className="notesList__icons">
-                    <i onClick={() => editNote(id, note, tags, color)} className="notesList__icon fas fa-edit" />
+                    <i onClick={() => editNote(id, note, tags, categories, color)} className="notesList__icon fas fa-edit" />
                     <i onClick={() => removeNote(id)} className="notesList__icon fas fa-times" />
                 </div>
-            </div>   
+            </div>  
+                <ul className="notesList__tags">
+                        {
+                            categories
+                            ?
+                            categories.map( category =>
+                            <li onClick={selectTag} key={category.id} className="category noteInfo__category-item">{category.category}</li> 
+                            )   
+                            : null
+                        }
+                </ul> 
         </li>
     )
 }

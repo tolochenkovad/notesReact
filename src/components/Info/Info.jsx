@@ -1,16 +1,23 @@
 import React, {useState} from 'react';
 import './Info.scss'
-import EditTag from './EditTag';
+import EditEl from './EditEl';
 import ChildrenCategory from './ChildrenCategory';
 
-const Info = ({tags, removeTag, tagValue, currentIdTag, addTag, 
-    editTag, getActiveTag, getTagBeforeEdit, category, removeCategory, tree}) => {
+const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag, currentIdCategory, addTag, 
+    addCategory, editTag, getActiveTag, getTagBeforeEdit, category, removeCategory, 
+    getCategoryBeforeEdit, editCategory, tree}) => {
     const [isEditIcon, setIsEdition] = useState(false);
     
 
     const onEditTag = (id, tag) => {
         getTagBeforeEdit(tag);
         editTag(id, tag);
+        setIsEdition(true);
+    }
+
+    const onEditCategory = (id, category) => {
+        getCategoryBeforeEdit(category);
+        editCategory(id, category);
         setIsEdition(true);
     }
 
@@ -21,6 +28,9 @@ const Info = ({tags, removeTag, tagValue, currentIdTag, addTag,
     const getActiveFilterTag = (e) => {
         getActiveTag(e.target.innerText)
     }
+
+    console.log(tree)
+    console.log(category)
 
     return(
         <div className="info">
@@ -33,7 +43,7 @@ const Info = ({tags, removeTag, tagValue, currentIdTag, addTag,
                             {
                                 isEditIcon && currentIdTag === tag.id
                                     ? 
-                                    <EditTag tagValue={tagValue} id={tag.id} addTag={addTag} onBlurFun={onBlurFunc} />
+                                    <EditEl elValue={tagValue} id={tag.id} addEl={addTag} onBlurFun={onBlurFunc} />
                                     : 
                                     tag.tag
                             }
@@ -46,21 +56,37 @@ const Info = ({tags, removeTag, tagValue, currentIdTag, addTag,
 
             <div className="category__wrap">
                 {
-                    category.map( item => item.children && item.parent === null 
+                    tree.map( item => item.children && item.parent === null 
                         ?
                             <div className="category__item" key={item.id}>
                                 <span className="category" >
-                                    {item.categoryValue}
-                                    <i onClick={() => removeCategory(item.id)} className="info__icon-del fas fa-times" />
+                                    <i onClick={() => onEditCategory(item.id, item.categoryValue)} className="info__icon-edit fas fa-edit" />
+                                    {
+                                    isEditIcon && currentIdCategory === item.id
+                                        ? 
+                                        <EditEl elValue={categoryValue} id={item.id} addEl={addCategory} onBlurFun={onBlurFunc} />
+                                        : 
+                                        item.categoryValue
+                                    }
+
+                                    <i onClick={() => removeCategory(item.id, item.categoryValue)} className="info__icon-del fas fa-times" />
                                 </span>
-                                <ChildrenCategory children={item.children} />
+                                <ChildrenCategory children={item.children} removeCategory={removeCategory} 
+                                isEditIcon={isEditIcon} addCategory={addCategory} onBlurFunc={onBlurFunc} categoryValue={categoryValue} currentIdCategory={currentIdCategory} onEditCategory={onEditCategory} />
                             </div>
                         :   !item.children && item.parent === null
                             ? 
                                 <div className="category__item" key={item.id}>
                                     <span className="category" >
-                                    {item.categoryValue}
-                                    <i onClick={() => removeCategory(item.id)} className="info__icon-del fas fa-times" />
+                                    <i onClick={() => onEditCategory(item.id, item.categoryValue)} className="info__icon-edit fas fa-edit" />
+                                    {
+                                    isEditIcon && currentIdCategory === item.id
+                                        ? 
+                                        <EditEl elValue={categoryValue} id={item.id} addEl={addCategory} onBlurFun={onBlurFunc} />
+                                        : 
+                                        item.categoryValue
+                                    }
+                                    <i onClick={() => removeCategory(item.id, item.categoryValue)} className="info__icon-del fas fa-times" />
                                     </span>
                                 </div>
                             : null

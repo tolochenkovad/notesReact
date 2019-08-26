@@ -29,6 +29,10 @@ const NotesContainer = () => {
     const [category, setCategory] = useState(getCategoryStorage() || []);
     const [parentCategory, setParentCategory] = useState('');
     const [tree, setTree] = useState([]);
+    const [categoryArrNote, setCategoryArrNote] = useState([]);
+    const [currentCategory, setCurrentCategory] = useState('');
+    const [categoryValue, setCategoryValue] = useState('');
+    const [currentIdCategory, setCurrentIdCategory] = useState(null);
 
     useEffect( () => {
         setNoteStorage(notes);
@@ -37,24 +41,26 @@ const NotesContainer = () => {
         setTree(buildTree(category));
     }, [notes, tags, category])
 
-    const addNoteToStorage = (text, tagsNote, color) => {
+    const addNoteToStorage = (text, tagsNote, categoriesNote, color) => {
         setNotes(
             notes.concat([
                 {
                     id: Date.now(),
                     text,
                     tags: tagsNote,
+                    categories: categoriesNote,
                     color   
                 }
             ]) 
         );
     };
 
-    const changeCurrentNote = (id, text, tagsNote, colorNote) => {
+    const changeCurrentNote = (id, text, tagsNote, categoriesNote, colorNote) => {
         notes.forEach(note => {
             if (note.id === id){
                 note.text = text
                 note.tags = tagsNote
+                note.categories = categoriesNote
                 note.color = colorNote
             }
         });
@@ -62,12 +68,12 @@ const NotesContainer = () => {
         setNotes(newNotes);
     };
 
-    const addNote = (id, text, tagsNote, colorNote) => {
+    const addNote = (id, text, tagsNote, categoriesNote, colorNote) => {
         if ( notes.some(note => note.id === id) ) {
-            changeCurrentNote(id, text, tagsNote, colorNote);
+            changeCurrentNote(id, text, tagsNote, categoriesNote, colorNote);
             return;
         }
-        addNoteToStorage(text, tagsNote, colorNote);
+        addNoteToStorage(text, tagsNote, categoriesNote, colorNote);
     };
 
     const removeNote = (id) => {
@@ -82,15 +88,20 @@ const NotesContainer = () => {
         setNotes(newNotes);
     };
 
-    const removeCategory = (id) => {
-        setCategory(category.filter(item => item.id !== id))
+    const removeCategory = (id, currentCategoryDel) => {
+        setCategory(category.filter(item => item.id !== id));
+        notes.map(note => 
+            note.categories = note.categories.filter( t => t.category !== currentCategoryDel));
+        let newNotes = [...notes];
+        setNotes(newNotes);
     };
 
-    const editNote = (id, text, tags, color) => {
+    const editNote = (id, text, tags, categories, color) => {
         setNoteInfo(true);
         setNoteValue(text);
         setCurrentIdNote(id);
         setTagsArrNote(tags);
+        setCategoryArrNote(categories);
         setColorValue(color);
     };
 
@@ -99,11 +110,17 @@ const NotesContainer = () => {
         setCurrentIdTag(id);
     };
 
+    const editCategory = (id, text) => {
+        setCategoryValue(text);
+        setCurrentIdCategory(id);
+    };
+
     
     const cleanValue = () => {
         setNoteValue('');
         setTagValue('');
         setTagsArrNote([]);
+        setCategoryArrNote([]);
         setColorValue('orange');
     };
 
@@ -138,6 +155,14 @@ const NotesContainer = () => {
         setTags(newTags);
     };
 
+    const changeCurrentCategory = (id, text) => {
+        category.forEach(item => {
+            if (item.id === id) item.categoryValue = text    
+        });
+        let newCategory = [...category];
+        setCategory(newCategory);
+    };
+
     const addTag = (id, tag) => {
         notes.map(note =>
             note.tags.map( item => 
@@ -157,6 +182,25 @@ const NotesContainer = () => {
         addTagsToStorage(tag)
     };
 
+    const addCategory = (id, categoryValue) => {
+        notes.map(note =>
+            note.categories.map( item => 
+                item.category === currentCategory
+                ? 
+                item.category = categoryValue
+                : null 
+            ) 
+        )
+        let newNotes = [...notes];
+        debugger;
+        setNotes(newNotes);
+        if ( category.some(item => item.id === id) ) {
+            changeCurrentCategory(id, categoryValue); 
+            return;
+        }
+        addCategoryArrOfNote(categoryValue)
+    };
+
     
 
     const addTagsArrOfNote = (tag) => {
@@ -174,8 +218,38 @@ const NotesContainer = () => {
         )
     };
 
+    const addCategoryArrOfNote = (category) => {
+        if ( categoryArrNote.some(item => item.category === category) ) {
+            alert('This category is already added!');
+            return;
+        }
+        categoryArrNote.forEach(item => 
+            {
+                if (item.category === parentCategory) {
+                    item.category = category;
+                }
+                return;
+            }
+        );
+        if ( categoryArrNote.some(item => item.category === category) ) {
+            return;
+        }
+        setCategoryArrNote(
+            categoryArrNote.concat([
+                {
+                    id: Date.now(),
+                    category
+                }
+            ]) 
+        )
+    };
+
     const removeTagNoteInfo = (id) => {
         setTagsArrNote(tagsArrNote.filter(tag => tag.id !== id))
+    };
+
+    const removeCategoryNoteInfo = (id) => {
+        setCategoryArrNote(categoryArrNote.filter(category => category.id !== id))
     };
 
     const getActiveTag = (tag) => {
@@ -221,9 +295,13 @@ const NotesContainer = () => {
         
     };
 
-    const getTagBeforeEdit = (currentTag) => {
+    const getTagBeforeEdit = currentTag => {
         setCurrentTag(currentTag)
     };
+
+    const getCategoryBeforeEdit = currentCategory => {
+        setCurrentCategory(currentCategory)
+    }
 
     const getParentCategory = (value) => {
         setParentCategory(value);
@@ -234,12 +312,17 @@ const NotesContainer = () => {
             <div className="notesContainer__info">
                 <Info tags={tags} 
                       tagValue={tagValue}
+                      categoryValue={categoryValue}
                       editTag={editTag}
+                      editCategory={editCategory}
                       addTag={addTag}
+                      addCategory={addCategory}
                       currentIdTag={currentIdTag}
+                      currentIdCategory={currentIdCategory}
                       getActiveTag={getActiveTag}
                       category={category}
                       getTagBeforeEdit={getTagBeforeEdit}
+                      getCategoryBeforeEdit={getCategoryBeforeEdit}
                       removeCategory={removeCategory}
                       tree={tree}
                       removeTag={removeTag}/>
@@ -262,7 +345,7 @@ const NotesContainer = () => {
                
             {
                 notes.length
-                ? <NotesList notes={notes} 
+                ? <NotesList    notes={notes} 
                                 removeNote={removeNote} 
                                 getActiveTag={getActiveTag}
                                 activeTag={activeTag}
@@ -281,6 +364,7 @@ const NotesContainer = () => {
                             currentIdNote={currentIdNote}
                             changeTag={changeTag}
                             tagValue={tagValue}
+                            categoryValue={categoryValue}
                             addTagsArrOfNote={addTagsArrOfNote}
                             tagsArrNote={tagsArrNote}
                             removeTagNoteInfo={removeTagNoteInfo}
@@ -291,6 +375,9 @@ const NotesContainer = () => {
                             category={category}
                             getParentCategory={getParentCategory}
                             getChildCategory={getChildCategory}
+                            categoryArrNote={categoryArrNote}
+                            addCategoryArrOfNote={addCategoryArrOfNote}
+                            removeCategoryNoteInfo={removeCategoryNoteInfo}
                             noteValue={noteValue}/>
                 : null
             }

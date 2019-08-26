@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import './NotesInfo.scss';
 
 const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteValue, 
-    tagValue, changeTag, addTagsArrOfNote, tagsArrNote, removeTagNoteInfo, 
+    changeTag, addTagsArrOfNote, tagsArrNote, removeTagNoteInfo, 
     colorArr, getColorValue, colorValue, getNeighboringCategory, category, 
-    getParentCategory, getChildCategory}) => {
+    getParentCategory, getChildCategory, categoryArrNote, addCategoryArrOfNote, removeCategoryNoteInfo}) => {
     const useInputValue = () => {
         const [value, setValue] = useState(noteValue);
         return {
@@ -36,12 +36,11 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
     const refTextarea = React.createRef();
     const refBtn = React.createRef();
     const refForm = React.createRef();
-    const refTag = React.createRef();
 
     const submitHandler = (e) => {
         e.preventDefault();
         if (textarea.value().trim()) {
-            addNote(currentIdNote, textarea.value(), tagsArrNote, colorValue)
+            addNote(currentIdNote, textarea.value(), tagsArrNote, categoryArrNote, colorValue)
         }
     };
 
@@ -54,7 +53,6 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
         if (e.keyCode === 13 || e.keyCode === 27) {
             e.preventDefault();
             refBtn.current.click();
-
             changeNoteInfo(false);
         }
     }
@@ -80,7 +78,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
             return;
         }
         changeTag(value);
-        addTagsArrOfNote(e.target.value);
+        addTagsArrOfNote(value);
         e.target.value = '';
         refTextarea.current.focus();
         
@@ -131,7 +129,8 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
 
     const submitCategory = e => {
         if (e.keyCode === 13){
-            getNeighboringCategory(e.target.value)
+            getNeighboringCategory(e.target.value);
+            addCategoryArrOfNote(e.target.value);
             e.target.value="";
             setNeighboringCategory(false);
             refTextarea.current.focus();
@@ -146,6 +145,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
     const submitChildCategory = e => {
         if (e.keyCode === 13){
             getChildCategory(e.target.value);
+            addCategoryArrOfNote(e.target.value);
             setParentChild(false);
             refTextarea.current.focus();
         }
@@ -169,6 +169,12 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
         removeTagNoteInfo(id);
         refTextarea.current.focus();
     }
+
+    const delCategory = (id) => {
+        removeCategoryNoteInfo(id);
+        refTextarea.current.focus();
+    }
+
 
     return (
         <div className='noteInfo-wrap'>
@@ -212,17 +218,12 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                         :   null
                     }
 
-                    <ul className="noteInfo__tags-container">
-                        {
-                            tagsArrNote.map(item =>
-                                <li key={item.id} ref={refTag} className="noteInfo__choosed-tag">
-                                    {item.tag}
-                                    <i onClick={() => delTag(item.id)} className="info__icon-del fas fa-times" />
-                                </li>
-                            )
-                        }
-                    </ul>
-                    
+
+                       
+                       
+
+                   
+
                     {
                         showInputTag
                         ?  
@@ -300,8 +301,33 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                     
                     <button ref={refBtn} className="noteInfo__btn" type="submit"></button>
                 </form>
+                
             </div>
+            <div className="noteInfo__characteristics">
+                    <ul className="noteInfo__tags-container">
+                        {
+                            tagsArrNote.map(item =>
+                                <li key={item.id} className="noteInfo__choosed-tag">
+                                    {item.tag}
+                                    <i onClick={() => delTag(item.id)} className="info__icon-del fas fa-times" />
+                                </li>
+                            )
+                        }
+                    </ul>
+
+                    <ul className="noteInfo__category-container">
+                        {
+                            categoryArrNote.map(item =>
+                                <li key={item.id} className="category noteInfo__category-item">
+                                    {item.category}
+                                    <i onClick={() => delCategory(item.id)} className="info__icon-del fas fa-times" />
+                                </li>
+                            )
+                        }
+                    </ul>
+                </div>
         </div>
+
     )
 }
 
