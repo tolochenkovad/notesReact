@@ -129,7 +129,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
         }
     }
 
-    const submitNeighboringCategory = e => {
+    const submitCategory = e => {
         if (e.keyCode === 13){
             getNeighboringCategory(e.target.value)
             e.target.value="";
@@ -265,7 +265,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                         ?  
                         <div className="noteInfo__form-tag">
                             <input className="noteInfo__input-tag" 
-                                   onKeyDown={submitNeighboringCategory}
+                                   onKeyDown={submitCategory}
                                    autoFocus={true}
                                    type="text"/>
                         </div>

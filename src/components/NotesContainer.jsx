@@ -74,8 +74,12 @@ const NotesContainer = () => {
         setNotes(notes.filter(note => note.id !== id))
     };
 
-    const removeTag = (id) => {
-        setTags(tags.filter(tag => tag.id !== id))
+    const removeTag = (id, currentTagDel) => {
+        setTags(tags.filter(tag => tag.id !== id));
+        notes.map(note => 
+            note.tags = note.tags.filter( t => t.tag !== currentTagDel))
+        let newNotes = [...notes];
+        setNotes(newNotes);
     };
 
     const removeCategory = (id) => {
@@ -224,8 +228,6 @@ const NotesContainer = () => {
     const getParentCategory = (value) => {
         setParentCategory(value);
     };
-
-    console.log(tree)
 
     return (
         <main className="notesContainer">

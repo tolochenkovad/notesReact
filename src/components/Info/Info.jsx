@@ -37,7 +37,7 @@ const Info = ({tags, removeTag, tagValue, currentIdTag, addTag,
                                     : 
                                     tag.tag
                             }
-                            <i onClick={() => removeTag(tag.id)} className="info__icon-del fas fa-times" />
+                            <i onClick={() => removeTag(tag.id, tag.tag)} className="info__icon-del fas fa-times" />
                         </li>   
                     )
                 }
