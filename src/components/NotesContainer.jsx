@@ -33,6 +33,7 @@ const NotesContainer = () => {
     const [currentCategory, setCurrentCategory] = useState('');
     const [categoryValue, setCategoryValue] = useState('');
     const [currentIdCategory, setCurrentIdCategory] = useState(null);
+    const [searchValue, setSeacrhValue] = useState('');
 
     useEffect( () => {
         setNoteStorage(notes);
@@ -333,26 +334,41 @@ const NotesContainer = () => {
                          cleanId={cleanId}/>
 
                 {
+                    activeTag  === '' && 
+                    <form className="notesContainer__tools-filter" onSubmit={e => e.preventDefault()}>
+                        <input  type="text"
+                                value={searchValue}
+                                onChange={e => setSeacrhValue(e.target.value)} 
+                                className="notesContainer__search"
+                                placeholder="Search" />  
+                    </form>
+                }
+               
+
+                {
                     activeTag !== '' ?
-                    <div className="notesContainer__tags-filter">
+                    <div className="notesContainer__tools-filter">
                         <span className="notesContainer__tag">
                             {activeTag}
                             <i onClick={() => setActiveTag('')} className="info__icon-del fas fa-times" />
+                            
                         </span>  
                     </div>
                     : null
                 } 
+   
                
-            {
+                {
                 notes.length
                 ? <NotesList    notes={notes} 
                                 removeNote={removeNote} 
                                 getActiveTag={getActiveTag}
                                 activeTag={activeTag}
+                                searchValue={searchValue}
                                 editNote={editNote}
                             />
                 : <p>No note!</p>
-            }
+                }
             </div>  
             
             {

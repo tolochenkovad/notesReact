@@ -29,8 +29,8 @@ const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag, currentId
         getActiveTag(e.target.innerText)
     }
 
-    console.log(tree)
-    console.log(category)
+    // console.log(tree)
+    // console.log(category)
 
     return(
         <div className="info">
