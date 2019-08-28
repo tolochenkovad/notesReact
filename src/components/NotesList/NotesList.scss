@@ -13,13 +13,21 @@
         justify-content: space-between;     
     }
     &__text{
-        font-family: 'Indie Flower', cursive;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 20px;
     }
     &__tools{
         display: flex;
         justify-content: space-between;
         margin-top: 30px;
         margin-bottom: 10px;
+        &-list{
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
     }
     &__icon{
         margin-left: 50px;
@@ -29,14 +37,8 @@
         display: flex;
         align-items: center;
     }
-    &__tags{
-        display: flex;
-        flex-wrap: wrap;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
     &__tag{
+        font-size: 12px;
         margin-right: 5px;
         margin-top: 10px;
         padding: 5px 20px;
@@ -45,6 +47,9 @@
         cursor: pointer;
         &:last-child{
             margin-right: 0;
+        }
+        & span{
+            margin-left: 10px;
         }
     }
 }

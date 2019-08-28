@@ -15,6 +15,7 @@ const AddNote = ({changeNoteInfo, cleanValue, cleanId }) => {
     return (
         <div className="addNote">
             <form>
+            <i className="fas fa-plus" />
             <textarea
                 className = "addNote__textarea" 
                 onClick = {clickItem}

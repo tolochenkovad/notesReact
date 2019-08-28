@@ -34,7 +34,7 @@
     }
     &__select{
         background: #978989;
-        width: 400px;
+        width: 420px;
         height: 50px;
         border:none;
         position: absolute;
@@ -47,9 +47,13 @@
     }
     &__tag{
         padding: 5px 15px;
-        padding-right: 40px;
+        //padding-right: 40px;
         background: #978989a1;
         border-radius: 15px;
+        font-size: 20px;
+        & span{
+            margin-left: 10px;
+        }
         &-wrap{
             position: absolute;
             top: 82%;
@@ -58,37 +62,47 @@
         }
     }
     &__color{
-        width: 40px;
-        height: 40px;
+        width: 110px;
+        height: 30px;
         background: white;
-        border-radius: 50%;
+        font-size: 20px;
         &-wrap{
             position: absolute;
-            top: 85%;
+            top: 87%;
             left: 15%;
             cursor: pointer;
         }
         &-icon{
-            bottom: -75%;
-            left: 25%;
+            font-size: 20px;
+            top: 45%;
+            left: 15%;
+            & span{
+                margin-left: 10px;
+            }
         }
     }
     &__category{
-        width: 80px;
-        height: 40px;
+        width: 115px;
+        height: 30px;
         border: 1px solid black;
         &-wrap{
             position: absolute;
-            top: 84%;
-            left: 26%;
+            top: 87%;
+            left: 32%;
             cursor: pointer;
         }
         &-icon{
-            bottom: -60%;
-            left: 35%;
+            font-size: 20px;
+            top: 50%;
+            left: 7%;
+            & span{
+                margin-left: 10px;
+            }
         }
         &-item{
+            font-size: 12px;
             margin-top: 10px;
+            cursor: pointer;
         }
     }
     &__choosed-tag{

@@ -2,28 +2,27 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import './NotesList.scss';
 
-const NoteItem = ({ id, note, color, removeNote, editNote, tags, categories, getTagValue}) => {
+const NoteItem = ({ id, note, color, removeNote, editNote, tags, categories, 
+    getActiveCategory, getActiveTag}) => {
     const refLi = React.createRef();
 
     useEffect(() => { 
         refLi.current.style.background = color;
     }, [refLi, color])
 
-    const selectTag = (e) => {
-        getTagValue(e.target.innerHTML);
-    }
-   
-
     return (
         <li ref={refLi} className="notesList__item">
             <span className="notesList__text">{note}</span>
             <div className="notesList__tools">   
-                <ul className="notesList__tags">
+                <ul className="notesList__tools-list">
                     {
                         tags
                         ?
                         tags.map(tag =>
-                         <li onClick={selectTag} key={tag.id} className="notesList__tag">{tag.tag}</li> 
+                         <li onClick={e => getActiveTag(e.target.innerHTML)} key={tag.id} className="notesList__tag">
+                         <i className="fas fa-paperclip fa-xs" />
+                         <span>{tag.tag}</span>
+                         </li> 
                         )   
                         : null
                     }
@@ -34,12 +33,12 @@ const NoteItem = ({ id, note, color, removeNote, editNote, tags, categories, get
                     <i onClick={() => removeNote(id)} className="notesList__icon fas fa-times" />
                 </div>
             </div>  
-                <ul className="notesList__tags">
+                <ul className="notesList__tools-list">
                         {
                             categories
                             ?
                             categories.map( category =>
-                            <li onClick={selectTag} key={category.id} className="category noteInfo__category-item">{category.category}</li> 
+                            <li onClick={e => getActiveCategory(e.target.innerHTML)} key={category.id} className="category noteInfo__category-item">{category.category}</li> 
                             )   
                             : null
                         }

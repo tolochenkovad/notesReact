@@ -46,7 +46,9 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
 
     const onFocusFunc = () => {
         setShowTag(false);
-
+        setShowInputTag(false);
+        setColorPicker(false);
+        setCategory(false);
     }
 
     const onPressEnter = e => {
@@ -100,6 +102,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
         setCategory(false);
         if (value === 'category') setNeighboringCategory(true);
         if (value === 'child') setChildCategory(true);
+        if (value !== '' && value !== 'category' && value !== 'child') addCategoryArrOfNote(value);
         e.target.value = '';
         refTextarea.current.focus();   
     }
@@ -129,8 +132,10 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
 
     const submitCategory = e => {
         if (e.keyCode === 13){
-            getNeighboringCategory(e.target.value);
-            addCategoryArrOfNote(e.target.value);
+            let id = Date.now();
+            let parent = null;
+            getNeighboringCategory(id, e.target.value, parent);
+            addCategoryArrOfNote(e.target.value, id, parent);
             e.target.value="";
             setNeighboringCategory(false);
             refTextarea.current.focus();
@@ -144,8 +149,8 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
 
     const submitChildCategory = e => {
         if (e.keyCode === 13){
-            getChildCategory(e.target.value);
-            addCategoryArrOfNote(e.target.value);
+            let id = Date.now();
+            addCategoryArrOfNote(e.target.value, id, getChildCategory(id, e.target.value));
             setParentChild(false);
             refTextarea.current.focus();
         }
@@ -175,6 +180,16 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
         refTextarea.current.focus();
     }
 
+    const onBlurFunc = () => {
+        setShowTag(false);
+        setShowInputTag(false);
+        setColorPicker(false);
+        setCategory(false);
+        setNeighboringCategory(false);
+        setChildCategory(false);
+        setParentChild(false);
+    }
+
 
     return (
         <div className='noteInfo-wrap'>
@@ -187,18 +202,18 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                         {...textarea.bind} />
 
                     <div className="noteInfo__tag-wrap" onClick={onPressTag}>
-                        <i className="noteInfo__tag fas fa-plus"></i>
+                        <i className="noteInfo__tag fas fa-plus"><span>tag</span></i>
                     </div>
 
                     <div className="noteInfo__color-wrap" onClick={onPressColor}>
                         <div className="noteInfo__color">
-                            <i className="noteInfo__color-icon fas fa-plus"></i>
+                            <i className="noteInfo__color-icon fas fa-plus"><span>color</span></i>
                         </div>
                     </div>
 
                     <div className="noteInfo__category-wrap" onClick={onPressCategory}>
                         <div className="noteInfo__category">
-                            <i className="noteInfo__category-icon fas fa-plus"></i>
+                            <i className="noteInfo__category-icon fas fa-plus"><span>category</span></i>
                         </div>
                     </div>
 
@@ -218,18 +233,13 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                         :   null
                     }
 
-
-                       
-                       
-
-                   
-
                     {
                         showInputTag
                         ?  
                         <div className="noteInfo__form-tag">
                             <input className="noteInfo__input-tag" 
                                    onKeyDown={submitHandlerTag}
+                                   onBlur={onBlurFunc}
                                    autoFocus={true}
                                    type="text"/>
                         </div>
@@ -254,9 +264,14 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                         showCategory
                         ?  
                             <select onChange={clickCategory} onKeyDown={onKeyFunc} className="noteInfo__select">
-                                <option value="">add category or add child element</option>
-                                <option value="category">category</option>
-                                <option value="child">child element</option>
+                                <option value="">choose category or create yours</option>
+                                <option value="category">add category</option>
+                                <option value="child">add child element</option>
+                                {
+                                    category.map(c => 
+                                        <option key={c.id} value={c.categoryValue}>=> {c.categoryValue}</option>   
+                                    )
+                                }
                             </select>
                         :   null
                     }
@@ -267,6 +282,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                         <div className="noteInfo__form-tag">
                             <input className="noteInfo__input-tag" 
                                    onKeyDown={submitCategory}
+                                   onBlur={onBlurFunc}
                                    autoFocus={true}
                                    type="text"/>
                         </div>
@@ -294,6 +310,7 @@ const NoteInfo = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, noteVa
                                 <input className="noteInfo__input-tag" 
                                     onKeyDown={submitChildCategory}
                                     autoFocus={true}
+                                    onBlur={onBlurFunc}
                                     type="text"/>
                             </div>
                         :   null

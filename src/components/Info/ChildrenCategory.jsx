@@ -3,7 +3,7 @@ import './Info.scss';
 import EditEl from './EditEl';
 
 const ChildrenCategory = ({children, removeCategory, isEditIcon, addCategory, 
-    onEditCategory, categoryValue, onBlurFunc, currentIdCategory}) => {
+    onEditCategory, categoryValue, onBlurFunc, currentIdCategory, getActiveFilterCategory}) => {
     return(
         
         <div className="category__child">
@@ -12,7 +12,7 @@ const ChildrenCategory = ({children, removeCategory, isEditIcon, addCategory,
             child.children 
             ? 
                 <span className="category__child-wrap" key={child.id}>
-                    <span className="category category_child">
+                    <span onClick={getActiveFilterCategory} className="category category_child category_info">
                         <i onClick={() => onEditCategory(child.id, child.categoryValue)} className="info__icon-edit fas fa-edit" />
                         {
                             isEditIcon && currentIdCategory === child.id
@@ -27,12 +27,12 @@ const ChildrenCategory = ({children, removeCategory, isEditIcon, addCategory,
                         && 
                         <ChildrenCategory children={child.children} removeCategory={removeCategory} 
                         isEditIcon={isEditIcon} addCategory={addCategory} onBlurFunc={onBlurFunc} 
-                        categoryValue={categoryValue} currentIdCategory={currentIdCategory} onEditCategory={onEditCategory} />
+                        categoryValue={categoryValue} getActiveFilterCategory={getActiveFilterCategory} currentIdCategory={currentIdCategory} onEditCategory={onEditCategory} />
                     }
 
                 </span>
             :
-                <span key={child.id} className="category category_child">
+                <span onClick={getActiveFilterCategory} key={child.id} className="category category_child category_info">
                     <i onClick={() => onEditCategory(child.id, child.categoryValue)} className="info__icon-edit fas fa-edit" />
                     {
                             isEditIcon && currentIdCategory === child.id

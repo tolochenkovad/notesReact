@@ -4,7 +4,7 @@ import EditEl from './EditEl';
 import ChildrenCategory from './ChildrenCategory';
 
 const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag, currentIdCategory, addTag, 
-    addCategory, editTag, getActiveTag, getTagBeforeEdit, category, removeCategory, 
+    addCategory, editTag, getActiveTag, getActiveCategory, getTagBeforeEdit, category, removeCategory, 
     getCategoryBeforeEdit, editCategory, tree}) => {
     const [isEditIcon, setIsEdition] = useState(false);
     
@@ -29,8 +29,9 @@ const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag, currentId
         getActiveTag(e.target.innerText)
     }
 
-    // console.log(tree)
-    // console.log(category)
+    const getActiveFilterCategory = (e) => {
+        getActiveCategory(e.target.innerText);
+    }
 
     return(
         <div className="info">
@@ -59,7 +60,7 @@ const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag, currentId
                     tree.map( item => item.children && item.parent === null 
                         ?
                             <div className="category__item" key={item.id}>
-                                <span className="category" >
+                                <span onClick={getActiveFilterCategory} className="category category_info" >
                                     <i onClick={() => onEditCategory(item.id, item.categoryValue)} className="info__icon-edit fas fa-edit" />
                                     {
                                     isEditIcon && currentIdCategory === item.id
@@ -72,12 +73,12 @@ const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag, currentId
                                     <i onClick={() => removeCategory(item.id, item.categoryValue)} className="info__icon-del fas fa-times" />
                                 </span>
                                 <ChildrenCategory children={item.children} removeCategory={removeCategory} 
-                                isEditIcon={isEditIcon} addCategory={addCategory} onBlurFunc={onBlurFunc} categoryValue={categoryValue} currentIdCategory={currentIdCategory} onEditCategory={onEditCategory} />
+                                isEditIcon={isEditIcon} getActiveFilterCategory={getActiveFilterCategory} addCategory={addCategory} onBlurFunc={onBlurFunc} categoryValue={categoryValue} currentIdCategory={currentIdCategory} onEditCategory={onEditCategory} />
                             </div>
                         :   !item.children && item.parent === null
                             ? 
                                 <div className="category__item" key={item.id}>
-                                    <span className="category" >
+                                    <span onClick={getActiveFilterCategory} className="category category_info" >
                                     <i onClick={() => onEditCategory(item.id, item.categoryValue)} className="info__icon-edit fas fa-edit" />
                                     {
                                     isEditIcon && currentIdCategory === item.id

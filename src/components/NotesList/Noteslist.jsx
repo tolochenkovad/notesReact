@@ -3,20 +3,17 @@ import PropTypes from 'prop-types';
 import './NotesList.scss';
 import NoteItem from './NoteItem';
 
-const NotesList = ({ notes, removeNote, editNote, getActiveTag, activeTag, searchValue}) => {
-    const getTagValue = (value) => {
-        getActiveTag(value);
-    }
-
-    console.log(searchValue);
+const NotesList = ({ notes, removeNote, editNote, getActiveTag, 
+    getActiveCategory, activeTag, activeCategory, searchValue}) => {
 
     return (
         <ul className="notesList">
             {
-                activeTag !== ''
-                 ?
+                activeTag !== '' || activeCategory  !== ''
+                ?
                     notes.map(note =>
-                        note.tags.some(t => t.tag === activeTag)
+                        note.tags.some(t => t.tag === activeTag) ||
+                        note.categories.some(t => t.category === activeCategory)
                         ?
                         <NoteItem
                             note={note.text}
@@ -27,7 +24,8 @@ const NotesList = ({ notes, removeNote, editNote, getActiveTag, activeTag, searc
                             color={note.color}
                             removeNote={removeNote}
                             editNote={editNote}
-                            getTagValue={getTagValue}
+                            getActiveCategory={getActiveCategory}
+                            getActiveTag={getActiveTag}
                         />
                         : null
                     ).reverse()
@@ -43,10 +41,12 @@ const NotesList = ({ notes, removeNote, editNote, getActiveTag, activeTag, searc
                                 color={note.color}
                                 removeNote={removeNote}
                                 editNote={editNote}
-                                getTagValue={getTagValue}
+                                getActiveCategory={getActiveCategory}
+                                getActiveTag={getActiveTag}
                         />
                     :   null
                     ).reverse() 
+                
             }
            
         </ul>

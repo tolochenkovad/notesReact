@@ -33,6 +33,7 @@ const NotesContainer = () => {
     const [currentCategory, setCurrentCategory] = useState('');
     const [categoryValue, setCategoryValue] = useState('');
     const [currentIdCategory, setCurrentIdCategory] = useState(null);
+    const [activeCategory, setActiveCategory] = useState('');
     const [searchValue, setSeacrhValue] = useState('');
 
     useEffect( () => {
@@ -199,7 +200,7 @@ const NotesContainer = () => {
             changeCurrentCategory(id, categoryValue); 
             return;
         }
-        addCategoryArrOfNote(categoryValue)
+        addCategoryArrOfNote(categoryValue);
     };
 
     
@@ -219,30 +220,40 @@ const NotesContainer = () => {
         )
     };
 
-    const addCategoryArrOfNote = (category) => {
-        if ( categoryArrNote.some(item => item.category === category) ) {
-            alert('This category is already added!');
-            return;
-        }
-        categoryArrNote.forEach(item => 
-            {
-                if (item.category === parentCategory) {
-                    item.category = category;
-                }
-                return;
+    const addCategoryArrOfNote = (currentCategory, id, parent) => {
+        let currentId = id;
+        let currentParent = parent;
+
+        category.forEach(c => {
+            if (c.categoryValue === currentCategory) {
+                currentId = c.id;
+                currentParent = c.parent
             }
+        })
+        debugger;
+        categoryArrNote.forEach(item => {
+            if (item.id === currentParent){
+                item.category = currentCategory;
+                item.id = currentId
+            }
+        }
+           
         );
-        if ( categoryArrNote.some(item => item.category === category) ) {
+
+        if ( categoryArrNote.some(item => item.category === currentCategory) ) {
+            debugger;
             return;
         }
         setCategoryArrNote(
             categoryArrNote.concat([
                 {
-                    id: Date.now(),
-                    category
+                    id: currentId,
+                    category: currentCategory,
+                    parent: currentParent
                 }
             ]) 
-        )
+        );
+        
     };
 
     const removeTagNoteInfo = (id) => {
@@ -257,11 +268,15 @@ const NotesContainer = () => {
         setActiveTag(tag)
     };
 
+    const getActiveCategory = category => {
+        setActiveCategory(category)
+    }
+
     const getColorValue = (color) => {
         setColorValue(color)
     };
 
-    const getNeighboringCategory = (value) => {
+    const getNeighboringCategory = (id, value, parent) => {
         if ( category.some(item => item.categoryValue === value) ) {
             alert('This category is already added!');
             return;
@@ -269,15 +284,15 @@ const NotesContainer = () => {
         setCategory(
             category.concat([
                 {
-                    id: Date.now(),
+                    id,
                     categoryValue: value,
-                    parent: null
+                    parent
                 }
             ]) 
         );
     };
 
-    const getChildCategory = (value) => {
+    const getChildCategory = (id, value) => {
         let idParent = null;
         category.forEach(item => {
             if (item.categoryValue === parentCategory){
@@ -285,7 +300,7 @@ const NotesContainer = () => {
                 setCategory(
                     category.concat([
                         {
-                            id: Date.now(),
+                            id,
                             categoryValue: value,
                             parent: idParent
                         }
@@ -293,7 +308,7 @@ const NotesContainer = () => {
                 );  
             }
         });
-        
+        return idParent;
     };
 
     const getTagBeforeEdit = currentTag => {
@@ -321,6 +336,7 @@ const NotesContainer = () => {
                       currentIdTag={currentIdTag}
                       currentIdCategory={currentIdCategory}
                       getActiveTag={getActiveTag}
+                      getActiveCategory={getActiveCategory}
                       category={category}
                       getTagBeforeEdit={getTagBeforeEdit}
                       getCategoryBeforeEdit={getCategoryBeforeEdit}
@@ -329,45 +345,60 @@ const NotesContainer = () => {
                       removeTag={removeTag}/>
             </div>
             <div className="notesContainer__notes">
-                <AddNote cleanValue={cleanValue} 
-                         changeNoteInfo={changeNoteInfo}
-                         cleanId={cleanId}/>
 
-                {
-                    activeTag  === '' && 
-                    <form className="notesContainer__tools-filter" onSubmit={e => e.preventDefault()}>
-                        <input  type="text"
-                                value={searchValue}
-                                onChange={e => setSeacrhValue(e.target.value)} 
-                                className="notesContainer__search"
-                                placeholder="Search" />  
-                    </form>
-                }
                
 
                 {
-                    activeTag !== '' ?
-                    <div className="notesContainer__tools-filter">
-                        <span className="notesContainer__tag">
-                            {activeTag}
-                            <i onClick={() => setActiveTag('')} className="info__icon-del fas fa-times" />
-                            
-                        </span>  
-                    </div>
-                    : null
-                } 
-   
+                    activeTag  === '' && activeCategory  === ''
+                    ? 
+                        <form className="notesContainer__tools-filter" onSubmit={e => e.preventDefault()}>
+                            <input  type="text"
+                                    value={searchValue}
+                                    onChange={e => setSeacrhValue(e.target.value)} 
+                                    className="notesContainer__search"
+                                    placeholder="Search" />  
+                        </form>
+                        
+                    :   
+                        <div className="notesContainer__tools-filter">
+                            {
+                                activeTag !== '' ?
+                                <span className="notesContainer__tag">
+                                    {activeTag}
+                                    <i onClick={() => setActiveTag('')} className="info__icon-del fas fa-times" />
+                                </span> 
+                                : null
+                            }
+                            {
+                                activeCategory !== '' ?
+                                <span className="category">
+                                    {activeCategory}
+                                    <i onClick={() => setActiveCategory('')} className="info__icon-del fas fa-times" />
+                                </span> 
+                                : null
+                            } 
+                        </div>
+                }
+
+                        <AddNote cleanValue={cleanValue} 
+                                changeNoteInfo={changeNoteInfo}
+                                cleanId={cleanId}/>
+
+                       
+
                
                 {
                 notes.length
                 ? <NotesList    notes={notes} 
                                 removeNote={removeNote} 
                                 getActiveTag={getActiveTag}
+                                getActiveCategory={getActiveCategory}
                                 activeTag={activeTag}
+                                activeCategory={activeCategory}
                                 searchValue={searchValue}
                                 editNote={editNote}
                             />
-                : <p>No note!</p>
+                : null
                 }
             </div>  
             
