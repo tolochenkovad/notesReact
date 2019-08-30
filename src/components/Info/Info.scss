@@ -16,7 +16,7 @@
         margin-right: 20px;
         margin-top: 15px;
         padding: 5px 10px;
-        background: #978989a1;
+        background: #baa4a4;
         border-radius: 15px;
         cursor: pointer;
         &:hover{
@@ -40,13 +40,9 @@
 }
 
 .category{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    //max-height: 40px;
-    padding: 0 10px;
-    border: 1px solid black;
-    margin-right: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
     &_info{
         &:hover{
             background: white;
@@ -57,9 +53,6 @@
         display: flex;
         flex-wrap: nowrap;
         cursor: pointer;
-    }
-    &__wrap{
-       //display: inline-block;
     }
     &__child{
         margin-bottom: 10px;
@@ -82,5 +75,14 @@
             bottom: 0;
             transform: translate(-30px)
         }
+    }
+    &__text{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 10px;
+        border: 1px solid black;
+        margin-right: 20px;
+        font-size: 12px;
     }
 }

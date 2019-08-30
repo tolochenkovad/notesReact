@@ -1,21 +1,25 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import './Info.scss';
 
-const EditEl = ({elValue, onBlurFun, addEl, id}) => {
-    const [valueEl, setElTag] = useState(elValue);
+const EditElement = ({elementValue, onBlurFun, addElement, id}) => {
+
+    const [valueEl, setEl] = useState(elementValue);
 
     const onBlurEdit = () => {
         onBlurFun();
-        addEl(id, valueEl);
-    }
+        addElement(id, valueEl);
+    };
+
     const onPressEnter = (e) => {
         if (e.keyCode === 13 || e.keyCode === 27) {
             e.preventDefault();
             onBlurFun();
-            addEl(id, valueEl);
+            addElement(id, valueEl);
         }
         return;
-    }
+    };
+ 
     return(
         <input 
             className="info__tag-input" 
@@ -23,10 +27,17 @@ const EditEl = ({elValue, onBlurFun, addEl, id}) => {
             autoFocus={true}
             value={valueEl}
             onKeyDown={onPressEnter}
-            onChange={e => setElTag(e.target.value)}
+            onChange={e => setEl(e.target.value)}
             onBlur={onBlurEdit}
         />
     )
-}
+};
 
-export default EditEl;
+EditElement.propTypes = {
+    elementValue: PropTypes.string,
+    onBlurFun: PropTypes.func,
+    addElement: PropTypes.func,
+    id: PropTypes.number
+};
+
+export default EditElement;
