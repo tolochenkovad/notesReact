@@ -6,18 +6,14 @@ import NoteItem from './NoteItem';
 const NotesList = ({ notes, removeNote, editNote, getActiveTag, 
     getActiveCategory, activeTag, activeCategory, searchValue}) => {
 
-    const sortNotes = () => {
-        notes.sort( (a, b) =>  new Date(a.data.dataInt) - new Date(b.data.dataInt)).reverse();
-    };
-
-    sortNotes();
+    let newNotes = [...notes].sort( (a, b) =>  new Date(a.data.dataInt) - new Date(b.data.dataInt)).reverse();
 
     return (
         <ul className="notesList">
             {
                 activeTag !== '' || activeCategory  !== ''
                 ?
-                    notes.map(note =>
+                    newNotes.map(note =>
                         note.tags.some(t => t.tag === activeTag) ||
                         note.categories.some(t => t.category === activeCategory)
                         ?
@@ -37,7 +33,7 @@ const NotesList = ({ notes, removeNote, editNote, getActiveTag,
                         :   null
                     )
 
-                :   notes.map(note => note.text.toLowerCase().includes( searchValue.toLowerCase() )
+                :   newNotes.map(note => note.text.toLowerCase().includes( searchValue.toLowerCase() )
                     ?
                         <NoteItem
                                 note={note.text}

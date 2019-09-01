@@ -82,7 +82,8 @@ const NotesContainer = () => {
             dataInt: currentData,
             dataString: curData
         };
-        notes.forEach(note => {
+        let newNotes = [...notes];
+        newNotes.forEach(note => {
             if (note.id === id){
                 if (note.text !== text) note.data = data;
                 note.text = text
@@ -91,7 +92,6 @@ const NotesContainer = () => {
                 note.color = colorNote
             }
         });
-        let newNotes = [...notes];
         setNotes(newNotes);
     };
 
@@ -127,7 +127,8 @@ const NotesContainer = () => {
 
     // tags func
     const addTag = (id, tag) => {
-        notes.map(note =>
+        let newNotes = [...notes];
+        newNotes.map(note =>
             note.tags.map( item => 
                 item.tag === currentTag
                 ? 
@@ -135,7 +136,6 @@ const NotesContainer = () => {
                 :   null 
             ) 
         )
-        let newNotes = [...notes];
         setNotes(newNotes);
 
         if ( tags.some(item => item.id === id) ) {
@@ -147,9 +147,9 @@ const NotesContainer = () => {
 
     const removeTag = (id, currentTagDel) => {
         setTags(tags.filter(tag => tag.id !== id));
-        notes.map(note => 
-            note.tags = note.tags.filter( t => t.tag !== currentTagDel))
         let newNotes = [...notes];
+        newNotes.map(note => 
+            note.tags = note.tags.filter( t => t.tag !== currentTagDel));
         setNotes(newNotes);
     };
 
@@ -189,10 +189,10 @@ const NotesContainer = () => {
     };
 
     const changeCurrentTags = (id, tag) => {
-        tags.forEach(item => {
+        let newTags = [...tags];
+        newTags.forEach(item => {
             if (item.id === id) item.tag = tag    
         });
-        let newTags = [...tags];
         setTags(newTags);
     };
 
@@ -210,22 +210,23 @@ const NotesContainer = () => {
 
     // categories func
     const changeCurrentCategory = (id, text) => {
-        category.forEach(item => {
+        let newCategory = [...category];
+        newCategory.forEach(item => {
             if (item.id === id) item.categoryValue = text    
         });
-        let newCategory = [...category];
         setCategory(newCategory);
     };
 
     const removeCategory = (id, currentCategoryDel) => {
         setCategory(category.filter(item => item.id !== id));
-        notes.map(note => 
-            note.categories = note.categories.filter( t => t.category !== currentCategoryDel));
         let newNotes = [...notes];
+        newNotes.map(note => 
+            note.categories = note.categories.filter( t => t.category !== currentCategoryDel));
         setNotes(newNotes);
     };
 
     const addCategory = (id, categoryValue) => {
+        let newNotes = [...notes];
         notes.map(note =>
             note.categories.map( item => 
                 item.category === currentCategory
@@ -234,7 +235,6 @@ const NotesContainer = () => {
                 :   null 
             ) 
         )
-        let newNotes = [...notes];
         setNotes(newNotes);
         if ( category.some(item => item.id === id) ) {
             changeCurrentCategory(id, categoryValue); 
@@ -247,14 +247,15 @@ const NotesContainer = () => {
     const addCategoryArrOfNote = (currentCategory, id, parent) => {
         let currentId = id;
         let currentParent = parent;
-
-        category.forEach(c => {
+        let newCategory = [...category];
+        let newCategoryArrNote = [...categoryArrNote];
+        newCategory.forEach(c => {
             if (c.categoryValue === currentCategory) {
                 currentId = c.id;
                 currentParent = c.parent
             }
         })
-        categoryArrNote.forEach(item => {
+        newCategoryArrNote.forEach(item => {
             if (item.id === currentParent){
                 item.category = currentCategory;
                 item.id = currentId
@@ -309,7 +310,8 @@ const NotesContainer = () => {
 
     const getChildCategory = (id, value) => {
         let idParent = null;
-        category.forEach(item => {
+        let newCategory = [...category];
+        newCategory.forEach(item => {
             if (item.categoryValue === parentCategory){
                 idParent = item.id;
                 setCategory(
