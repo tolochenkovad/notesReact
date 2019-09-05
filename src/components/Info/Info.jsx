@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import './Info.scss'
-import ChildrenCategory from './ChildrenCategory';
-import EditElement from './EditElement';
+import TagLibrary from './TagLibrary';
+import CategoryLibrary from './CategoryLibrary';
 
 const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag, 
     currentIdCategory, addTag, addCategory, editTag, getActiveTag, 
@@ -39,66 +39,26 @@ const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag,
 
     return(
         <div className="info">
-            <h2 className="info__headline">Tag library</h2>
-            <ul className="info__tagsList">
-                {
-                    tags.map( (tag, index) =>
-                        <li onClick={getActiveFilterTag} key={index} className="info__tag">
-                            <i onClick={() => onEditTag(tag.id, tag.tag)} className="info__icon-edit fas fa-edit" />
-                            {
-                                isTagEdit && currentIdTag === tag.id
-                                    ? 
-                                        <EditElement elementValue={tagValue} id={tag.id} addElement={addTag} onBlurFun={onBlurFunc} />
-                                    : 
-                                        tag.tag
-                            }
-                            <i onClick={() => removeTag(tag.id, tag.tag)} className="info__icon-del fas fa-times" />
-                        </li>   
-                    )
-                }
-            </ul>
-            <h3 className="info__headline">Category library</h3>
-            <ul className="category">
-                {
-                    tree.map( item => item.children && item.parent === null 
-                        ?
-                            <li className="category__item" key={item.id}>
-                                <span onClick={getActiveFilterCategory} className="category__text category_info" >
-                                    <i onClick={() => onEditCategory(item.id, item.categoryValue)} className="info__icon-edit fas fa-edit" />
-                                    {
-                                    isEditIcon && currentIdCategory === item.id
-                                        ? 
-                                            <EditElement elementValue={categoryValue} id={item.id} addElement={addCategory} onBlurFun={onBlurFunc} />
-                                        : 
-                                            item.categoryValue
-                                    }
-
-                                    <i onClick={() => removeCategory(item.id, item.categoryValue)} className="info__icon-del fas fa-times" />
-                                </span>
-                                <ChildrenCategory children={item.children} removeCategory={removeCategory} 
-                                isEditIcon={isEditIcon} getActiveFilterCategory={getActiveFilterCategory} 
-                                addCategory={addCategory} onBlurFunc={onBlurFunc} categoryValue={categoryValue} 
-                                currentIdCategory={currentIdCategory} onEditCategory={onEditCategory} />
-                            </li>
-                        :   !item.children && item.parent === null
-                            ? 
-                                <li className="category__item" key={item.id}>
-                                    <span onClick={getActiveFilterCategory} className="category__text category_info" >
-                                    <i onClick={() => onEditCategory(item.id, item.categoryValue)} className="info__icon-edit fas fa-edit" />
-                                    {
-                                    isEditIcon && currentIdCategory === item.id
-                                        ? 
-                                            <EditElement elementValue={categoryValue} id={item.id} addElement={addCategory} onBlurFun={onBlurFunc} />
-                                        : 
-                                            item.categoryValue
-                                    }
-                                    <i onClick={() => removeCategory(item.id, item.categoryValue)} className="info__icon-del fas fa-times" />
-                                    </span>
-                                </li>
-                            : null
-                    )
-                }
-            </ul>
+            <TagLibrary     tags={tags}
+                            getActiveFilterTag={getActiveFilterTag}
+                            onEditTag={onEditTag}
+                            isTagEdit={isTagEdit}
+                            currentIdTag={currentIdTag}
+                            tagValue={tagValue}
+                            removeTag={removeTag}
+                            addTag={addTag}
+                            onBlurFunc={onBlurFunc}
+            />
+           <CategoryLibrary tree={tree}
+                            getActiveFilterCategory={getActiveFilterCategory}
+                            onEditCategory={onEditCategory}
+                            isEditIcon={isEditIcon}
+                            currentIdCategory={currentIdCategory}
+                            categoryValue={categoryValue}
+                            addCategory={addCategory}
+                            onBlurFunc={onBlurFunc}
+                            removeCategory={removeCategory}
+           />
         </div>       
     )
 }
@@ -120,6 +80,6 @@ Info.propTypes = {
     currentIdCategory: PropTypes.number,
     editCategory: PropTypes.func,
     tree: PropTypes.arrayOf(PropTypes.object)
-}
+};
 
 export default Info;

@@ -14,7 +14,7 @@ const NoteItem = ({ id, note, color, data, removeNote, editNote, tags, categorie
     return (
         <li ref={refLi} className="notesList__item">
             <span className="notesList__text">{note}</span>
-            <div className="notesList__tools">   
+            <div className="notesList__box">   
                 <ul className="notesList__tools-list">
                     {
                         tags

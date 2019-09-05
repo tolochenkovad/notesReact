@@ -5,6 +5,8 @@ import { getStorage, setStorage} from '../utils/localStorage';
 import NoteInfoContainer from './NoteInfo/NoteInfoContainer';
 import Info from './Info/Info';
 import { buildTree } from '../utils/makeTree';
+import Filter from './Filter';
+import AddNote from './AddNote';
 
 const NotesContainer = () => {
     // notes state
@@ -357,6 +359,13 @@ const NotesContainer = () => {
         cleanId();
     };
 
+    //
+
+    const getSeacrhValue = (value) => {
+        setSeacrhValue(value)
+    };
+
+
     return (
         <main className="notesContainer">
             <aside className="notesContainer__info">
@@ -380,48 +389,15 @@ const NotesContainer = () => {
             </aside>
 
             <div className="notesContainer__notes">
-                {
-                    activeTag  === '' && activeCategory  === ''
-                    ? 
-                        <form className="filter" onSubmit={e => e.preventDefault()}>
-                            <input  type="text"
-                                    value={searchValue}
-                                    onChange={e => setSeacrhValue(e.target.value)} 
-                                    className="filter__search"
-                                    placeholder="Search" />  
-                        </form>
-                        
-                    :   
-                        <div className="filter">
-                            {
-                                activeTag !== '' ?
-                                <span className="filter__tag">
-                                    {activeTag}
-                                    <i onClick={() => setActiveTag('')} className="info__icon-del fas fa-times" />
-                                </span> 
-                                : null
-                            }
-                            {
-                                activeCategory !== '' ?
-                                <span className="category__text">
-                                    {activeCategory}
-                                    <i onClick={() => setActiveCategory('')} className="info__icon-del fas fa-times" />
-                                </span> 
-                                : null
-                            } 
-                        </div>
-                }
-
-                <div className="addNote">
-                    <form>
-                        <i className="fas fa-plus" />
-                        <textarea
-                            className = "addNote__textarea" 
-                            onClick = {clickItem}
-                            placeholder = "Click to add note"
-                        />
-                    </form>
-                </div>
+                <Filter activeTag={activeTag}
+                        activeCategory={activeCategory}
+                        searchValue={searchValue}
+                        getActiveTag={getActiveTag}
+                        getSeacrhValue={getSeacrhValue}
+                        getActiveCategory={getActiveCategory}
+                />
+                
+                <AddNote clickItem={clickItem} />
 
                 {
                 notes.length

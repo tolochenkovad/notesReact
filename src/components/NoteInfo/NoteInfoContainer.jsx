@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './NotesInfo.scss';
-import NoteInfo from './NoteInfo';
+import NoteForm from './NoteForm';
+import ChoosedCharacteristics from './ChoosedCharacteristics';
 
 const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, 
     noteValue, changeTag, addTagsArrOfNote, tagsArrNote, removeTagNoteInfo, 
@@ -102,9 +103,6 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
         e.target.value = '';
         refTextarea.current.focus();   
     };
-
-
-
 
     // tags func
     const onPressTag = () => {
@@ -207,40 +205,48 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
     };
     
     return (
-        <NoteInfo   refForm={refForm} 
-                    tags={tags} 
-                    showTag={showTag} 
-                    showColorPicker={showColorPicker} 
-                    showInputTag={showInputTag}
-                    clickTag={clickTag} 
-                    refTextarea={refTextarea} 
-                    refBtn={refBtn}
-                    textarea={textarea}
-                    onFocusFunc={onFocusFunc} 
-                    onPressEnter={onPressEnter} 
-                    onPressTag={onPressTag}
-                    onPressColor={onPressColor}
-                    onPressCategory={onPressCategory} 
-                    submitHandler={submitHandler}
-                    onKeyFunc={onKeyFunc} 
-                    submitHandlerTag={submitHandlerTag} 
-                    onBlurFunc={onBlurFunc} 
-                    clickColor={clickColor}
-                    colorArr={colorArr}
-                    showCategory={showCategory} 
-                    clickCategory={clickCategory} 
-                    category={category} 
-                    isNeighboringCategory={isNeighboringCategory} 
-                    submitCategory={submitCategory}
-                    isChildCategory={isChildCategory} 
-                    clickParentCategory={clickParentCategory} 
-                    isParentHasChild={isParentHasChild} 
-                    submitChildCategory={submitChildCategory}
-                    tagsArrNote={tagsArrNote}
-                    delTag={delTag}
-                    categoryArrNote={categoryArrNote}
-                    delCategory={delCategory}
-        />
+        <div className='noteInfo-wrap'>
+            <NoteForm   refForm={refForm} 
+                        tags={tags} 
+                        showTag={showTag} 
+                        showColorPicker={showColorPicker} 
+                        showInputTag={showInputTag}
+                        clickTag={clickTag} 
+                        refTextarea={refTextarea} 
+                        refBtn={refBtn}
+                        textarea={textarea}
+                        onFocusFunc={onFocusFunc} 
+                        onPressEnter={onPressEnter} 
+                        onPressTag={onPressTag}
+                        onPressColor={onPressColor}
+                        onPressCategory={onPressCategory} 
+                        submitHandler={submitHandler}
+                        onKeyFunc={onKeyFunc} 
+                        submitHandlerTag={submitHandlerTag} 
+                        onBlurFunc={onBlurFunc} 
+                        clickColor={clickColor}
+                        colorArr={colorArr}
+                        showCategory={showCategory} 
+                        clickCategory={clickCategory} 
+                        category={category} 
+                        isNeighboringCategory={isNeighboringCategory} 
+                        submitCategory={submitCategory}
+                        isChildCategory={isChildCategory} 
+                        clickParentCategory={clickParentCategory} 
+                        isParentHasChild={isParentHasChild} 
+                        submitChildCategory={submitChildCategory}
+                        tagsArrNote={tagsArrNote}
+                        delTag={delTag}
+                        categoryArrNote={categoryArrNote}
+                        delCategory={delCategory}
+            />
+
+            <ChoosedCharacteristics  tagsArrNote={tagsArrNote}
+                                  categoryArrNote={categoryArrNote}
+                                  delTag={delTag}
+                                  delCategory={delCategory}
+            />
+        </div>
     )
 };
 

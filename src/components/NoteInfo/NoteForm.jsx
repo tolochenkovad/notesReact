@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './NotesInfo.scss';
 
-const NoteInfo = ({refForm, tags, showTag, showColorPicker, showInputTag, clickTag, 
-    refTextarea, refBtn, textarea, onFocusFunc, onPressEnter, onPressTag, onPressColor, 
-    onPressCategory, submitHandler, onKeyFunc, submitHandlerTag, onBlurFunc, clickColor, 
-    colorArr, showCategory, clickCategory, category, isNeighboringCategory, submitCategory,
-    isChildCategory, clickParentCategory, isParentHasChild, submitChildCategory, tagsArrNote,
-    delTag, categoryArrNote, delCategory}) => {
-
+const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnter,
+    textarea, onPressTag, onPressColor, onPressCategory, showTag, clickTag,
+    onKeyFunc, tags, showInputTag, submitHandlerTag, onBlurFunc, showColorPicker,
+    clickColor, colorArr, showCategory, clickCategory, category, isNeighboringCategory,
+    submitCategory, isChildCategory, clickParentCategory, isParentHasChild, 
+    submitChildCategory, refBtn}) => {
     return(
-        <div className='noteInfo-wrap'>
-            <div className="noteInfo">
+        <div className="noteInfo">
             <form ref={refForm} onSubmit={submitHandler}>
                 <textarea ref={refTextarea}
                     onFocus={onFocusFunc} 
@@ -138,41 +135,13 @@ const NoteInfo = ({refForm, tags, showTag, showColorPicker, showInputTag, clickT
                         </div>
                     :   null
                 }
-                
                 <button ref={refBtn} className="noteInfo__btn" type="submit"></button>
-            </form>
-            
-        </div>
-            <div className="noteInfo__characteristics">
-                <ul className="noteInfo__tags-container">
-                    {
-                        tagsArrNote.map(item =>
-                            <li key={item.id} className="noteInfo__choosed-tag">
-                                <i className="fas fa-paperclip fa-xs" />
-                                <span>{item.tag}</span>
-                                <i onClick={() => delTag(item.id)} className="info__icon-del fas fa-times" />
-                            </li>
-                        )
-                    }
-                </ul>
-
-                <ul className="noteInfo__category-container">
-                    {
-                        categoryArrNote.map(item =>
-                            <li key={item.id} className="category__text noteInfo__category-item">
-                                {item.category}
-                                <i onClick={() => delCategory(item.id)} className="info__icon-del fas fa-times" />
-                            </li>
-                        )
-                    }
-                </ul>
+                </form>  
             </div>
-        </div>
     )
 };
 
-
-NoteInfo.propTypes = {
+NoteForm.propTypes = {
     refForm: PropTypes.object,
     refTextarea: PropTypes.object,
     refBtn: PropTypes.object,
@@ -180,12 +149,7 @@ NoteInfo.propTypes = {
     tags: PropTypes.arrayOf(PropTypes.object),
     showTag: PropTypes.bool,
     showInputTag: PropTypes.bool,
-    clickTag: PropTypes.func,
     onPressTag: PropTypes.func,
-    submitHandlerTag: PropTypes.func,
-    tagsArrNote: PropTypes.arrayOf(PropTypes.object),
-    delTag: PropTypes.func,
-    categoryArrNote: PropTypes.arrayOf(PropTypes.object),
     category: PropTypes.arrayOf(PropTypes.object),
     showColorPicker: PropTypes.bool,
     onPressColor: PropTypes.func,
@@ -204,8 +168,9 @@ NoteInfo.propTypes = {
     isChildCategory: PropTypes.bool,
     clickParentCategory: PropTypes.func,
     isParentHasChild: PropTypes.bool,
-    submitChildCategory: PropTypes.func,
-    delCategory: PropTypes.func   
+    submitChildCategory: PropTypes.func  
 };
 
-export default NoteInfo;
+
+
+export default NoteForm;
