@@ -1,11 +1,10 @@
 import React from 'react';
 import NotesContainer from './components/NotesContainer';
+import Header from './components/Header';
 
 const App = () => (
     <>
-        <header className="header">
-            <h1 className="header__title">Notes App</h1>
-        </header>
+        <Header />
         <NotesContainer /> 
     </>
 );
