@@ -1,6 +1,18 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import './Info.scss';
+import { makeStyles } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme();
+
+const useStyles = makeStyles({
+   input:{
+        background:'transparent',
+        border: 'none', 
+        outline: 'none',
+        fontSize: theme.spacing(2)
+   }
+});
 
 const EditElement = ({elementValue, onBlurFun, addElement, id}) => {
 
@@ -19,10 +31,12 @@ const EditElement = ({elementValue, onBlurFun, addElement, id}) => {
         }
         return;
     };
+
+    const classes = useStyles();
  
     return(
         <input 
-            className="info__tag-input" 
+            className={classes.input} 
             type="text" 
             autoFocus={true}
             value={valueEl}
