@@ -47,7 +47,8 @@ const useStyles = makeStyles({
     },
     icon:{
         fontSize: theme.spacing(2.5),
-        top: '45%',
+        position: 'absolute',
+        top: '15%',
         left: '15%',
         '& span':{
             marginLeft: theme.spacing(1.25),
@@ -75,7 +76,8 @@ const useStyles = makeStyles({
     },
     categoryIcon:{
         fontSize: theme.spacing(2.5),
-        top: '50%',
+        position: 'absolute',
+        top: '15%',
         left: '7%',
         '& span':{
             marginLeft: theme.spacing(1.25),
