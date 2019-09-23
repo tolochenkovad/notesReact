@@ -1,13 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme();
+const useStyles = makeStyles({
+    addNote: {
+        position: 'relative',
+        borderBottom: '1px solid #ededed'
+    },
+    textarea:{
+        fontFamily: '"Montserrat", sans-serif',
+        fontSize: theme.spacing(2.5),
+        padding: 0,
+        paddingTop: theme.spacing(2),
+        paddingLeft: theme.spacing(6.25),
+        border: 'none',
+        background: '#ececec',
+        width: '100%',
+        boxSizing: 'border-box',
+        fontStyle: 'italic',
+        boxShadow: 'inset 0 -2px 40px rgba(0, 0, 0, 0.03)',
+        resize: 'none',
+        color: 'transparent',
+        textShadow: '0 0 0 black',
+        cursor: 'pointer',
+        "&:focus": {
+            outline: 'none'
+          }
+    }
+});
+
 
 const AddNote = ({clickItem}) => {
+    const classes = useStyles();
+
     return(
-        <div className="addNote">
+        <div className={classes.addNote}>
             <form>
                 <i className="fas fa-plus" />
                 <textarea
-                    className = "addNote__textarea" 
+                    className = {classes.textarea}
                     onClick = {clickItem}
                     placeholder = "Click to add note"
                 />
