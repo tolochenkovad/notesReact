@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import NoteItem from './NoteItem';
+import NoteItem from './NoteItem/NoteItem';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
