@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
+import clsx from 'clsx';
 
 const theme = createMuiTheme();
 
@@ -60,7 +61,7 @@ const Filter = ({activeTag, activeCategory, searchValue,
                             activeTag !== '' ?
                             <span className={classes.tag}>
                                 {activeTag}
-                                <i onClick={() => getActiveTag('')} className="info__icon-del fas fa-times" />
+                                <i onClick={() => getActiveTag('')} className={clsx(classes.iconDel, 'fas fa-times')} />
                             </span> 
                             : null
                         }
@@ -68,7 +69,7 @@ const Filter = ({activeTag, activeCategory, searchValue,
                             activeCategory !== '' ?
                             <span className={classes.text}>
                                 {activeCategory}
-                                <i onClick={() => getActiveCategory('')} className="info__icon-del fas fa-times" />
+                                <i onClick={() => getActiveCategory('')} className={clsx(classes.iconDel, 'fas fa-times')} />
                             </span> 
                             : null
                         } 
