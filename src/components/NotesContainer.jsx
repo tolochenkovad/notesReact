@@ -7,6 +7,7 @@ import Info from './Info/Info';
 import { buildTree } from '../utils/makeTree';
 import Filter from './Filter';
 import AddNote from './AddNote';
+import { makeStyles } from '@material-ui/styles';
 
 const NotesContainer = () => {
     // notes state
@@ -365,10 +366,27 @@ const NotesContainer = () => {
         setSeacrhValue(value)
     };
 
+    const useStyles = makeStyles({
+        notesContainer: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '0 20px 20px 20px'
+        },
+        info: {
+            width: '30%',
+            background: '#ececec'
+        },
+        notes:{
+            width: '65%'
+        }
+    });
+
+    const classes = useStyles();
+
 
     return (
-        <main className="notesContainer">
-            <aside className="notesContainer__info">
+        <main className={classes.notesContainer}>
+            <aside className={classes.info}>
                 <Info tags={tags} 
                       tagValue={tagValue}
                       categoryValue={categoryValue}
@@ -388,7 +406,7 @@ const NotesContainer = () => {
                       removeTag={removeTag}/>
             </aside>
 
-            <div className="notesContainer__notes">
+            <div className={classes.notes}>
                 <Filter activeTag={activeTag}
                         activeCategory={activeCategory}
                         searchValue={searchValue}
