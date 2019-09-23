@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import { useStyles } from './style'
+import { useStyles } from './style';
 
 const EditElement = ({elementValue, onBlurFun, addElement, id}) => {
 

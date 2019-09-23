@@ -4,8 +4,8 @@ import { getStorage, setStorage} from '../utils/localStorage';
 import NoteInfoContainer from './NoteInfo/NoteInfoContainer';
 import Info from './Info/Info';
 import { buildTree } from '../utils/makeTree';
-import Filter from './Filter';
-import AddNote from './AddNote';
+import Filter from './Filter/Filter';
+import AddNote from './AddNote/AddNote';
 import { makeStyles } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 
