@@ -8,6 +8,24 @@ import { buildTree } from '../utils/makeTree';
 import Filter from './Filter';
 import AddNote from './AddNote';
 import { makeStyles } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme();
+
+const useStyles = makeStyles({
+    notesContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: theme.spacing(0, 2.5, 2.5, 2.5)
+    },
+    info: {
+        width: '30%',
+        background: '#ececec'
+    },
+    notes:{
+        width: '65%'
+    }
+});
 
 const NotesContainer = () => {
     // notes state
@@ -365,21 +383,6 @@ const NotesContainer = () => {
     const getSeacrhValue = (value) => {
         setSeacrhValue(value)
     };
-
-    const useStyles = makeStyles({
-        notesContainer: {
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: '0 20px 20px 20px'
-        },
-        info: {
-            width: '30%',
-            background: '#ececec'
-        },
-        notes:{
-            width: '65%'
-        }
-    });
 
     const classes = useStyles();
 
