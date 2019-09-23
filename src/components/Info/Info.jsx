@@ -3,6 +3,17 @@ import PropTypes from 'prop-types';
 import './Info.scss'
 import TagLibrary from './TagLibrary';
 import CategoryLibrary from './CategoryLibrary';
+import { makeStyles } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme();
+
+const useStyles = makeStyles({
+    info:{
+        padding: theme.spacing(0, 2.5, 2.5, 2.5),
+        fontSize: theme.spacing(1.5)
+    }
+});
 
 const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag, 
     currentIdCategory, addTag, addCategory, editTag, getActiveTag, 
@@ -37,8 +48,10 @@ const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag,
         setIsEdition(false);
     };
 
+    const classes = useStyles();
+
     return(
-        <div className="info">
+        <div className={classes.info}>
             <TagLibrary     tags={tags}
                             getActiveFilterTag={getActiveFilterTag}
                             onEditTag={onEditTag}
