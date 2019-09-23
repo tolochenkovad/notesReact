@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import './Info.scss'
 import TagLibrary from './TagLibrary';
 import CategoryLibrary from './CategoryLibrary';
 import { makeStyles } from '@material-ui/styles';

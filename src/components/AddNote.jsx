@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
+import clsx from 'clsx';
 
 const theme = createMuiTheme();
 const useStyles = makeStyles({
@@ -28,6 +29,13 @@ const useStyles = makeStyles({
         "&:focus": {
             outline: 'none'
           }
+    },
+    icon:{
+        position: 'absolute',
+        fontSize: theme.spacing(3),
+        top: theme.spacing(3.75),
+        transform: 'translateY(-50%)',
+        left: theme.spacing(2.5)
     }
 });
 
@@ -38,7 +46,7 @@ const AddNote = ({clickItem}) => {
     return(
         <div className={classes.addNote}>
             <form>
-                <i className="fas fa-plus" />
+                <i className={clsx(classes.icon, 'fas fa-plus')} />
                 <textarea
                     className = {classes.textarea}
                     onClick = {clickItem}

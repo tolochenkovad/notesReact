@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './NotesContainer.scss';
 import NotesList from './NotesList/Noteslist';
 import { getStorage, setStorage} from '../utils/localStorage';
 import NoteInfoContainer from './NoteInfo/NoteInfoContainer';

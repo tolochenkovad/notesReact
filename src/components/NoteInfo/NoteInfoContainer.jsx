@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import './NotesInfo.scss';
 import NoteForm from './NoteForm';
 import ChoosedCharacteristics from './ChoosedCharacteristics';
 import { makeStyles } from '@material-ui/styles';
