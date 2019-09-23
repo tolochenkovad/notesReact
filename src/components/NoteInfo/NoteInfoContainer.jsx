@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import NoteForm from './NoteForm';
-import ChoosedCharacteristics from './ChoosedCharacteristics';
+import NoteForm from './NoteForm/NoteForm';
+import ChoosedCharacteristics from './ChoosedCharacteristics/ChoosedCharacteristics';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
