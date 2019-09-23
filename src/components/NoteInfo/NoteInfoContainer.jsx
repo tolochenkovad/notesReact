@@ -3,6 +3,23 @@ import PropTypes from 'prop-types';
 import './NotesInfo.scss';
 import NoteForm from './NoteForm';
 import ChoosedCharacteristics from './ChoosedCharacteristics';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles({
+   wrap:{
+        position: 'fixed',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        background: 'rgba(0, 0, 0, 0.8)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 10
+   }
+});
 
 const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, 
     noteValue, changeTag, addTagsArrOfNote, tagsArrNote, removeTagNoteInfo, 
@@ -203,9 +220,11 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
         removeCategoryNoteInfo(id);
         refTextarea.current.focus();
     };
+
+    const classes = useStyles();
     
     return (
-        <div className='noteInfo-wrap'>
+        <div className={classes.wrap}>
             <NoteForm   refForm={refForm} 
                         tags={tags} 
                         showTag={showTag} 

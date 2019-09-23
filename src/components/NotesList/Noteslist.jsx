@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './NotesList.scss';
 import NoteItem from './NoteItem';
 import { makeStyles } from '@material-ui/styles';
 

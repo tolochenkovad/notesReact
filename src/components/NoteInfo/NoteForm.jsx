@@ -1,5 +1,115 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+import clsx from 'clsx';
+
+const theme = createMuiTheme();
+
+const useStyles = makeStyles({
+    noteInfo:{
+        position: 'relative',
+        width: '60%'
+    },
+    textarea:{
+        position: 'relative',
+        padding: theme.spacing(2.5),
+        border: 'none',
+        background: '#b4b4fa',
+        width: '100%',
+        height: theme.spacing(37.5),
+        boxSizing: 'border-box',
+        fontSize: theme.spacing(3.5),
+        boxShadow: 'inset 0 -2px 40px rgba(0,0,0,0.03)',
+        resize: 'none',
+        outline: 'none'
+    },
+    infoList:{
+        margin: 0,
+        listStyle: 'none',
+        padding: 0,
+        paddingTop: theme.spacing(1.25),
+        background: '#e0d8d8',
+        display: 'flex',
+        alignItems: 'flex-end'  
+    },
+    tagWrap:{
+        cursor: 'pointer',
+        position: 'relative',    
+        margin: theme.spacing(0, 2.5)
+    },
+    tag:{
+        width: theme.spacing(13.75),
+        height: theme.spacing(3.75),
+        background: '#baa4a4',
+        borderRadius: theme.spacing(1.875),
+        fontSize: theme.spacing(2.5)
+    },
+    icon:{
+        fontSize: theme.spacing(2.5),
+        top: '45%',
+        left: '15%',
+        '& span':{
+            marginLeft: theme.spacing(1.25),
+        }
+    },
+    colorWrap:{
+        cursor: 'pointer',
+        position: 'relative',
+        marginRight: theme.spacing(2.5)
+    },
+    color:{
+        width: theme.spacing(13.75),
+        height: theme.spacing(3.75),
+        background: 'yellow',
+        fontSize: theme.spacing(2.5)
+    },
+    categoryWrap:{
+        cursor: 'pointer',
+        position: 'relative'
+    },
+    category:{
+        width: theme.spacing(14.375),
+        height: theme.spacing(3.75),
+        border: '1px solid black'
+    },
+    categoryIcon:{
+        fontSize: theme.spacing(2.5),
+        top: '50%',
+        left: '7%',
+        '& span':{
+            marginLeft: theme.spacing(1.25),
+        }
+    },
+    select:{
+        background: '#978989',
+        width: theme.spacing(52.5),
+        height: theme.spacing(6.25),
+        border: 'none',
+        position: 'absolute',
+        bottom: '-2.3%',
+        left: 0,
+        outline: 'none',
+        paddingLeft: theme.spacing(3.75),
+        fontSize: theme.spacing(2.5),
+        zIndex: 11
+    },
+    formBox:{
+        position: 'absolute',
+        bottom: '-4%'  
+    },
+    input:{
+        height: theme.spacing(6.25),
+        left: '40%',
+        width: theme.spacing(56.25),
+        outline: 'none',
+        fontSize: theme.spacing(2.5),
+        paddingLeft: theme.spacing(3.75)
+    },
+    btn:{
+        display: 'none'
+    }
+ });
 
 const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnter,
     textarea, onPressTag, onPressColor, onPressCategory, showTag, clickTag,
@@ -7,32 +117,35 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
     clickColor, colorArr, showCategory, clickCategory, category, isNeighboringCategory,
     submitCategory, isChildCategory, clickParentCategory, isParentHasChild, 
     submitChildCategory, refBtn}) => {
+
+    const classes = useStyles();
+
     return(
-        <div className="noteInfo">
+        <div className={classes.noteInfo}>
             <form ref={refForm} onSubmit={submitHandler}>
                 <textarea ref={refTextarea}
                     onFocus={onFocusFunc} 
                     onKeyDown={onPressEnter}
-                    className="noteInfo__textarea"
+                    className={classes.textarea}
                     {...textarea.bind} />
 
-                <ul className="noteInfo__info-block">
+                <ul className={classes.infoList}>
 
-                    <li  className="noteInfo__tag-wrap" onClick={onPressTag}>
-                        <div className="noteInfo__tag">
-                            <i className="noteInfo__tag-icon fas fa-plus"><span>tag</span></i>
+                    <li  className={classes.tagWrap} onClick={onPressTag}>
+                        <div className={classes.tag}>
+                            <i className={clsx(classes.icon, 'fas fa-plus')}><span>tag</span></i>
                         </div>
                     </li>
 
-                    <li className="noteInfo__color-wrap" onClick={onPressColor}>
-                        <div className="noteInfo__color">
-                            <i className="noteInfo__color-icon fas fa-plus"><span>color</span></i>
+                    <li className={classes.colorWrap} onClick={onPressColor}>
+                        <div className={classes.color}>
+                            <i className={clsx(classes.icon, 'fas fa-plus')}><span>color</span></i>
                         </div>
                     </li>
 
-                    <li className="noteInfo__category-wrap" onClick={onPressCategory}>
-                        <div className="noteInfo__category">
-                            <i className="noteInfo__category-icon fas fa-plus"><span>category</span></i>
+                    <li className={classes.categoryWrap} onClick={onPressCategory}>
+                        <div className={classes.category}>
+                            <i className={clsx(classes.categoryIcon, 'fas fa-plus')}><span>category</span></i>
                         </div>
                     </li>
                 </ul>
@@ -41,7 +154,7 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                     showTag
                     ?
 
-                        <select onChange={clickTag} onKeyDown={onKeyFunc} className="noteInfo__select">
+                        <select onChange={clickTag} onKeyDown={onKeyFunc} className={classes.select}>
                             <option value="">choose tag or create yours</option>
                         {
                             tags.map(tag =>
@@ -56,8 +169,8 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     showInputTag
                     ?  
-                        <div className="noteInfo__form-tag">
-                            <input className="noteInfo__input-tag" 
+                        <div className={classes.formBox}>
+                            <input className={classes.input} 
                                 onKeyDown={submitHandlerTag}
                                 onBlur={onBlurFunc}
                                 autoFocus={true}
@@ -69,7 +182,7 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     showColorPicker
                     ?
-                        <select onChange={clickColor} onKeyDown={onKeyFunc} className="noteInfo__select">
+                        <select onChange={clickColor} onKeyDown={onKeyFunc} className={classes.select}>
                             <option value="">choose color theme</option>
                             {
                                 colorArr.map((color, index) =>
@@ -83,7 +196,7 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     showCategory
                     ?  
-                        <select onChange={clickCategory} onKeyDown={onKeyFunc} className="noteInfo__select">
+                        <select onChange={clickCategory} onKeyDown={onKeyFunc} className={classes.select}>
                             <option value="">choose category or create yours</option>
                             <option value="category">add category</option>
                             <option value="child">add child element</option>
@@ -99,8 +212,8 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     isNeighboringCategory
                     ?  
-                        <div className="noteInfo__form-tag">
-                            <input className="noteInfo__input-tag" 
+                        <div className={classes.formBox}>
+                            <input className={classes.input} 
                                 onKeyDown={submitCategory}
                                 onBlur={onBlurFunc}
                                 autoFocus={true}
@@ -112,7 +225,7 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     isChildCategory
                     ?  
-                        <select onChange={clickParentCategory} onKeyDown={onKeyFunc} className="noteInfo__select">
+                        <select onChange={clickParentCategory} onKeyDown={onKeyFunc} className={classes.select}>
                             <option value="">choose parent category</option>
                             {
                                 category.map(item =>
@@ -126,8 +239,8 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     isParentHasChild
                     ?
-                        <div className="noteInfo__form-tag">
-                            <input className="noteInfo__input-tag" 
+                        <div className={classes.formBox}>
+                            <input className={classes.input} 
                                 onKeyDown={submitChildCategory}
                                 autoFocus={true}
                                 onBlur={onBlurFunc}
@@ -135,7 +248,7 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                         </div>
                     :   null
                 }
-                <button ref={refBtn} className="noteInfo__btn" type="submit"></button>
+                <button ref={refBtn} className={classes.btn} type="submit"></button>
                 </form>  
             </div>
     )
