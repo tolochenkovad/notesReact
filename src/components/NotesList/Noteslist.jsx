@@ -2,14 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './NotesList.scss';
 import NoteItem from './NoteItem';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles({
+    notesList:{
+        margin: 0,
+        padding: 0,
+        listStyle: 'none'
+    }
+});
 
 const NotesList = ({ notes, removeNote, editNote, getActiveTag, 
     getActiveCategory, activeTag, activeCategory, searchValue}) => {
 
     let newNotes = [...notes].sort( (a, b) =>  new Date(a.data.dataInt) - new Date(b.data.dataInt)).reverse();
 
+    const classes = useStyles();
+
     return (
-        <ul className="notesList">
+        <ul className={classes.notesList}>
             {
                 activeTag !== '' || activeCategory  !== ''
                 ?
