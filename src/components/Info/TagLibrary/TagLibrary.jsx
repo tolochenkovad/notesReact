@@ -1,44 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EditElement from './EditElement';
-import { makeStyles } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
+import EditElement from '../EditElement/EditElement';
 import clsx from 'clsx';
-
-const theme = createMuiTheme();
-
-const useStyles = makeStyles({
-    headline:{
-        textAlign: 'center',
-        fontSize: theme.spacing(3.5)
-    },
-    tagsList:{
-        margin: 0,
-        padding: 0,
-        listStyle: 'none',   
-        display: 'flex',
-        flexWrap: 'wrap'
-    },
-    tag:{
-        marginRight: theme.spacing(2.5),
-        marginTop: theme.spacing(1.875),
-        padding: theme.spacing(0.625, 1.25),
-        background: '#baa4a4',
-        borderRadius: theme.spacing(1.875),
-        cursor: 'pointer',
-        '&:hover':{
-            background: 'white'
-        }
-    },
-    iconDel:{
-        marginLeft: theme.spacing(1.25),
-        cursor: 'pointer'
-    },
-    iconEdit:{
-        marginRight: theme.spacing(1.25),
-        cursor: 'pointer'
-    }   
-});
+import { useStyles } from './style';
 
 const TagLibrary = ({tags, getActiveFilterTag, onEditTag, isTagEdit, 
     currentIdTag, tagValue, removeTag, addTag, onBlurFunc}) => {

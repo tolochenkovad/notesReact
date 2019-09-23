@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import TagLibrary from './TagLibrary';
-import CategoryLibrary from './CategoryLibrary';
+import TagLibrary from './TagLibrary/TagLibrary';
+import CategoryLibrary from './CategoryLibrary/CategoryLibrary';
 import { makeStyles } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 

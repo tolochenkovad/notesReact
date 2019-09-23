@@ -1,18 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
-
-const theme = createMuiTheme();
-
-const useStyles = makeStyles({
-   input:{
-        background:'transparent',
-        border: 'none', 
-        outline: 'none',
-        fontSize: theme.spacing(2)
-   }
-});
+import { useStyles } from './style'
 
 const EditElement = ({elementValue, onBlurFun, addElement, id}) => {
 
