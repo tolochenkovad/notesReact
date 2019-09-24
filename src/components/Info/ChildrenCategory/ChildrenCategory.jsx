@@ -1,33 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EditElement from '../EditElement/EditElement';
-import clsx from 'clsx';
-import { useStyles } from './style';
+import { useStyle } from './style';
+import Grid from '@material-ui/core/Grid';
+import ChildrenCategoryItem from './ChildrenCategoryItem';
 
 const ChildrenCategory = ({children, removeCategory, isEditIcon, 
     addCategory, onEditCategory, categoryValue, onBlurFunc, 
     currentIdCategory, getActiveFilterCategory}) => {
 
-    const classes = useStyles();
+    const classes = useStyle();
     
     return(
-        <div className={classes.childBox}>
+        <Grid className={classes.childBox}>
             {
                 children.map(child => 
                     child.children 
                     ? 
-                        <span className={classes.childWrap} key={child.id}>
-                            <span onClick={getActiveFilterCategory} className={classes.category}>
-                                <i onClick={() => onEditCategory(child.id, child.categoryValue)} className={clsx(classes.iconEdit, 'fas fa-edit')} />
-                                {
-                                    isEditIcon && currentIdCategory === child.id
-                                        ? 
-                                            <EditElement elementValue={categoryValue} id={child.id} addElement={addCategory} onBlurFun={onBlurFunc} />
-                                        : 
-                                            child.categoryValue
-                                }
-                                <i onClick={() => removeCategory(child.id, child.categoryValue)} className={clsx(classes.iconDel, 'fas fa-times')} />
-                            </span> 
+                        <Grid className={classes.childWrap} key={child.id}>
+                            <ChildrenCategoryItem getActiveFilterCategory={getActiveFilterCategory}
+                                                  onEditCategory={onEditCategory}
+                                                  isEditIcon={isEditIcon}
+                                                  currentIdCategory={currentIdCategory}
+                                                  categoryValue={categoryValue}
+                                                  addCategory={addCategory}
+                                                  onBlurFunc={onBlurFunc}
+                                                  removeCategory={removeCategory}
+                                                  child={child}
+                            /> 
                             {
                                 child.children && 
                                 <ChildrenCategory children={child.children} removeCategory={removeCategory} 
@@ -36,35 +35,27 @@ const ChildrenCategory = ({children, removeCategory, isEditIcon,
                                 currentIdCategory={currentIdCategory} onEditCategory={onEditCategory} />
                             }
 
-                        </span>
+                        </Grid>
                     :
-                        <span onClick={getActiveFilterCategory} key={child.id} className={classes.category}>
-                            <i onClick={() => onEditCategory(child.id, child.categoryValue)} className={clsx(classes.iconEdit, 'fas fa-edit')} />
-                            {
-                                isEditIcon && currentIdCategory === child.id
-                                    ? 
-                                        <EditElement elementValue={categoryValue} id={child.id} addElement={addCategory} onBlurFun={onBlurFunc} />
-                                    : 
-                                        child.categoryValue
-                            }
-                            <i onClick={() => removeCategory(child.id, child.categoryValue)} className={clsx(classes.iconDel, 'fas fa-times')} />
-                        </span>
-                )    
+                        <ChildrenCategoryItem   getActiveFilterCategory={getActiveFilterCategory}
+                                                onEditCategory={onEditCategory}
+                                                isEditIcon={isEditIcon}
+                                                currentIdCategory={currentIdCategory}
+                                                categoryValue={categoryValue}
+                                                addCategory={addCategory}
+                                                onBlurFunc={onBlurFunc}
+                                                removeCategory={removeCategory}
+                                                child={child}
+                                                key={child.id}
+                        /> 
+                    )    
             }
-        </div>
+        </Grid>
     )
 };
 
 ChildrenCategory.propTypes = {
-    children: PropTypes.arrayOf(PropTypes.object),
-    isEditIcon: PropTypes.bool,
-    onBlurFunc: PropTypes.func,
-    removeCategory: PropTypes.func,
-    onEditCategory: PropTypes.func,
-    addCategory: PropTypes.func,
-    categoryValue: PropTypes.string,
-    currentIdCategory: PropTypes.number,
-    getActiveFilterCategory: PropTypes.func
+    children: PropTypes.arrayOf(PropTypes.object)
 }
 
 export default ChildrenCategory;
