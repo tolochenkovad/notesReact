@@ -17,7 +17,6 @@ export const useStyles = makeStyles( theme => ({
         wordWrap: 'break-word'
     },
     box:{
-        display: 'flex',
         justifyContent: 'space-between',
         marginTop: theme.spacing(3.75),
         marginBottom: theme.spacing(1.25)

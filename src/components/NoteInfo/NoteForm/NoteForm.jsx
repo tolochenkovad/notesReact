@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useStyles } from './style';
+import Grid from '@material-ui/core/Grid';
 
 const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnter,
     textarea, onPressTag, onPressColor, onPressCategory, showTag, clickTag,
@@ -13,7 +14,7 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
     const classes = useStyles();
 
     return(
-        <div className={classes.noteInfo}>
+        <Grid className={classes.noteInfo}>
             <form ref={refForm} onSubmit={submitHandler}>
                 <textarea ref={refTextarea}
                     onFocus={onFocusFunc} 
@@ -104,13 +105,13 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     isNeighboringCategory
                     ?  
-                        <div className={classes.formBox}>
+                        <Grid className={classes.formBox}>
                             <input className={classes.input} 
                                 onKeyDown={submitCategory}
                                 onBlur={onBlurFunc}
                                 autoFocus={true}
                                 type="text"/>
-                        </div>
+                        </Grid>
                     :   null
                 }
 
@@ -131,18 +132,18 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     isParentHasChild
                     ?
-                        <div className={classes.formBox}>
+                        <Grid className={classes.formBox}>
                             <input className={classes.input} 
                                 onKeyDown={submitChildCategory}
                                 autoFocus={true}
                                 onBlur={onBlurFunc}
                                 type="text"/>
-                        </div>
+                        </Grid>
                     :   null
                 }
                 <button ref={refBtn} className={classes.btn} type="submit"></button>
                 </form>  
-            </div>
+            </Grid>
     )
 };
 

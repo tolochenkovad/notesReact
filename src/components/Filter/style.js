@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/styles';
 export const useStyles = makeStyles( theme => ({
     filter:{
         marginBottom: theme.spacing(3.75),
-        width: '100%',
-        display: 'flex',
         justifyContent: 'flex-start'
     },
     search:{

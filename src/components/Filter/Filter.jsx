@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useStyles } from './style';
+import Grid from '@material-ui/core/Grid';
 
 const Filter = ({activeTag, activeCategory, searchValue, 
     getActiveTag, getSeacrhValue, getActiveCategory}) => {
@@ -22,24 +23,24 @@ const Filter = ({activeTag, activeCategory, searchValue,
                     </form>
                     
                 :   
-                    <div className={classes.filter}>
+                    <Grid container={true} className={classes.filter}>
                         {
                             activeTag !== '' ?
-                            <span className={classes.tag}>
+                            <Grid item={true} className={classes.tag}>
                                 {activeTag}
                                 <i onClick={() => getActiveTag('')} className={clsx(classes.iconDel, 'fas fa-times')} />
-                            </span> 
+                            </Grid> 
                             : null
                         }
                         {
                             activeCategory !== '' ?
-                            <span className={classes.text}>
+                            <Grid item={true} className={classes.text}>
                                 {activeCategory}
                                 <i onClick={() => getActiveCategory('')} className={clsx(classes.iconDel, 'fas fa-times')} />
-                            </span> 
+                            </Grid> 
                             : null
                         } 
-                    </div>
+                    </Grid>
             }
         </>
     )

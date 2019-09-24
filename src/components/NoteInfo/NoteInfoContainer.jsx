@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import NoteForm from './NoteForm/NoteForm';
 import ChoosedCharacteristics from './ChoosedCharacteristics/ChoosedCharacteristics';
 import { makeStyles } from '@material-ui/styles';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles( theme => ({
    wrap:{
@@ -12,7 +13,6 @@ const useStyles = makeStyles( theme => ({
         bottom: 0,
         left: 0,
         background: 'rgba(0, 0, 0, 0.8)',
-        display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
@@ -223,7 +223,7 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
     const classes = useStyles();
     
     return (
-        <div className={classes.wrap}>
+        <Grid container={true} className={classes.wrap}>
             <NoteForm   refForm={refForm} 
                         tags={tags} 
                         showTag={showTag} 
@@ -264,7 +264,7 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
                                   delTag={delTag}
                                   delCategory={delCategory}
             />
-        </div>
+        </Grid>
     )
 };
 

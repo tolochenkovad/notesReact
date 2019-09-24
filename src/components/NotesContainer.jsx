@@ -397,8 +397,8 @@ const NotesContainer = () => {
 
 
     return (
-        <Grid container justify="space-between" className={classes.notesContainer}>
-            <aside className={classes.info}>
+        <Grid container={true} justify="space-between" className={classes.notesContainer}>
+            <Grid item={true} className={classes.info}>
                 <Info tags={tags} 
                       tagValue={tagValue}
                       categoryValue={categoryValue}
@@ -416,9 +416,9 @@ const NotesContainer = () => {
                       removeCategory={removeCategory}
                       tree={tree}
                       removeTag={removeTag}/>
-            </aside>
+            </Grid>
 
-            <div className={classes.notes}>
+            <Grid item={true} className={classes.notes}>
                 <Filter activeTag={activeTag}
                         activeCategory={activeCategory}
                         searchValue={searchValue}
@@ -443,7 +443,7 @@ const NotesContainer = () => {
                 />
                 :   null
                 }
-            </div>  
+            </Grid>  
             
             {
                 isNoteInfo 

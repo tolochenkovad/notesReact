@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useStyles } from './style';
+import Grid from '@material-ui/core/Grid';
 
 const NoteItem = ({ id, note, color, data, removeNote, editNote, tags, categories, 
     getActiveCategory, getActiveTag}) => {
@@ -17,7 +18,7 @@ const NoteItem = ({ id, note, color, data, removeNote, editNote, tags, categorie
     return (
         <li ref={refLi} className={classes.item}>
             <span className={classes.text}>{note}</span>
-            <div className={classes.box}>   
+            <Grid container={true} className={classes.box}>   
                 <ul className={classes.toolsList}>
                     {
                         tags
@@ -36,7 +37,7 @@ const NoteItem = ({ id, note, color, data, removeNote, editNote, tags, categorie
                     <i onClick={() => editNote(id, note, tags, categories, color)} className={clsx(classes.icon, 'fas fa-edit')} />
                     <i onClick={() => removeNote(id)} className={clsx(classes.icon, 'fas fa-times')} />
                 </div>
-            </div>  
+            </Grid>  
                 <ul className={classes.toolsList}>
                         {
                             categories
@@ -47,9 +48,9 @@ const NoteItem = ({ id, note, color, data, removeNote, editNote, tags, categorie
                             :   null
                         }
                 </ul> 
-                <div className={classes.dateBox}>
+                <Grid className={classes.dateBox}>
                     <span className={classes.date}>{data.dataString}</span>
-                </div>
+                </Grid>
         </li>
     )
 };

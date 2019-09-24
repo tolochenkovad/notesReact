@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useStyles } from './style';
+import Grid from '@material-ui/core/Grid';
 
 const ChoosedCharacteristics = ({tagsArrNote, categoryArrNote, delTag, delCategory}) => {
 
     const classes = useStyles();
 
     return(
-        <div className={classes.characteristics}>
+        <Grid className={classes.characteristics}>
             <ul className={classes.tagsBox}>
                 {
                     tagsArrNote.map(item =>
@@ -31,7 +32,7 @@ const ChoosedCharacteristics = ({tagsArrNote, categoryArrNote, delTag, delCatego
                     )
                 }
             </ul>
-        </div>
+        </Grid>
     )
 };
 

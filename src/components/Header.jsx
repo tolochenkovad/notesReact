@@ -1,5 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+
 
 const useStyles = makeStyles( theme => ({
     title: {
@@ -15,9 +17,9 @@ const useStyles = makeStyles( theme => ({
 const Header = () => {
     const classes = useStyles();
     return(
-        <header>
+        <Grid>
             <h1 className={classes.title}>Notes App</h1>
-        </header>
+        </Grid>
     )
 };
 
