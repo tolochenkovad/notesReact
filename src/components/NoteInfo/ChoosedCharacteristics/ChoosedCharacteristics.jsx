@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useStyles } from './style';
 import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 const ChoosedCharacteristics = ({tagsArrNote, categoryArrNote, delTag, delCategory}) => {
 
@@ -10,28 +12,28 @@ const ChoosedCharacteristics = ({tagsArrNote, categoryArrNote, delTag, delCatego
 
     return(
         <Grid className={classes.characteristics}>
-            <ul className={classes.tagsBox}>
+            <List className={classes.tagsBox}>
                 {
                     tagsArrNote.map(item =>
-                        <li key={item.id} className={classes.choosedTag}>
+                        <ListItem key={item.id} className={classes.choosedTag}>
                             <i className="fas fa-paperclip fa-xs" />
                             <span>{item.tag}</span>
                             <i onClick={() => delTag(item.id)} className={clsx(classes.iconDel, 'fas fa-times')} />
-                        </li>
+                        </ListItem>
                     )
                 }
-            </ul>
+            </List>
 
-            <ul className={classes.categoryBox}>
+            <List className={classes.categoryBox}>
                 {
                     categoryArrNote.map(item =>
-                        <li key={item.id} className={classes.choosedСategory}>
+                        <ListItem key={item.id} className={classes.choosedСategory}>
                             {item.category}
                             <i onClick={() => delCategory(item.id)} className={clsx(classes.iconDel, 'fas fa-times')} />
-                        </li>
+                        </ListItem>
                     )
                 }
-            </ul>
+            </List>
         </Grid>
     )
 };
