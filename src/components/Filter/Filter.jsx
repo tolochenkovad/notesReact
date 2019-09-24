@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useStyles } from './style';
 import Grid from '@material-ui/core/Grid';
+import FormControl from '@material-ui/core/FormControl';
+import TextField  from '@material-ui/core/TextField';
 
 const Filter = ({activeTag, activeCategory, searchValue, 
     getActiveTag, getSeacrhValue, getActiveCategory}) => {
@@ -14,13 +16,13 @@ const Filter = ({activeTag, activeCategory, searchValue,
             {
                 activeTag  === '' && activeCategory  === ''
                 ? 
-                    <form className={classes.filter} onSubmit={e => e.preventDefault()}>
-                        <input  type="text"
+                    <FormControl component="form" className={classes.filter} onSubmit={e => e.preventDefault()}>
+                        <TextField   type="text"
                                 value={searchValue}
                                 onChange={e => getSeacrhValue(e.target.value)} 
                                 className={classes.search}
                                 placeholder="Search" />  
-                    </form>
+                    </FormControl>
                     
                 :   
                     <Grid container={true} className={classes.filter}>
