@@ -8,13 +8,12 @@ import Filter from './Filter/Filter';
 import AddNote from './AddNote/AddNote';
 import { makeStyles } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 
 const theme = createMuiTheme();
 
 const useStyles = makeStyles({
     notesContainer: {
-        display: 'flex',
-        justifyContent: 'space-between',
         padding: theme.spacing(0, 2.5, 2.5, 2.5)
     },
     info: {
@@ -401,7 +400,7 @@ const NotesContainer = () => {
 
 
     return (
-        <main className={classes.notesContainer}>
+        <Grid container justify="space-between" className={classes.notesContainer}>
             <aside className={classes.info}>
                 <Info tags={tags} 
                       tagValue={tagValue}
@@ -477,7 +476,7 @@ const NotesContainer = () => {
                     />
                 :   null
             }
-        </main>
+        </Grid>
     )
 }
 
