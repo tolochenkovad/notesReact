@@ -10,9 +10,10 @@ const AddNote = ({clickItem}) => {
     return(
         <Grid className={classes.addNote}>
                 <i className={clsx(classes.icon, 'fas fa-plus')} />
-                <textarea
+                <Grid
                     className = {classes.textarea}
                     onClick = {clickItem}
+                    component="input"
                     placeholder = "Click to add note"
                 />
         </Grid>
