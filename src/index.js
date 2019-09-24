@@ -1,11 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from "./serviceWorker";
-import './style.scss';
+import './style.css';
 import App from "./App";
+import { ThemeProvider } from '@material-ui/styles';
+import theme from './lib/material-ui/theme';
 
 ReactDOM.render((
-    <App />
+    <ThemeProvider theme={theme}>
+        <App />
+    </ThemeProvider>
+    
 ), document.getElementById('root'));
 
 

@@ -1,32 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import { useStyles } from './style';
+import Grid from '@material-ui/core/Grid';
 
 const ChoosedCharacteristics = ({tagsArrNote, categoryArrNote, delTag, delCategory}) => {
+
+    const classes = useStyles();
+
     return(
-        <div className="noteInfo__characteristics">
-            <ul className="noteInfo__tags-container">
+        <Grid className={classes.characteristics}>
+            <ul className={classes.tagsBox}>
                 {
                     tagsArrNote.map(item =>
-                        <li key={item.id} className="noteInfo__choosed-tag">
+                        <li key={item.id} className={classes.choosedTag}>
                             <i className="fas fa-paperclip fa-xs" />
                             <span>{item.tag}</span>
-                            <i onClick={() => delTag(item.id)} className="info__icon-del fas fa-times" />
+                            <i onClick={() => delTag(item.id)} className={clsx(classes.iconDel, 'fas fa-times')} />
                         </li>
                     )
                 }
             </ul>
 
-            <ul className="noteInfo__category-container">
+            <ul className={classes.categoryBox}>
                 {
                     categoryArrNote.map(item =>
-                        <li key={item.id} className="category__text noteInfo__category-item">
+                        <li key={item.id} className={classes.choosedСategory}>
                             {item.category}
-                            <i onClick={() => delCategory(item.id)} className="info__icon-del fas fa-times" />
+                            <i onClick={() => delCategory(item.id)} className={clsx(classes.iconDel, 'fas fa-times')} />
                         </li>
                     )
                 }
             </ul>
-        </div>
+        </Grid>
     )
 };
 

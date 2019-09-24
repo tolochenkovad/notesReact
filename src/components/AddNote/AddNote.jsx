@@ -1,18 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import { useStyles } from './style';
+import Grid from '@material-ui/core/Grid';
 
 const AddNote = ({clickItem}) => {
+    const classes = useStyles();
+
     return(
-        <div className="addNote">
+        <Grid className={classes.addNote}>
             <form>
-                <i className="fas fa-plus" />
+                <i className={clsx(classes.icon, 'fas fa-plus')} />
                 <textarea
-                    className = "addNote__textarea" 
+                    className = {classes.textarea}
                     onClick = {clickItem}
                     placeholder = "Click to add note"
                 />
             </form>
-        </div>
+        </Grid>
     )
 };
 

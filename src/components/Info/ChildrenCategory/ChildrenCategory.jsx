@@ -1,21 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Info.scss';
-import EditElement from './EditElement';
+import EditElement from '../EditElement/EditElement';
+import clsx from 'clsx';
+import { useStyles } from './style';
 
 const ChildrenCategory = ({children, removeCategory, isEditIcon, 
     addCategory, onEditCategory, categoryValue, onBlurFunc, 
     currentIdCategory, getActiveFilterCategory}) => {
+
+    const classes = useStyles();
     
     return(
-        <div className="category__child">
+        <div className={classes.childBox}>
             {
                 children.map(child => 
                     child.children 
                     ? 
-                        <span className="category__child-wrap" key={child.id}>
-                            <span onClick={getActiveFilterCategory} className="category__text category_child category_info">
-                                <i onClick={() => onEditCategory(child.id, child.categoryValue)} className="info__icon-edit fas fa-edit" />
+                        <span className={classes.childWrap} key={child.id}>
+                            <span onClick={getActiveFilterCategory} className={classes.category}>
+                                <i onClick={() => onEditCategory(child.id, child.categoryValue)} className={clsx(classes.iconEdit, 'fas fa-edit')} />
                                 {
                                     isEditIcon && currentIdCategory === child.id
                                         ? 
@@ -23,7 +26,7 @@ const ChildrenCategory = ({children, removeCategory, isEditIcon,
                                         : 
                                             child.categoryValue
                                 }
-                                <i onClick={() => removeCategory(child.id, child.categoryValue)} className="info__icon-del fas fa-times" />
+                                <i onClick={() => removeCategory(child.id, child.categoryValue)} className={clsx(classes.iconDel, 'fas fa-times')} />
                             </span> 
                             {
                                 child.children && 
@@ -35,8 +38,8 @@ const ChildrenCategory = ({children, removeCategory, isEditIcon,
 
                         </span>
                     :
-                        <span onClick={getActiveFilterCategory} key={child.id} className="category__text category_child category_info">
-                            <i onClick={() => onEditCategory(child.id, child.categoryValue)} className="info__icon-edit fas fa-edit" />
+                        <span onClick={getActiveFilterCategory} key={child.id} className={classes.category}>
+                            <i onClick={() => onEditCategory(child.id, child.categoryValue)} className={clsx(classes.iconEdit, 'fas fa-edit')} />
                             {
                                 isEditIcon && currentIdCategory === child.id
                                     ? 
@@ -44,11 +47,11 @@ const ChildrenCategory = ({children, removeCategory, isEditIcon,
                                     : 
                                         child.categoryValue
                             }
-                            <i onClick={() => removeCategory(child.id, child.categoryValue)} className="info__icon-del fas fa-times" />
+                            <i onClick={() => removeCategory(child.id, child.categoryValue)} className={clsx(classes.iconDel, 'fas fa-times')} />
                         </span>
                 )    
             }
-    </div>
+        </div>
     )
 };
 

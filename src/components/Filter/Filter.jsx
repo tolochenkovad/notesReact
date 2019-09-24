@@ -1,41 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import { useStyles } from './style';
+import Grid from '@material-ui/core/Grid';
 
 const Filter = ({activeTag, activeCategory, searchValue, 
     getActiveTag, getSeacrhValue, getActiveCategory}) => {
+
+    const classes = useStyles();
 
     return(
         <>
             {
                 activeTag  === '' && activeCategory  === ''
                 ? 
-                    <form className="filter" onSubmit={e => e.preventDefault()}>
+                    <form className={classes.filter} onSubmit={e => e.preventDefault()}>
                         <input  type="text"
                                 value={searchValue}
                                 onChange={e => getSeacrhValue(e.target.value)} 
-                                className="filter__search"
+                                className={classes.search}
                                 placeholder="Search" />  
                     </form>
                     
                 :   
-                    <div className="filter">
+                    <Grid container={true} className={classes.filter}>
                         {
                             activeTag !== '' ?
-                            <span className="filter__tag">
+                            <Grid item={true} className={classes.tag}>
                                 {activeTag}
-                                <i onClick={() => getActiveTag('')} className="info__icon-del fas fa-times" />
-                            </span> 
+                                <i onClick={() => getActiveTag('')} className={clsx(classes.iconDel, 'fas fa-times')} />
+                            </Grid> 
                             : null
                         }
                         {
                             activeCategory !== '' ?
-                            <span className="category__text">
+                            <Grid item={true} className={classes.text}>
                                 {activeCategory}
-                                <i onClick={() => getActiveCategory('')} className="info__icon-del fas fa-times" />
-                            </span> 
+                                <i onClick={() => getActiveCategory('')} className={clsx(classes.iconDel, 'fas fa-times')} />
+                            </Grid> 
                             : null
                         } 
-                    </div>
+                    </Grid>
             }
         </>
     )

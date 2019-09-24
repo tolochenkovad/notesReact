@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import './NotesList.scss';
+import clsx from 'clsx';
+import { useStyles } from './style';
+import Grid from '@material-ui/core/Grid';
 
 const NoteItem = ({ id, note, color, data, removeNote, editNote, tags, categories, 
     getActiveCategory, getActiveTag}) => {
@@ -11,16 +13,18 @@ const NoteItem = ({ id, note, color, data, removeNote, editNote, tags, categorie
         refLi.current.style.background = color;
     }, [refLi, color]);
 
+    const classes = useStyles();
+
     return (
-        <li ref={refLi} className="notesList__item">
-            <span className="notesList__text">{note}</span>
-            <div className="notesList__box">   
-                <ul className="notesList__tools-list">
+        <li ref={refLi} className={classes.item}>
+            <span className={classes.text}>{note}</span>
+            <Grid container={true} className={classes.box}>   
+                <ul className={classes.toolsList}>
                     {
                         tags
                         ?
                             tags.map(tag =>
-                            <li onClick={e => getActiveTag(e.target.innerText)} key={tag.id} className="notesList__tag">
+                            <li onClick={e => getActiveTag(e.target.innerText)} key={tag.id} className={classes.tag}>
                                 <i className="fas fa-paperclip fa-xs" />
                                 <span>{tag.tag}</span>
                             </li> 
@@ -29,24 +33,24 @@ const NoteItem = ({ id, note, color, data, removeNote, editNote, tags, categorie
                     }
                 </ul>
                 
-                <div className="notesList__icons">
-                    <i onClick={() => editNote(id, note, tags, categories, color)} className="notesList__icon fas fa-edit" />
-                    <i onClick={() => removeNote(id)} className="notesList__icon fas fa-times" />
+                <div className={classes.icons}>
+                    <i onClick={() => editNote(id, note, tags, categories, color)} className={clsx(classes.icon, 'fas fa-edit')} />
+                    <i onClick={() => removeNote(id)} className={clsx(classes.icon, 'fas fa-times')} />
                 </div>
-            </div>  
-                <ul className="notesList__tools-list">
+            </Grid>  
+                <ul className={classes.toolsList}>
                         {
                             categories
                             ?
                                 categories.map( category =>
-                                    <li onClick={e => getActiveCategory(e.target.innerHTML)} key={category.id} className="category__text noteInfo__category-item">{category.category}</li> 
+                                    <li onClick={e => getActiveCategory(e.target.innerHTML)} key={category.id} className={classes.categoryText}>{category.category}</li> 
                                 )   
                             :   null
                         }
                 </ul> 
-                <div className="notesList__data">
-                    <span className="notesList__data-item">{data.dataString}</span>
-                </div>
+                <Grid className={classes.dateBox}>
+                    <span className={classes.date}>{data.dataString}</span>
+                </Grid>
         </li>
     )
 };

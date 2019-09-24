@@ -1,20 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EditElement from './EditElement';
-import ChildrenCategory from './ChildrenCategory';
+import EditElement from '../EditElement/EditElement';
+import ChildrenCategory from '../ChildrenCategory/ChildrenCategory';
+import clsx from 'clsx';
+import { useStyle } from './style';
 
 const CategoryLibrary = ({tree, getActiveFilterCategory, onEditCategory, isEditIcon, currentIdCategory,
     categoryValue, addCategory, onBlurFunc, removeCategory}) => {
+
+    const classes = useStyle();
+
     return (
         <>
-            <h3 className="info__headline">Category library</h3>
-                <ul className="category">
+            <h3 className={classes.headline}>Category library</h3>
+                <ul className={classes.categoryList}>
                     {
                         tree.map( item => item.children && item.parent === null 
                             ?
-                                <li className="category__item" key={item.id}>
-                                    <span onClick={getActiveFilterCategory} className="category__text category_info" >
-                                        <i onClick={() => onEditCategory(item.id, item.categoryValue)} className="info__icon-edit fas fa-edit" />
+                                <li className={classes.item} key={item.id}>
+                                    <span onClick={getActiveFilterCategory} className={classes.category} >
+                                        <i onClick={() => onEditCategory(item.id, item.categoryValue)} className={clsx(classes.iconEdit, 'fas fa-edit')} />
                                         {
                                         isEditIcon && currentIdCategory === item.id
                                             ? 
@@ -23,7 +28,7 @@ const CategoryLibrary = ({tree, getActiveFilterCategory, onEditCategory, isEditI
                                                 item.categoryValue
                                         }
 
-                                        <i onClick={() => removeCategory(item.id, item.categoryValue)} className="info__icon-del fas fa-times" />
+                                        <i onClick={() => removeCategory(item.id, item.categoryValue)} className={clsx(classes.iconDel, 'fas fa-times')} />
                                     </span>
                                     <ChildrenCategory children={item.children} removeCategory={removeCategory} 
                                     isEditIcon={isEditIcon} getActiveFilterCategory={getActiveFilterCategory} 
@@ -32,9 +37,9 @@ const CategoryLibrary = ({tree, getActiveFilterCategory, onEditCategory, isEditI
                                 </li>
                             :   !item.children && item.parent === null
                                 ? 
-                                    <li className="category__item" key={item.id}>
-                                        <span onClick={getActiveFilterCategory} className="category__text category_info" >
-                                        <i onClick={() => onEditCategory(item.id, item.categoryValue)} className="info__icon-edit fas fa-edit" />
+                                    <li className={classes.item} key={item.id}>
+                                        <span onClick={getActiveFilterCategory} className={classes.category} >
+                                        <i onClick={() => onEditCategory(item.id, item.categoryValue)} className={clsx(classes.iconEdit, 'fas fa-edit')} />
                                         {
                                         isEditIcon && currentIdCategory === item.id
                                             ? 
@@ -42,7 +47,7 @@ const CategoryLibrary = ({tree, getActiveFilterCategory, onEditCategory, isEditI
                                             : 
                                                 item.categoryValue
                                         }
-                                        <i onClick={() => removeCategory(item.id, item.categoryValue)} className="info__icon-del fas fa-times" />
+                                        <i onClick={() => removeCategory(item.id, item.categoryValue)} className={clsx(classes.iconDel, 'fas fa-times')} />
                                         </span>
                                     </li>
                                 : null

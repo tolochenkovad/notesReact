@@ -1,12 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import './NotesContainer.scss';
 import NotesList from './NotesList/Noteslist';
 import { getStorage, setStorage} from '../utils/localStorage';
 import NoteInfoContainer from './NoteInfo/NoteInfoContainer';
 import Info from './Info/Info';
 import { buildTree } from '../utils/makeTree';
-import Filter from './Filter';
-import AddNote from './AddNote';
+import Filter from './Filter/Filter';
+import AddNote from './AddNote/AddNote';
+import { makeStyles } from '@material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+
+const useStyles = makeStyles( theme => ({
+    notesContainer: {
+        padding: theme.spacing(0, 2.5, 2.5, 2.5)
+    },
+    info: {
+        width: '30%',
+        background: '#ececec'
+    },
+    notes:{
+        width: '65%'
+    },
+    '@media (max-width: 992px)': {
+        notesContainer: {
+            flexDirection: 'column'
+        },
+        info: {
+            width: '100%',
+            order: 2,
+            marginTop: '30px'
+        },
+        notes:{
+            width: '100%'
+            
+        }
+    }
+}));
 
 const NotesContainer = () => {
     // notes state
@@ -365,10 +393,12 @@ const NotesContainer = () => {
         setSeacrhValue(value)
     };
 
+    const classes = useStyles();
+
 
     return (
-        <main className="notesContainer">
-            <aside className="notesContainer__info">
+        <Grid container={true} justify="space-between" className={classes.notesContainer}>
+            <Grid item={true} className={classes.info}>
                 <Info tags={tags} 
                       tagValue={tagValue}
                       categoryValue={categoryValue}
@@ -386,9 +416,9 @@ const NotesContainer = () => {
                       removeCategory={removeCategory}
                       tree={tree}
                       removeTag={removeTag}/>
-            </aside>
+            </Grid>
 
-            <div className="notesContainer__notes">
+            <Grid item={true} className={classes.notes}>
                 <Filter activeTag={activeTag}
                         activeCategory={activeCategory}
                         searchValue={searchValue}
@@ -413,7 +443,7 @@ const NotesContainer = () => {
                 />
                 :   null
                 }
-            </div>  
+            </Grid>  
             
             {
                 isNoteInfo 
@@ -443,7 +473,7 @@ const NotesContainer = () => {
                     />
                 :   null
             }
-        </main>
+        </Grid>
     )
 }
 

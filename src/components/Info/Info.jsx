@@ -1,8 +1,16 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import './Info.scss'
-import TagLibrary from './TagLibrary';
-import CategoryLibrary from './CategoryLibrary';
+import TagLibrary from './TagLibrary/TagLibrary';
+import CategoryLibrary from './CategoryLibrary/CategoryLibrary';
+import { makeStyles } from '@material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+
+const useStyles = makeStyles( theme => ({
+    info:{
+        padding: theme.spacing(0, 2.5, 2.5, 2.5),
+        fontSize: theme.spacing(1.5)
+    }
+}));
 
 const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag, 
     currentIdCategory, addTag, addCategory, editTag, getActiveTag, 
@@ -37,8 +45,10 @@ const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag,
         setIsEdition(false);
     };
 
+    const classes = useStyles();
+
     return(
-        <div className="info">
+        <Grid className={classes.info}>
             <TagLibrary     tags={tags}
                             getActiveFilterTag={getActiveFilterTag}
                             onEditTag={onEditTag}
@@ -59,7 +69,7 @@ const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag,
                             onBlurFunc={onBlurFunc}
                             removeCategory={removeCategory}
            />
-        </div>       
+        </Grid>       
     )
 }
 

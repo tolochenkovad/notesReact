@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import { useStyles } from './style';
+import Grid from '@material-ui/core/Grid';
 
 const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnter,
     textarea, onPressTag, onPressColor, onPressCategory, showTag, clickTag,
@@ -7,32 +10,35 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
     clickColor, colorArr, showCategory, clickCategory, category, isNeighboringCategory,
     submitCategory, isChildCategory, clickParentCategory, isParentHasChild, 
     submitChildCategory, refBtn}) => {
+
+    const classes = useStyles();
+
     return(
-        <div className="noteInfo">
+        <Grid className={classes.noteInfo}>
             <form ref={refForm} onSubmit={submitHandler}>
                 <textarea ref={refTextarea}
                     onFocus={onFocusFunc} 
                     onKeyDown={onPressEnter}
-                    className="noteInfo__textarea"
+                    className={classes.textarea}
                     {...textarea.bind} />
 
-                <ul className="noteInfo__info-block">
+                <ul className={classes.infoList}>
 
-                    <li  className="noteInfo__tag-wrap" onClick={onPressTag}>
-                        <div className="noteInfo__tag">
-                            <i className="noteInfo__tag-icon fas fa-plus"><span>tag</span></i>
+                    <li  className={classes.tagWrap} onClick={onPressTag}>
+                        <div className={classes.tag}>
+                            <i className={clsx(classes.icon, 'fas fa-plus')}><span>tag</span></i>
                         </div>
                     </li>
 
-                    <li className="noteInfo__color-wrap" onClick={onPressColor}>
-                        <div className="noteInfo__color">
-                            <i className="noteInfo__color-icon fas fa-plus"><span>color</span></i>
+                    <li className={classes.colorWrap} onClick={onPressColor}>
+                        <div className={classes.color}>
+                            <i className={clsx(classes.icon, 'fas fa-plus')}><span>color</span></i>
                         </div>
                     </li>
 
-                    <li className="noteInfo__category-wrap" onClick={onPressCategory}>
-                        <div className="noteInfo__category">
-                            <i className="noteInfo__category-icon fas fa-plus"><span>category</span></i>
+                    <li className={classes.categoryWrap} onClick={onPressCategory}>
+                        <div className={classes.category}>
+                            <i className={clsx(classes.categoryIcon, 'fas fa-plus')}><span>category</span></i>
                         </div>
                     </li>
                 </ul>
@@ -41,7 +47,7 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                     showTag
                     ?
 
-                        <select onChange={clickTag} onKeyDown={onKeyFunc} className="noteInfo__select">
+                        <select onChange={clickTag} onKeyDown={onKeyFunc} className={classes.select}>
                             <option value="">choose tag or create yours</option>
                         {
                             tags.map(tag =>
@@ -56,8 +62,8 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     showInputTag
                     ?  
-                        <div className="noteInfo__form-tag">
-                            <input className="noteInfo__input-tag" 
+                        <div className={classes.formBox}>
+                            <input className={classes.input} 
                                 onKeyDown={submitHandlerTag}
                                 onBlur={onBlurFunc}
                                 autoFocus={true}
@@ -69,7 +75,7 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     showColorPicker
                     ?
-                        <select onChange={clickColor} onKeyDown={onKeyFunc} className="noteInfo__select">
+                        <select onChange={clickColor} onKeyDown={onKeyFunc} className={classes.select}>
                             <option value="">choose color theme</option>
                             {
                                 colorArr.map((color, index) =>
@@ -83,7 +89,7 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     showCategory
                     ?  
-                        <select onChange={clickCategory} onKeyDown={onKeyFunc} className="noteInfo__select">
+                        <select onChange={clickCategory} onKeyDown={onKeyFunc} className={classes.select}>
                             <option value="">choose category or create yours</option>
                             <option value="category">add category</option>
                             <option value="child">add child element</option>
@@ -99,20 +105,20 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     isNeighboringCategory
                     ?  
-                        <div className="noteInfo__form-tag">
-                            <input className="noteInfo__input-tag" 
+                        <Grid className={classes.formBox}>
+                            <input className={classes.input} 
                                 onKeyDown={submitCategory}
                                 onBlur={onBlurFunc}
                                 autoFocus={true}
                                 type="text"/>
-                        </div>
+                        </Grid>
                     :   null
                 }
 
                 {
                     isChildCategory
                     ?  
-                        <select onChange={clickParentCategory} onKeyDown={onKeyFunc} className="noteInfo__select">
+                        <select onChange={clickParentCategory} onKeyDown={onKeyFunc} className={classes.select}>
                             <option value="">choose parent category</option>
                             {
                                 category.map(item =>
@@ -126,18 +132,18 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     isParentHasChild
                     ?
-                        <div className="noteInfo__form-tag">
-                            <input className="noteInfo__input-tag" 
+                        <Grid className={classes.formBox}>
+                            <input className={classes.input} 
                                 onKeyDown={submitChildCategory}
                                 autoFocus={true}
                                 onBlur={onBlurFunc}
                                 type="text"/>
-                        </div>
+                        </Grid>
                     :   null
                 }
-                <button ref={refBtn} className="noteInfo__btn" type="submit"></button>
+                <button ref={refBtn} className={classes.btn} type="submit"></button>
                 </form>  
-            </div>
+            </Grid>
     )
 };
 

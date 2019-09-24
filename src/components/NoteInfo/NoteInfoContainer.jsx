@@ -1,8 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import './NotesInfo.scss';
-import NoteForm from './NoteForm';
-import ChoosedCharacteristics from './ChoosedCharacteristics';
+import NoteForm from './NoteForm/NoteForm';
+import ChoosedCharacteristics from './ChoosedCharacteristics/ChoosedCharacteristics';
+import { makeStyles } from '@material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+
+const useStyles = makeStyles( theme => ({
+   wrap:{
+        position: 'fixed',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        background: 'rgba(0, 0, 0, 0.8)',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 10
+   }
+}));
 
 const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, 
     noteValue, changeTag, addTagsArrOfNote, tagsArrNote, removeTagNoteInfo, 
@@ -203,9 +219,11 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
         removeCategoryNoteInfo(id);
         refTextarea.current.focus();
     };
+
+    const classes = useStyles();
     
     return (
-        <div className='noteInfo-wrap'>
+        <Grid container={true} className={classes.wrap}>
             <NoteForm   refForm={refForm} 
                         tags={tags} 
                         showTag={showTag} 
@@ -246,7 +264,7 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
                                   delTag={delTag}
                                   delCategory={delCategory}
             />
-        </div>
+        </Grid>
     )
 };
 

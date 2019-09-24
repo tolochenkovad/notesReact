@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import './Info.scss';
+import { useStyles } from './style';
 
 const EditElement = ({elementValue, onBlurFun, addElement, id}) => {
 
@@ -19,10 +19,12 @@ const EditElement = ({elementValue, onBlurFun, addElement, id}) => {
         }
         return;
     };
+
+    const classes = useStyles();
  
     return(
         <input 
-            className="info__tag-input" 
+            className={classes.input} 
             type="text" 
             autoFocus={true}
             value={valueEl}
