@@ -23,6 +23,20 @@ const useStyles = makeStyles({
     },
     notes:{
         width: '65%'
+    },
+    '@media (max-width: 992px)': {
+        notesContainer: {
+            flexDirection: 'column'
+        },
+        info: {
+            width: '100%',
+            order: 2,
+            marginTop: '30px'
+        },
+        notes:{
+            width: '100%'
+            
+        }
     }
 });
 

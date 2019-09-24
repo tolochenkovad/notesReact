@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import EditElement from '../EditElement/EditElement';
 import ChildrenCategory from '../ChildrenCategory/ChildrenCategory';
 import clsx from 'clsx';
-import { useStyle } from './style'
+import { useStyle } from './style';
 
 const CategoryLibrary = ({tree, getActiveFilterCategory, onEditCategory, isEditIcon, currentIdCategory,
     categoryValue, addCategory, onBlurFunc, removeCategory}) => {
