@@ -1,10 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme();
-
-const useStyles = makeStyles({
+const useStyles = makeStyles( theme => ({
     title: {
         fontFamily: '"Permanent Marker", cursive',
         fontSize: theme.spacing(10),
@@ -13,7 +10,7 @@ const useStyles = makeStyles({
         color: 'blue',
         marginBottom: theme.spacing(2.5)
     }
-});
+}));
 
 const Header = () => {
     const classes = useStyles();

@@ -7,12 +7,9 @@ import { buildTree } from '../utils/makeTree';
 import Filter from './Filter/Filter';
 import AddNote from './AddNote/AddNote';
 import { makeStyles } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-const theme = createMuiTheme();
-
-const useStyles = makeStyles({
+const useStyles = makeStyles( theme => ({
     notesContainer: {
         padding: theme.spacing(0, 2.5, 2.5, 2.5)
     },
@@ -37,7 +34,7 @@ const useStyles = makeStyles({
             
         }
     }
-});
+}));
 
 const NotesContainer = () => {
     // notes state

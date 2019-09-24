@@ -1,9 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme();
-
-export const useStyles = makeStyles({
+export const useStyles = makeStyles( theme => ({
     item: {
         display: 'flex',
         flexDirection: 'column',
@@ -77,4 +74,4 @@ export const useStyles = makeStyles({
             marginRight: 0
         }
     }
-});
+}));

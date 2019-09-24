@@ -1,9 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme();
-
-export const useStyle = makeStyles({
+export const useStyle = makeStyles( theme => ({
     headline:{
         textAlign: 'center',
         fontSize: theme.spacing(3.5)
@@ -39,4 +36,4 @@ export const useStyle = makeStyles({
         marginRight: theme.spacing(1.25),
         cursor: 'pointer'
     }   
-});
+}));

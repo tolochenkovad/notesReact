@@ -1,8 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme();
-export const useStyles = makeStyles({
+export const useStyles = makeStyles( theme => ({
     addNote: {
         position: 'relative',
         borderBottom: '1px solid #ededed'
@@ -34,4 +32,4 @@ export const useStyles = makeStyles({
         transform: 'translateY(-50%)',
         left: theme.spacing(2.5)
     }
-});
+}));

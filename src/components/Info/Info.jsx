@@ -3,16 +3,13 @@ import PropTypes from 'prop-types';
 import TagLibrary from './TagLibrary/TagLibrary';
 import CategoryLibrary from './CategoryLibrary/CategoryLibrary';
 import { makeStyles } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme();
-
-const useStyles = makeStyles({
+const useStyles = makeStyles( theme => ({
     info:{
         padding: theme.spacing(0, 2.5, 2.5, 2.5),
         fontSize: theme.spacing(1.5)
     }
-});
+}));
 
 const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag, 
     currentIdCategory, addTag, addCategory, editTag, getActiveTag, 

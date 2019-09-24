@@ -1,9 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme();
-
-export const useStyles = makeStyles({
+export const useStyles = makeStyles( theme => ({
     filter:{
         marginBottom: theme.spacing(3.75),
         width: '100%',
@@ -32,4 +29,4 @@ export const useStyles = makeStyles({
         borderRadius: theme.spacing(1.875),   
         marginRight: theme.spacing(2.5)
     }
-});
+}));

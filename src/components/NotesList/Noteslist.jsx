@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import NoteItem from './NoteItem/NoteItem';
 import { makeStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles( theme => ({
     notesList:{
         margin: 0,
         padding: 0,
         listStyle: 'none'
     }
-});
+}));
 
 const NotesList = ({ notes, removeNote, editNote, getActiveTag, 
     getActiveCategory, activeTag, activeCategory, searchValue}) => {

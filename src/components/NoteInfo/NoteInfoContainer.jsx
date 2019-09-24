@@ -4,7 +4,7 @@ import NoteForm from './NoteForm/NoteForm';
 import ChoosedCharacteristics from './ChoosedCharacteristics/ChoosedCharacteristics';
 import { makeStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles( theme => ({
    wrap:{
         position: 'fixed',
         top: 0,
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
         alignItems: 'center',
         zIndex: 10
    }
-});
+}));
 
 const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, 
     noteValue, changeTag, addTagsArrOfNote, tagsArrNote, removeTagNoteInfo, 

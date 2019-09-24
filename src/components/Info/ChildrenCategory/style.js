@@ -1,9 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme();
-
-export const useStyles = makeStyles({
+export const useStyles = makeStyles( theme => ({
     childBox:{
         marginBottom: theme.spacing(1.25),
         display: 'flex',
@@ -43,4 +40,4 @@ export const useStyles = makeStyles({
         marginRight: theme.spacing(1.25),
         cursor: 'pointer'
     }
-});
+}));

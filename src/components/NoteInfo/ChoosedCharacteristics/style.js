@@ -1,9 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme();
-
-export const useStyles = makeStyles({
+export const useStyles = makeStyles( theme => ({
     characteristics:{
         background: '#e0d8d8',
         width: '60%'
@@ -48,4 +45,4 @@ export const useStyles = makeStyles({
         marginTop: theme.spacing(1.25),
         cursor: 'pointer'
     }
-});
+}));

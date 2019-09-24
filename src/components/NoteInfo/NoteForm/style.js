@@ -1,9 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme();
-
-export const useStyles = makeStyles({
+export const useStyles = makeStyles( theme => ({
     noteInfo:{
         position: 'relative',
         width: '60%'
@@ -108,4 +105,4 @@ export const useStyles = makeStyles({
     btn:{
         display: 'none'
     }
- });
+ }));
