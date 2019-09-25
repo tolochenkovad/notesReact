@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { useStyles } from './style';
+import TextField from '@material-ui/core/TextField';
 
 const EditElement = ({elementValue, onBlurFun, addElement, id}) => {
 
@@ -23,8 +24,9 @@ const EditElement = ({elementValue, onBlurFun, addElement, id}) => {
     const classes = useStyles();
  
     return(
-        <input 
+        <TextField 
             className={classes.input} 
+            InputProps={{ disableUnderline: true}}
             type="text" 
             autoFocus={true}
             value={valueEl}
