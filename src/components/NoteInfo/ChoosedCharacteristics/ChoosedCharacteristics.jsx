@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import { useStyles } from './style';
 import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import ChoosedItem from './ChoosedItem';
 
 const ChoosedCharacteristics = ({tagsArrNote, categoryArrNote, delTag, delCategory}) => {
 
@@ -12,28 +10,23 @@ const ChoosedCharacteristics = ({tagsArrNote, categoryArrNote, delTag, delCatego
 
     return(
         <Grid className={classes.characteristics}>
-            <List className={classes.tagsBox}>
-                {
-                    tagsArrNote.map(item =>
-                        <ListItem key={item.id} className={classes.choosedTag}>
-                            <i className="fas fa-paperclip fa-xs" />
-                            <span>{item.tag}</span>
-                            <i onClick={() => delTag(item.id)} className={clsx(classes.iconDel, 'fas fa-times')} />
-                        </ListItem>
-                    )
-                }
-            </List>
 
-            <List className={classes.categoryBox}>
-                {
-                    categoryArrNote.map(item =>
-                        <ListItem key={item.id} className={classes.choosedСategory}>
-                            {item.category}
-                            <i onClick={() => delCategory(item.id)} className={clsx(classes.iconDel, 'fas fa-times')} />
-                        </ListItem>
-                    )
-                }
-            </List>
+            <ChoosedItem     itemArr={tagsArrNote} 
+                             value={'tag'}
+                             listClassBox={classes.tagsBox}
+                             itemClassBox={classes.choosedTag}
+                             itemClassName={classes.tagName}
+                             removeFunc={delTag}>
+                    <i className="fas fa-paperclip fa-xs" />
+            </ChoosedItem>
+            
+            <ChoosedItem     itemArr={categoryArrNote} 
+                             value={'category'}
+                             listClassBox={classes.categoryBox}
+                             itemClassBox={classes.choosedСategory}
+                             itemClassName={classes.tagName}
+                             removeFunc={delCategory}
+            />
         </Grid>
     )
 };
