@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useStyles } from './style';
 import Grid from '@material-ui/core/Grid';
+import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
 
 const NoteItem = ({ id, note, color, data, removeNote, editNote, tags, categories, 
     getActiveCategory, getActiveTag}) => {
@@ -16,42 +19,46 @@ const NoteItem = ({ id, note, color, data, removeNote, editNote, tags, categorie
     const classes = useStyles();
 
     return (
-        <li ref={refLi} className={classes.item}>
-            <span className={classes.text}>{note}</span>
+        <ListItem ref={refLi} className={classes.item}>
+            <Typography variant="body2" className={classes.text}>{note}</Typography>
             <Grid container={true} className={classes.box}>   
-                <ul className={classes.toolsList}>
+                <List className={classes.toolsList}>
                     {
                         tags
                         ?
                             tags.map(tag =>
-                            <li onClick={e => getActiveTag(e.target.innerText)} key={tag.id} className={classes.tag}>
+                            <ListItem onClick={e => getActiveTag(e.target.innerText)} key={tag.id} className={classes.tag}>
                                 <i className="fas fa-paperclip fa-xs" />
-                                <span>{tag.tag}</span>
-                            </li> 
+                                <Typography variant="body2" className={classes.tagText} >{tag.tag}</Typography>
+                            </ListItem> 
                         )   
                         :   null
                     }
-                </ul>
+                </List>
                 
-                <div className={classes.icons}>
+                <Grid className={classes.icons}>
                     <i onClick={() => editNote(id, note, tags, categories, color)} className={clsx(classes.icon, 'fas fa-edit')} />
                     <i onClick={() => removeNote(id)} className={clsx(classes.icon, 'fas fa-times')} />
-                </div>
+                </Grid>
             </Grid>  
-                <ul className={classes.toolsList}>
+                <List className={classes.toolsList}>
                         {
                             categories
                             ?
                                 categories.map( category =>
-                                    <li onClick={e => getActiveCategory(e.target.innerHTML)} key={category.id} className={classes.categoryText}>{category.category}</li> 
+                                    <ListItem onClick={e => getActiveCategory(e.target.innerHTML)} 
+                                        key={category.id} 
+                                        className={classes.categoryText}>
+                                    {category.category}
+                                    </ListItem> 
                                 )   
                             :   null
                         }
-                </ul> 
+                </List> 
                 <Grid className={classes.dateBox}>
-                    <span className={classes.date}>{data.dataString}</span>
+                    <Typography variant="body2" className={classes.date}>{data.dataString}</Typography>
                 </Grid>
-        </li>
+        </ListItem>
     )
 };
 
