@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
+import PropTypes from 'prop-types';
 
 const ToolItem = ({wrapClass, itemClass, iconClass, name, handleClick}) => {
     return(
@@ -12,6 +13,15 @@ const ToolItem = ({wrapClass, itemClass, iconClass, name, handleClick}) => {
         </ListItem>
 
     )
+};
+
+ToolItem.propTypes = {
+    wrapClass:PropTypes.string,
+    itemClass:PropTypes.string,
+    iconClass:PropTypes.string,
+    name:PropTypes.string,
+    handleClick: PropTypes.func
+
 };
 
 export default ToolItem;
