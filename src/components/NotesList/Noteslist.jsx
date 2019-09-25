@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NoteItem from './NoteItem/NoteItem';
 import { makeStyles } from '@material-ui/styles';
+import List from '@material-ui/core/List';
 
 const useStyles = makeStyles( theme => ({
     notesList:{
@@ -19,7 +20,7 @@ const NotesList = ({ notes, removeNote, editNote, getActiveTag,
     const classes = useStyles();
 
     return (
-        <ul className={classes.notesList}>
+        <List className={classes.notesList}>
             {
                 activeTag !== '' || activeCategory  !== ''
                 ?
@@ -63,7 +64,7 @@ const NotesList = ({ notes, removeNote, editNote, getActiveTag,
                 
             }
            
-        </ul>
+        </List>
     )
 }
 
