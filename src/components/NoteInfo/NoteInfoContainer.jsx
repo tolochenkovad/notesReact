@@ -65,7 +65,8 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
         e.preventDefault();
         if (textarea.value().trim()) {
             addNote(currentIdNote, textarea.value(), tagsArrNote, categoryArrNote, colorValue)
-        }
+        };
+        changeNoteInfo(false);
     };
 
     const onFocusFunc = () => {

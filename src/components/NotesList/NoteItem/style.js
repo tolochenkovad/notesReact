@@ -2,19 +2,24 @@ import { makeStyles } from '@material-ui/styles';
 
 export const useStyles = makeStyles( theme => ({
     item: {
-        display: 'flex',
-        flexDirection: 'column',
-        marginTop: theme.spacing(5),
-        fontSize: theme.spacing(3),
-        background: 'orange',
-        minHeight: theme.spacing(15),
-        padding: theme.spacing(1.25, 3.75, 1.25, 3.75),
-        justifyContent: 'space-between'     
+        '&&':{
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop: theme.spacing(5),
+            fontSize: theme.spacing(3),
+            background: 'orange',
+            minHeight: theme.spacing(15),
+            padding: theme.spacing(1.25, 3.75, 1.25, 3.75),
+            justifyContent: 'space-between',
+            alignItems:'normal'     
+        } 
     },
     text:{
-        fontFamily: '"Montserrat", sans-serif',
-        fontSize: theme.spacing(2.5),
-        wordWrap: 'break-word'
+        '&&':{
+            fontFamily: '"Montserrat", sans-serif',
+            fontSize: theme.spacing(2.5),
+            wordWrap: 'break-word'
+        }
     },
     box:{
         justifyContent: 'space-between',
@@ -29,18 +34,24 @@ export const useStyles = makeStyles( theme => ({
         listStyle: 'none'
     },
     tag:{
-        fontSize: '12px',
-        marginRight: '5px',
-        marginTop: '10px',
-        padding: '5px 15px',
-        background: '#baa4a4',
-        borderRadius: '15px',
-        cursor: 'pointer',
-        '&:last-child':{
-            marginRight: 0
-        },
-        '& span':{
-            marginLeft: '10px'
+        '&&':{
+            fontSize: theme.spacing(1.5),
+            marginRight: theme.spacing(0.625),
+            marginTop: theme.spacing(1.25),
+            padding: theme.spacing(0.625, 1.875),
+            background: '#baa4a4',
+            borderRadius: theme.spacing(1.875),
+            cursor: 'pointer',
+            width: 'auto',
+            '&:last-child':{
+                marginRight: 0
+            }
+        }  
+    },
+    tagText:{
+        '&&':{
+            fontSize: theme.spacing(1.5),
+            marginLeft: theme.spacing(1.25)
         }
     },
     icons:{
@@ -52,15 +63,18 @@ export const useStyles = makeStyles( theme => ({
         cursor: 'pointer'
     },
     categoryText: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: theme.spacing(0.625, 1.25),
-        border: '1px solid black',
-        marginRight: theme.spacing(2.5),
-        fontSize: theme.spacing(1.5),
-        marginTop: theme.spacing(1.25),
-        cursor: 'pointer'
+        '&&':{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: theme.spacing(0.625, 1.25),
+            border: '1px solid black',
+            marginRight: theme.spacing(2.5),
+            fontSize: theme.spacing(1.5),
+            marginTop: theme.spacing(1.25),
+            cursor: 'pointer',
+            width: 'auto'
+        }  
     },
     dateBox:{
         textAlign: 'right',
@@ -68,9 +82,12 @@ export const useStyles = makeStyles( theme => ({
         fontSize: theme.spacing(1.5)
     },
     date:{
-        marginRight: theme.spacing(1.25),
-        '&:last-child':{
-            marginRight: 0
-        }
+        '&&':{
+            marginRight: theme.spacing(1.25),
+            fontSize: theme.spacing(1.5),
+            '&:last-child':{
+                marginRight: 0
+            }
+        } 
     }
 }));

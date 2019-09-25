@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ChildrenCategory from '../ChildrenCategory/ChildrenCategory';
-import { useStyle } from './style';
+import { useStyles } from './style';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,7 +10,7 @@ import CategoryItem from './CategoryItem';
 const CategoryLibrary = ({tree, getActiveFilterCategory, onEditCategory, isEditIcon, currentIdCategory,
     categoryValue, addCategory, onBlurFunc, removeCategory}) => {
 
-    const classes = useStyle();
+    const classes = useStyles();
 
     return (
         <>

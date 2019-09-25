@@ -6,20 +6,27 @@ export const useStyles = makeStyles( theme => ({
         width: '60%'
     },
     tagsBox:{
-        margin: 0,
-        padding: theme.spacing(2.5),
-        listStyle: 'none',   
-        display: 'flex',
-        flexWrap: 'wrap'
+        '&&':{
+            margin: 0,
+            padding: theme.spacing(2.5),
+            listStyle: 'none',   
+            display: 'flex',
+            flexWrap: 'wrap'
+        }    
     },
     choosedTag:{
-        background: '#baa4a4',
-        padding: theme.spacing(0.625, 2.5),
-        borderRadius: theme.spacing(1.875),
-        fontSize: theme.spacing(1.5),
-        marginRight: theme.spacing(1.25),
-        marginTop: theme.spacing(1.25),
-        '& span': {
+        '&&':{
+            background: '#baa4a4',
+            padding: theme.spacing(0.625, 2.5),
+            borderRadius: theme.spacing(1.875),
+            fontSize: theme.spacing(1.5),
+            marginRight: theme.spacing(1.25),
+            marginTop: theme.spacing(1.25),
+            width: 'auto'
+        }  
+    },
+    tagName:{
+        '&&':{
             marginLeft: theme.spacing(1.25)
         }
     },
@@ -28,21 +35,26 @@ export const useStyles = makeStyles( theme => ({
         cursor: 'pointer'
     },
     categoryBox:{
-        margin: 0,
-        padding: theme.spacing(0, 2.5, 2.5, 2.5),
-        listStyle: 'none',   
-        display: 'flex',
-        flexWrap: 'wrap'
+        '&&':{
+            margin: 0,
+            padding: theme.spacing(0, 2.5, 2.5, 2.5),
+            listStyle: 'none',   
+            display: 'flex',
+            flexWrap: 'wrap'
+        }  
     },
     choosedСategory:{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: theme.spacing(0.625, 1.25),
-        border: '1px solid black',
-        marginRight: theme.spacing(2.5),
-        fontSize: theme.spacing(1.5),
-        marginTop: theme.spacing(1.25),
-        cursor: 'pointer'
+        '&&':{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: theme.spacing(0.625, 1.25),
+            border: '1px solid black',
+            marginRight: theme.spacing(2.5),
+            fontSize: theme.spacing(1.5),
+            marginTop: theme.spacing(1.25),
+            cursor: 'pointer',
+            width: 'auto'
+        } 
     }
 }));

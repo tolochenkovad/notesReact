@@ -17,11 +17,11 @@ const Filter = ({activeTag, activeCategory, searchValue,
                 activeTag  === '' && activeCategory  === ''
                 ? 
                     <FormControl component="form" className={classes.filter} onSubmit={e => e.preventDefault()}>
-                        <TextField   type="text"
-                                value={searchValue}
-                                onChange={e => getSeacrhValue(e.target.value)} 
-                                className={classes.search}
-                                placeholder="Search" />  
+                        <TextField  type="text"
+                                    value={searchValue}
+                                    onChange={e => getSeacrhValue(e.target.value)} 
+                                    className={classes.search}
+                                    placeholder="Search" />  
                     </FormControl>
                     
                 :   

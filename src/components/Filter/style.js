@@ -2,8 +2,11 @@ import { makeStyles } from '@material-ui/styles';
 
 export const useStyles = makeStyles( theme => ({
     filter:{
-        marginBottom: theme.spacing(3.75),
-        justifyContent: 'flex-start'
+        '&&':{
+            marginBottom: theme.spacing(3.75),
+            justifyContent: 'flex-start',
+            width: '100%'
+        }   
     },
     search:{
         padding: theme.spacing(1.25),
@@ -23,8 +26,7 @@ export const useStyles = makeStyles( theme => ({
     text:{
         fontSize: theme.spacing(1.5),
         padding: theme.spacing(0.625, 1.875),
-        background: '#978989a1',
-        borderRadius: theme.spacing(1.875),   
+        border: '1px solid black',   
         marginRight: theme.spacing(2.5)
     }
 }));

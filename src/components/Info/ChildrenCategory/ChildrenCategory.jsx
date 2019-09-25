@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useStyle } from './style';
+import { useStyles } from './style';
 import Grid from '@material-ui/core/Grid';
 import ChildrenCategoryItem from './ChildrenCategoryItem';
 
@@ -8,7 +8,7 @@ const ChildrenCategory = ({children, removeCategory, isEditIcon,
     addCategory, onEditCategory, categoryValue, onBlurFunc, 
     currentIdCategory, getActiveFilterCategory}) => {
 
-    const classes = useStyle();
+    const classes = useStyles();
     
     return(
         <Grid className={classes.childBox}>
