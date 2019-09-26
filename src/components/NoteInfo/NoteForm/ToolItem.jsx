@@ -4,7 +4,34 @@ import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
 import PropTypes from 'prop-types';
 
-const ToolItem = ({wrapClass, itemClass, iconClass, name, handleClick}) => {
+const ToolItem = ({name, handleClick, classes}) => {
+
+    let wrapClass = '';
+    let itemClass = '';
+    let iconClass = '';
+
+    switch(name){
+        case 'tag':{
+            wrapClass = classes.tagWrap;
+            itemClass = classes.tag;
+            iconClass = classes.icon;
+            break;
+        }
+        case 'color':{
+            wrapClass = classes.colorWrap;
+            itemClass = classes.color;
+            iconClass = classes.icon;
+            break;
+        }
+        case 'category':{
+            wrapClass = classes.categoryWrap;
+            itemClass = classes.category;
+            iconClass = classes.categoryIcon;
+            break;
+        }
+        default: break;
+    }
+
     return(
         <ListItem  className={wrapClass} onClick={handleClick}>
             <Grid className={itemClass}>
@@ -16,9 +43,7 @@ const ToolItem = ({wrapClass, itemClass, iconClass, name, handleClick}) => {
 };
 
 ToolItem.propTypes = {
-    wrapClass:PropTypes.string,
-    itemClass:PropTypes.string,
-    iconClass:PropTypes.string,
+    classes: PropTypes.object,
     name:PropTypes.string,
     handleClick: PropTypes.func
 
