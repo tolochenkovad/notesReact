@@ -2,13 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import EditElement from '../EditElement/EditElement';
 import clsx from 'clsx';
-import { useStyles } from './style';
 import ListItem from '@material-ui/core/ListItem';
 
 const TagItem = ({getActiveFilterTag, onEditTag, tag, isTagEdit, currentIdTag,
-    tagValue, addTag, onBlurFunc, removeTag}) => {
-
-    const classes = useStyles();
+    tagValue, addTag, onBlurFunc, classes, removeTag}) => {
 
     return(
         <ListItem onClick={getActiveFilterTag} className={classes.tag}>

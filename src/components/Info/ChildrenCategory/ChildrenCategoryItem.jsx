@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useStyles } from './style';
 import clsx from 'clsx';
 import EditElement from '../EditElement/EditElement';
 import Grid from '@material-ui/core/Grid';
 
 const ChildrenCategoryItem = ({getActiveFilterCategory, onEditCategory, isEditIcon, currentIdCategory,
-    categoryValue, addCategory, onBlurFunc, removeCategory, child}) => {
-
-    const classes = useStyles();
+    categoryValue, addCategory, onBlurFunc, removeCategory, classes, child}) => {
 
     return(
         <Grid onClick={getActiveFilterCategory} className={classes.category}>
