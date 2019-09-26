@@ -1,13 +1,137 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useStyles } from './style';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import List from '@material-ui/core/List';
 import ToolItem from './ToolItem';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles( theme => ({
+    noteInfo:{
+        position: 'relative',
+        width: '60%'
+    },
+    textarea:{
+        position: 'relative',
+        padding: theme.spacing(2.5),
+        border: 'none',
+        background: '#b4b4fa',
+        width: '100%',
+        height: theme.spacing(37.5),
+        boxSizing: 'border-box',
+        fontSize: theme.spacing(3.5),
+        boxShadow: 'inset 0 -2px 40px rgba(0,0,0,0.03)',
+        resize: 'none',
+        outline: 'none'
+    },
+    infoList:{
+        margin: 0,
+        listStyle: 'none',
+        padding: 0,
+        paddingTop: theme.spacing(2.5),
+        background: '#e0d8d8',
+        display: 'flex',
+        alignItems: 'flex-start'
+    },
+    tagWrap:{
+            cursor: 'pointer',
+            position: 'relative',    
+            margin: theme.spacing(0, 2.5),
+            padding: 0,
+            width: 'auto'
+    },
+    tag:{
+        width: theme.spacing(13.75),
+        height: theme.spacing(3.75),
+        background: '#baa4a4',
+        borderRadius: theme.spacing(1.875),
+        fontSize: theme.spacing(2.5)
+    },
+    icon:{
+        fontSize: theme.spacing(2.5),
+        position: 'absolute',
+        top: '15%',
+        left: '15%',
+        '& span':{
+            marginLeft: theme.spacing(1.25),
+        }
+    },
+    colorWrap:{
+            cursor: 'pointer',
+            position: 'relative',
+            marginRight: theme.spacing(2.5),
+            padding: 0,
+            width: 'auto'
+    },
+    color:{
+        width: theme.spacing(13.75),
+        height: theme.spacing(3.75),
+        background: 'yellow',
+        fontSize: theme.spacing(2.5)
+    },
+    categoryWrap:{
+        cursor: 'pointer',
+        position: 'relative',
+        padding: 0,
+        width: 'auto'  
+    },
+    category:{
+        width: theme.spacing(14.375),
+        height: theme.spacing(3.75),
+        border: '1px solid black'
+    },
+    categoryIcon:{
+        fontSize: theme.spacing(2.5),
+        position: 'absolute',
+        top: '15%',
+        left: '7%',
+        '& span':{
+            marginLeft: theme.spacing(1.25),
+        }
+    },
+    select:{
+        background: '#978989',
+        marginTop:0,
+        width: theme.spacing(52.5),
+        border: 'none',
+        position: 'absolute',
+        bottom: 0,
+        left: '2.5%',
+        outline: 'none',
+        fontSize: theme.spacing(2.5),
+        zIndex: 11
+    },
+    formBox:{
+        position: 'absolute',
+        bottom: '-4%'  
+    },
+    input:{
+        height: theme.spacing(6.25),
+        left: 0,
+        borderBottom: 0,
+        width: theme.spacing(56.25),
+        outline: 'none',
+        fontSize: theme.spacing(2.5),
+        paddingLeft: theme.spacing(3.75),
+        background: 'white',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'flex-start'
+    },
+    btn:{
+        width: theme.spacing(25),
+        background: '#a15b34',
+        position: 'absolute',
+        bottom: '-1%',
+        right: '5%'
+    },
+    menu:{
+        padding: 0
+    }
+ }));
 
 
 const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnter,
@@ -29,23 +153,17 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                     {...textarea.bind} />
 
             <List className={classes.infoList}>
-                <ToolItem   wrapClass={classes.tagWrap} 
-                            handleClick={onPressTag}
-                            itemClass={classes.tag}
-                            iconClass={classes.icon}
+                <ToolItem   handleClick={onPressTag}
                             name='tag'
+                            classes={classes}
                 />
-                <ToolItem   wrapClass={classes.colorWrap} 
-                            handleClick={onPressColor}
-                            itemClass={classes.color}
-                            iconClass={classes.icon}
+                <ToolItem   handleClick={onPressColor}
                             name='color'
+                            classes={classes}
                 />
-                <ToolItem   wrapClass={classes.categoryWrap} 
-                            handleClick={onPressCategory}
-                            itemClass={classes.category}
-                            iconClass={classes.categoryIcon}
+                <ToolItem   handleClick={onPressCategory}
                             name='category'
+                            classes={classes}
                 />
             </List>
 
@@ -53,15 +171,26 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                     showTag
                     ?
 
-                        <NativeSelect onChange={clickTag} onKeyDown={onKeyFunc} className={classes.select}>
-                            <option value="">choose tag or create yours</option>
+                        <TextField  onChange={clickTag} 
+                                    onKeyDown={onKeyFunc} 
+                                    select
+                                    InputProps={{ disableUnderline: true}}
+                                    className={classes.select}
+                                    SelectProps={{
+                                        MenuProps: {
+                                          MenuListProps:{
+                                              className: classes.menu
+                                          }
+                                        }
+                                    }}
+                                    value = {tags[0].tag}>
                         {
                             tags.map(tag =>
-                                <option key={tag.id} value={tag.tag}>{tag.tag}</option>
+                                <MenuItem key={tag.id} value={tag.tag}>{tag.tag}</MenuItem>
                             )
                         }
-                            <option value="add">...create your tag</option>
-                        </NativeSelect>
+                            <MenuItem value="add">...create your tag</MenuItem>
+                        </TextField>
                     :   null
                 }
 
@@ -83,30 +212,52 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     showColorPicker
                     ?
-                        <NativeSelect onChange={clickColor} onKeyDown={onKeyFunc} className={classes.select}>
-                            <option value="">choose color theme</option>
+                        <TextField  select
+                                    InputProps={{ disableUnderline: true}}
+                                    onChange={clickColor} 
+                                    onKeyDown={onKeyFunc} 
+                                    value=''
+                                    SelectProps={{
+                                        MenuProps: {
+                                          MenuListProps:{
+                                              className: classes.menu
+                                          }
+                                        }
+                                      }}
+                                    className={classes.select}>
                             {
                                 colorArr.map((color, index) =>
-                                <option key={index} style={ {background: `${color}`} } value={color} /> 
+                                <MenuItem key={index} style={ {background: `${color}`} } value={color} /> 
                                 )
                             }
-                        </NativeSelect>
+                        </TextField>
                     :   null
                 }
 
                 {
                     showCategory
                     ?  
-                        <NativeSelect onChange={clickCategory} onKeyDown={onKeyFunc} className={classes.select}>
-                            <option value="">choose category or create yours</option>
-                            <option value="category">add category</option>
-                            <option value="child">add child element</option>
+                        <TextField  select
+                                    InputProps={{ disableUnderline: true}}
+                                    onChange={clickCategory} 
+                                    onKeyDown={onKeyFunc} 
+                                    SelectProps={{
+                                        MenuProps: {
+                                          MenuListProps:{
+                                              className: classes.menu
+                                          }
+                                        }
+                                    }}
+                                    value={category[0].categoryValue}
+                                    className={classes.select}>
+                            <MenuItem value="category">add category</MenuItem>
+                            <MenuItem value="child">add child element</MenuItem>
                             {
                                 category.map(c => 
-                                    <option key={c.id} value={c.categoryValue}>=> {c.categoryValue}</option>   
+                                    <MenuItem key={c.id} value={c.categoryValue}>=> {c.categoryValue}</MenuItem>   
                                 )
                             }
-                        </NativeSelect>
+                        </TextField>
                     :   null
                 }
 
@@ -127,14 +278,25 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                 {
                     isChildCategory
                     ?  
-                        <NativeSelect onChange={clickParentCategory} onKeyDown={onKeyFunc} className={classes.select}>
-                            <option value="">choose parent category</option>
+                        <TextField  select
+                                    InputProps={{ disableUnderline: true}}
+                                    onChange={clickParentCategory} 
+                                    onKeyDown={onKeyFunc} 
+                                    SelectProps={{
+                                        MenuProps: {
+                                          MenuListProps:{
+                                              className: classes.menu
+                                          }
+                                        }
+                                    }}
+                                    value=''
+                                    className={classes.select}>
                             {
                                 category.map(item =>
-                                    <option key={item.id} value={item.categoryValue}>{item.categoryValue}</option>
+                                    <MenuItem key={item.id} value={item.categoryValue}>{item.categoryValue}</MenuItem>
                                 )
                             }
-                        </NativeSelect>
+                        </TextField>
                     :   null
                 }
 
