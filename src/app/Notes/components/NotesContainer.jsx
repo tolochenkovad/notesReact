@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import NotesList from './NotesList/Noteslist';
-import { getStorage, setStorage} from '../utils/localStorage';
+import { getStorage, setStorage} from '../../../utils/localStorage';
 import NoteInfoContainer from './NoteInfo/NoteInfoContainer';
-import Info from './Info/Info';
-import { buildTree } from '../utils/makeTree';
-import Filter from './Filter/Filter';
+import Info from '../../InfoPage/Info';
+import { buildTree } from '../../../utils/makeTree';
+import Filter from '../../Filter/Filter';
 import AddNote from './AddNote/AddNote';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';

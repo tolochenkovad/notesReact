@@ -1,6 +1,6 @@
 import React from 'react';
-import NotesContainer from './components/NotesContainer';
-import Header from './components/Header';
+import NotesContainer from './app/Notes/components/NotesContainer';
+import Header from './app/Header/Header';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 const App = () => (
