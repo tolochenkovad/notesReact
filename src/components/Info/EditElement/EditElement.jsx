@@ -1,6 +1,15 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import { useStyles } from './style';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles( theme => ({
+    input:{
+        background:'transparent',
+        border: 'none', 
+        outline: 'none'
+     }
+ }));
 
 const EditElement = ({elementValue, onBlurFun, addElement, id}) => {
 
@@ -23,8 +32,9 @@ const EditElement = ({elementValue, onBlurFun, addElement, id}) => {
     const classes = useStyles();
  
     return(
-        <input 
+        <TextField 
             className={classes.input} 
+            InputProps={{ disableUnderline: true}}
             type="text" 
             autoFocus={true}
             value={valueEl}

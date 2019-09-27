@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
 import TagLibrary from './TagLibrary/TagLibrary';
 import CategoryLibrary from './CategoryLibrary/CategoryLibrary';
 import { makeStyles } from '@material-ui/styles';
@@ -72,24 +71,5 @@ const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag,
         </Grid>       
     )
 }
-
-Info.propTypes = {
-    tags: PropTypes.arrayOf(PropTypes.object),
-    removeTag: PropTypes.func,
-    editTag: PropTypes.func,
-    tagValue: PropTypes.string,
-    currentIdTag: PropTypes.number,
-    getTagBeforeEdit: PropTypes.func,
-    getActiveTag: PropTypes.func,
-    addTag: PropTypes.func,
-    getCategoryBeforeEdit: PropTypes.func,
-    addCategory: PropTypes.func,
-    getActiveCategory: PropTypes.func,
-    removeCategory: PropTypes.func,
-    categoryValue: PropTypes.string,
-    currentIdCategory: PropTypes.number,
-    editCategory: PropTypes.func,
-    tree: PropTypes.arrayOf(PropTypes.object)
-};
 
 export default Info;

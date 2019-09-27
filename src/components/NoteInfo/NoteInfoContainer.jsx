@@ -55,8 +55,6 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
 
     useEffect(() => {
         refTextarea.current.style.background = colorValue;
-        refTextarea.current.focus();
-        refTextarea.current.selectionStart = refTextarea.current.value.length;
     }, []);
 
 
@@ -65,7 +63,8 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
         e.preventDefault();
         if (textarea.value().trim()) {
             addNote(currentIdNote, textarea.value(), tagsArrNote, categoryArrNote, colorValue)
-        }
+        };
+        changeNoteInfo(false);
     };
 
     const onFocusFunc = () => {
@@ -136,6 +135,7 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
         changeTag(value);
         addTagsArrOfNote(value);
         e.target.value = '';
+        setShowTag(false);
         refTextarea.current.focus();
         
     };
