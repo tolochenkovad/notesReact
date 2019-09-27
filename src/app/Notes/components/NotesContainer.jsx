@@ -8,6 +8,9 @@ import Filter from '../../Filter/Filter';
 import AddNote from './AddNote/AddNote';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
+import { getNote } from '../redux/selectors';
+import { addNoteAC } from '../redux/actions';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles( theme => ({
     notesContainer: {
@@ -36,7 +39,7 @@ const useStyles = makeStyles( theme => ({
     }
 }));
 
-const NotesContainer = () => {
+const NotesContainer = ({addNoteAC}) => {
     // notes state
     const [notes, setNotes] = useState(getStorage("notes") || []);
     const [isNoteInfo, setNoteInfo] = useState(false);
@@ -101,6 +104,7 @@ const NotesContainer = () => {
                 }
             ]) 
         );
+        addNoteAC(text, tagsNote, categoriesNote, color);
     };
 
     const changeCurrentNote = (id, text, tagsNote, categoriesNote, colorNote) => {
@@ -395,7 +399,6 @@ const NotesContainer = () => {
 
     const classes = useStyles();
 
-
     return (
         <Grid container={true} justify="space-between" className={classes.notesContainer}>
             <Grid item={true} className={classes.info}>
@@ -475,7 +478,11 @@ const NotesContainer = () => {
             }
         </Grid>
     )
-}
+};
 
+const mapStateToProps = state => ({
+    notes: getNote(state)
+});
 
-export default NotesContainer;
+export default connect(mapStateToProps, {addNoteAC})(NotesContainer);
+// export default NotesContainer;

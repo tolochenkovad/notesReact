@@ -1,8 +1,8 @@
 import { takeLatest, put } from "redux-saga/effects";
 import { ADD_NOTE_SAGA, ADD_NOTE } from './constants';
 
-function* addNote({text, tagsNote, categoriesNote, color}) {
-  yield put({ type: ADD_NOTE, text, tagsNote, categoriesNote, color});
+function* addNote(action) {
+  yield put({ type: ADD_NOTE, action});
 }
 
 function* notesSaga() {
