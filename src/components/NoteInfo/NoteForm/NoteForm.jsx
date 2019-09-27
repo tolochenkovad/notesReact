@@ -25,7 +25,7 @@ const useStyles = makeStyles( theme => ({
         fontSize: theme.spacing(3.5),
         boxShadow: 'inset 0 -2px 40px rgba(0,0,0,0.03)',
         resize: 'none',
-        outline: 'none'
+        outline: 'none',
     },
     infoList:{
         margin: 0,
@@ -99,7 +99,7 @@ const useStyles = makeStyles( theme => ({
         border: 'none',
         position: 'absolute',
         bottom: 0,
-        left: '2.5%',
+        left: '1.5%',
         outline: 'none',
         fontSize: theme.spacing(2.5),
         zIndex: 11
@@ -130,6 +130,13 @@ const useStyles = makeStyles( theme => ({
     },
     menu:{
         padding: 0
+    },
+    inputText:{
+        fontSize: theme.spacing(3.75),
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start'
     }
  }));
 
@@ -146,11 +153,13 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
     return(
         <Grid className={classes.noteInfo}>
             <FormControl ref={refForm} fullWidth={true} component="form" onSubmit={submitHandler}>
-                <textarea ref={refTextarea}
-                    onFocus={onFocusFunc} 
-                    onKeyDown={onPressEnter}
-                    className={classes.textarea}
-                    {...textarea.bind} />
+                <TextField  ref={refTextarea}
+                            InputProps={{ disableUnderline: true, className:classes.inputText}}
+                            autoFocus
+                            onFocus={onFocusFunc} 
+                            onKeyDown={onPressEnter}
+                            className={classes.textarea}
+                            {...textarea.bind} />
 
             <List className={classes.infoList}>
                 <ToolItem   handleClick={onPressTag}
