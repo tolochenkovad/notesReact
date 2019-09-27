@@ -5,11 +5,16 @@ import './style.css';
 import App from "./App";
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './lib/material-ui/theme';
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 ReactDOM.render((
-    <ThemeProvider theme={theme}>
-        <App />
-    </ThemeProvider>
+    <Provider store={store}>
+        <ThemeProvider theme={theme}>
+            <App />
+        </ThemeProvider>
+    </Provider>
+    
     
 ), document.getElementById('root'));
 
