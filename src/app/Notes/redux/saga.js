@@ -1,5 +1,5 @@
 import { takeLatest, put, select } from "redux-saga/effects";
-import {ADD_NOTE_SAGA, ADD_NOTE, REMOVE_NOTE_SAGA, REMOVE_NOTE} from './constants';
+import {ADD_NOTE_SAGA, ADD_NOTE, REMOVE_NOTE_SAGA, REMOVE_NOTE, EDIT_NOTE_SAGA, EDIT_NOTE} from './constants';
 import {getNote} from "./selectors";
 import {setStorage} from "../../../utils/localStorage";
 
@@ -15,9 +15,17 @@ function* removeNote(action) {
     setStorage("notes", notes);
 };
 
+function* changeNote(action) {
+    yield put({ type: EDIT_NOTE, action});
+    const notes = yield select(getNote);
+    setStorage("notes", notes);
+};
+
+
 function* notesSaga() {
     yield takeLatest(ADD_NOTE_SAGA, addNote);
     yield takeLatest(REMOVE_NOTE_SAGA, removeNote);
+    yield takeLatest(EDIT_NOTE_SAGA, changeNote);
 };
 
 export default notesSaga;

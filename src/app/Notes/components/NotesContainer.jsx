@@ -8,7 +8,7 @@ import Filter from '../../Filter/Filter';
 import AddNote from './AddNote/AddNote';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
-import {addNoteAC, removeNoteAC} from '../redux/actions';
+import {addNoteAC, changeNoteAC, removeNoteAC} from '../redux/actions';
 import { connect } from 'react-redux';
 import {getNote} from "../redux/selectors";
 
@@ -39,7 +39,7 @@ const useStyles = makeStyles( theme => ({
     }
 }));
 
-const NotesContainer = ({addNoteAC, removeNoteAC, notes}) => {
+const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, notes}) => {
 
     const [isNoteInfo, setNoteInfo] = useState(false);
     const [noteValue, setNoteValue] = useState('');
@@ -85,33 +85,11 @@ const NotesContainer = ({addNoteAC, removeNoteAC, notes}) => {
         addNoteAC(text, tagsNote, categoriesNote, color);
     };
 
-    // const changeCurrentNote = (id, text, tagsNote, categoriesNote, colorNote) => {
-    //     let dataNote = new Date().toLocaleDateString();
-    //     let timeNote = new Date().toLocaleTimeString().toString().substring(0,5);
-    //     let currentData = new Date();
-    //     let curData = `${dataNote}   ${timeNote}`;
-    //     let data = {
-    //         dataInt: currentData,
-    //         dataString: curData
-    //     };
-    //     let newNotes = [...notes];
-    //     newNotes.forEach(note => {
-    //         if (note.id === id){
-    //             if (note.text !== text) note.data = data;
-    //             note.text = text
-    //             note.tags = tagsNote
-    //             note.categories = categoriesNote
-    //             note.color = colorNote
-    //         }
-    //     });
-    //     setNotes(newNotes);
-    // };
-
     const addNote = (id, text, tagsNote, categoriesNote, colorNote) => {
-        // if ( notes.some(note => note.id === id) ) {
-        //     changeCurrentNote(id, text, tagsNote, categoriesNote, colorNote);
-        //     return;
-        // }
+        if ( notes.some(note => note.id === id) ) {
+            changeNoteAC(id, text, tagsNote, categoriesNote, colorNote);
+            return;
+        };
         addNoteToStorage(text, tagsNote, categoriesNote, colorNote);
     };
 
@@ -429,28 +407,28 @@ const NotesContainer = ({addNoteAC, removeNoteAC, notes}) => {
             {
                 isNoteInfo 
                 ? 
-                    <NoteInfoContainer   addNote={addNote} 
-                                addTag={addTag}
-                                tags={tags}
-                                changeNoteInfo={changeNoteInfo} 
-                                currentIdNote={currentIdNote}
-                                changeTag={changeTag}
-                                tagValue={tagValue}
-                                categoryValue={categoryValue}
-                                addTagsArrOfNote={addTagsArrOfNote}
-                                tagsArrNote={tagsArrNote}
-                                removeTagNoteInfo={removeTagNoteInfo}
-                                colorArr={colorArr}
-                                colorValue={colorValue}
-                                getColorValue={getColorValue}
-                                getNeighboringCategory={getNeighboringCategory}
-                                category={category}
-                                getParentCategory={getParentCategory}
-                                getChildCategory={getChildCategory}
-                                categoryArrNote={categoryArrNote}
-                                addCategoryArrOfNote={addCategoryArrOfNote}
-                                removeCategoryNoteInfo={removeCategoryNoteInfo}
-                                noteValue={noteValue}
+                    <NoteInfoContainer  addNote={addNote}
+                                        addTag={addTag}
+                                        tags={tags}
+                                        changeNoteInfo={changeNoteInfo}
+                                        currentIdNote={currentIdNote}
+                                        changeTag={changeTag}
+                                        tagValue={tagValue}
+                                        categoryValue={categoryValue}
+                                        addTagsArrOfNote={addTagsArrOfNote}
+                                        tagsArrNote={tagsArrNote}
+                                        removeTagNoteInfo={removeTagNoteInfo}
+                                        colorArr={colorArr}
+                                        colorValue={colorValue}
+                                        getColorValue={getColorValue}
+                                        getNeighboringCategory={getNeighboringCategory}
+                                        category={category}
+                                        getParentCategory={getParentCategory}
+                                        getChildCategory={getChildCategory}
+                                        categoryArrNote={categoryArrNote}
+                                        addCategoryArrOfNote={addCategoryArrOfNote}
+                                        removeCategoryNoteInfo={removeCategoryNoteInfo}
+                                        noteValue={noteValue}
                     />
                 :   null
             }
@@ -462,5 +440,5 @@ const mapStateToProps = state => ({
     notes: getNote(state)
 });
 
-export default connect(mapStateToProps, {addNoteAC, removeNoteAC})(NotesContainer);
+export default connect(mapStateToProps, {addNoteAC, removeNoteAC, changeNoteAC})(NotesContainer);
 // export default NotesContainer;
