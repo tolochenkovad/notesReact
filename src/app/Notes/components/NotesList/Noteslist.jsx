@@ -15,7 +15,7 @@ const useStyles = makeStyles( theme => ({
 const NotesList = ({ notes, removeNote, editNote, getActiveTag, 
     getActiveCategory, activeTag, activeCategory, searchValue}) => {
 
-    let newNotes = [...notes].sort( (a, b) =>  new Date(a.data.dataInt) - new Date(b.data.dataInt)).reverse();
+    let newNotes = [...notes].sort( (a, b) =>  new Date(a.date.dateInt) - new Date(b.date.dateInt)).reverse();
 
     const classes = useStyles();
 
@@ -35,7 +35,7 @@ const NotesList = ({ notes, removeNote, editNote, getActiveTag,
                                 tags={note.tags}
                                 categories={note.categories}
                                 color={note.color}
-                                data={note.data}
+                                date={note.date}
                                 removeNote={removeNote}
                                 editNote={editNote}
                                 getActiveCategory={getActiveCategory}
@@ -53,7 +53,7 @@ const NotesList = ({ notes, removeNote, editNote, getActiveTag,
                                 tags={note.tags}
                                 categories={note.categories}
                                 color={note.color}
-                                data={note.data}
+                                date={note.date}
                                 removeNote={removeNote}
                                 editNote={editNote}
                                 getActiveCategory={getActiveCategory}

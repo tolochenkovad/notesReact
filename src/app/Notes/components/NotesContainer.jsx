@@ -8,9 +8,9 @@ import Filter from '../../Filter/Filter';
 import AddNote from './AddNote/AddNote';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
-import { getNote } from '../redux/selectors';
-import { addNoteAC } from '../redux/actions';
+import {addNoteAC, removeNoteAC} from '../redux/actions';
 import { connect } from 'react-redux';
+import {getNote} from "../redux/selectors";
 
 const useStyles = makeStyles( theme => ({
     notesContainer: {
@@ -39,9 +39,8 @@ const useStyles = makeStyles( theme => ({
     }
 }));
 
-const NotesContainer = ({addNoteAC}) => {
-    // notes state
-    const [notes, setNotes] = useState(getStorage("notes") || []);
+const NotesContainer = ({addNoteAC, removeNoteAC, notes}) => {
+
     const [isNoteInfo, setNoteInfo] = useState(false);
     const [noteValue, setNoteValue] = useState('');
     const [currentIdNote, setCurrentIdNote] = useState(null);
@@ -76,64 +75,43 @@ const NotesContainer = ({addNoteAC}) => {
     const [tree, setTree] = useState([]);
 
     useEffect( () => {
-        setStorage("notes", notes);
         setStorage("tags", tags);
         setStorage("categories", category);
         setTree(buildTree(category));
-    }, [notes, tags, category]);
+    }, [tags, category]);
 
     // notes func
     const addNoteToStorage = (text, tagsNote, categoriesNote, color) => {
-        let dataNote = new Date().toLocaleDateString();
-        let timeNote = new Date().toLocaleTimeString().toString().substring(0,5);
-        let currentData = new Date();
-        let curData = `${dataNote}   ${timeNote}`;
-        let data = {
-            dataInt: currentData,
-            dataString: curData
-        };
-        setNotes(
-            notes.concat([
-                {
-                    id: Date.now(),
-                    text,
-                    tags: tagsNote,
-                    categories: categoriesNote,
-                    color,
-                    data
-                }
-            ]) 
-        );
         addNoteAC(text, tagsNote, categoriesNote, color);
     };
 
-    const changeCurrentNote = (id, text, tagsNote, categoriesNote, colorNote) => {
-        let dataNote = new Date().toLocaleDateString();
-        let timeNote = new Date().toLocaleTimeString().toString().substring(0,5);
-        let currentData = new Date();
-        let curData = `${dataNote}   ${timeNote}`;
-        let data = {
-            dataInt: currentData,
-            dataString: curData
-        };
-        let newNotes = [...notes];
-        newNotes.forEach(note => {
-            if (note.id === id){
-                if (note.text !== text) note.data = data;
-                note.text = text
-                note.tags = tagsNote
-                note.categories = categoriesNote
-                note.color = colorNote
-            }
-        });
-        setNotes(newNotes);
-    };
+    // const changeCurrentNote = (id, text, tagsNote, categoriesNote, colorNote) => {
+    //     let dataNote = new Date().toLocaleDateString();
+    //     let timeNote = new Date().toLocaleTimeString().toString().substring(0,5);
+    //     let currentData = new Date();
+    //     let curData = `${dataNote}   ${timeNote}`;
+    //     let data = {
+    //         dataInt: currentData,
+    //         dataString: curData
+    //     };
+    //     let newNotes = [...notes];
+    //     newNotes.forEach(note => {
+    //         if (note.id === id){
+    //             if (note.text !== text) note.data = data;
+    //             note.text = text
+    //             note.tags = tagsNote
+    //             note.categories = categoriesNote
+    //             note.color = colorNote
+    //         }
+    //     });
+    //     setNotes(newNotes);
+    // };
 
     const addNote = (id, text, tagsNote, categoriesNote, colorNote) => {
-        if ( notes.some(note => note.id === id) ) {
-            changeCurrentNote(id, text, tagsNote, categoriesNote, colorNote);
-            return;
-        }
+        // if ( notes.some(note => note.id === id) ) {
+        //     changeCurrentNote(id, text, tagsNote, categoriesNote, colorNote);
+        //     return;
+        // }
         addNoteToStorage(text, tagsNote, categoriesNote, colorNote);
     };
 
@@ -147,7 +125,7 @@ const NotesContainer = ({addNoteAC}) => {
     };
 
     const removeNote = (id) => {
-        setNotes(notes.filter(note => note.id !== id))
+        removeNoteAC(id);
     };
 
     const changeNoteInfo = (bool) => {
@@ -163,17 +141,17 @@ const NotesContainer = ({addNoteAC}) => {
     const addTag = (id, tag) => {
         let newNotes = [...notes];
         newNotes.map(note =>
-            note.tags.map( item => 
+            note.tags.map( item =>
                 item.tag === currentTag
-                ? 
+                ?
                     item.tag = tag
-                :   null 
-            ) 
+                :   null
+            )
         )
-        setNotes(newNotes);
+        // setNotes(newNotes);
 
         if ( tags.some(item => item.id === id) ) {
-            changeCurrentTags(id, tag); 
+            changeCurrentTags(id, tag);
             return;
         }
         addTagsToStorage(tag)
@@ -182,9 +160,9 @@ const NotesContainer = ({addNoteAC}) => {
     const removeTag = (id, currentTagDel) => {
         setTags(tags.filter(tag => tag.id !== id));
         let newNotes = [...notes];
-        newNotes.map(note => 
+        newNotes.map(note =>
             note.tags = note.tags.filter( t => t.tag !== currentTagDel));
-        setNotes(newNotes);
+        // setNotes(newNotes);
     };
 
     const editTag = (id, text) => {
@@ -254,28 +232,28 @@ const NotesContainer = ({addNoteAC}) => {
     const removeCategory = (id, currentCategoryDel) => {
         setCategory(category.filter(item => item.id !== id));
         let newNotes = [...notes];
-        newNotes.map(note => 
+        newNotes.map(note =>
             note.categories = note.categories.filter( t => t.category !== currentCategoryDel));
-        setNotes(newNotes);
+        // setNotes(newNotes);
     };
 
     const addCategory = (id, categoryValue) => {
         let newNotes = [...notes];
         notes.map(note =>
-            note.categories.map( item => 
+            note.categories.map( item =>
                 item.category === currentCategory
-                ? 
+                ?
                     item.category = categoryValue
-                :   null 
-            ) 
+                :   null
+            )
         )
-        setNotes(newNotes);
+        // setNotes(newNotes);
         if ( category.some(item => item.id === id) ) {
-            changeCurrentCategory(id, categoryValue); 
+            changeCurrentCategory(id, categoryValue);
             return;
         }
         addCategoryArrOfNote(categoryValue);
-    }; 
+    };
 
     
     const addCategoryArrOfNote = (currentCategory, id, parent) => {
@@ -484,5 +462,5 @@ const mapStateToProps = state => ({
     notes: getNote(state)
 });
 
-export default connect(mapStateToProps, {addNoteAC})(NotesContainer);
+export default connect(mapStateToProps, {addNoteAC, removeNoteAC})(NotesContainer);
 // export default NotesContainer;

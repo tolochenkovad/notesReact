@@ -87,9 +87,8 @@ const useStyles = makeStyles( theme => ({
     }
 }));
 
-const NoteItem = ({ id, note, color, data, removeNote, editNote, tags, categories, 
+const NoteItem = ({ id, note, color, date, removeNote, editNote, tags, categories,
     getActiveCategory, getActiveTag}) => {
-   
     const refLi = React.createRef();
 
     useEffect(() => { 
@@ -136,7 +135,7 @@ const NoteItem = ({ id, note, color, data, removeNote, editNote, tags, categorie
                         }
                 </List> 
                 <Grid className={classes.dateBox}>
-                    <Typography variant="body2" className={classes.date}>{data.dataString}</Typography>
+                    <Typography variant="body2" className={classes.date}>{date.dateString}</Typography>
                 </Grid>
         </ListItem>
     )
