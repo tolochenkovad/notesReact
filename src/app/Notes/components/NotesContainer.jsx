@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import NotesList from './NotesList/Noteslist';
 import { getStorage, setStorage} from '../../../utils/localStorage';
 import NoteInfoContainer from './NoteInfo/NoteInfoContainer';
-import Info from '../../InfoPage/Info';
+import Info from '../../InfoPage/components/Info';
 import { buildTree } from '../../../utils/makeTree';
 import Filter from '../../Filter/Filter';
 import AddNote from './AddNote/AddNote';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
-import {addNoteAC, changeNoteAC, removeNoteAC} from '../redux/actions';
+import {addNoteAC, changeNoteAC, checkTagsNoteAC, removeNoteAC, removeTagOfNoteAC} from '../redux/actions';
 import { connect } from 'react-redux';
 import {getNote} from "../redux/selectors";
+import {addTagAC, changeCurrentTagAC, removeTagAC} from "../../InfoPage/redux/actions";
+import {getTags} from "../../InfoPage/redux/selectors";
 
 const useStyles = makeStyles( theme => ({
     notesContainer: {
@@ -39,18 +41,14 @@ const useStyles = makeStyles( theme => ({
     }
 }));
 
-const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, notes}) => {
+const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, removeTagAC, addTagAC,
+                            checkTagsNoteAC, removeTagOfNoteAC, changeCurrentTagAC, notes}) => {
 
     const [isNoteInfo, setNoteInfo] = useState(false);
     const [noteValue, setNoteValue] = useState('');
     const [currentIdNote, setCurrentIdNote] = useState(null);
 
     // tags state
-    const [tags, setTags] = useState(getStorage("tags") || [
-        {id: 1, tag: 'important'},
-        {id: 2, tag: 'home'},
-        {id: 3, tag: 'work'}
-    ]);
     const [tagValue, setTagValue] = useState('');
     const [currentIdTag, setCurrentIdTag] = useState(null);
     const [tagsArrNote, setTagsArrNote] = useState([]);
@@ -75,10 +73,9 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, notes}) => {
     const [tree, setTree] = useState([]);
 
     useEffect( () => {
-        setStorage("tags", tags);
         setStorage("categories", category);
         setTree(buildTree(category));
-    }, [tags, category]);
+    }, [category]);
 
     // notes func
     const addNoteToStorage = (text, tagsNote, categoriesNote, color) => {
@@ -117,30 +114,17 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, notes}) => {
 
     // tags func
     const addTag = (id, tag) => {
-        let newNotes = [...notes];
-        newNotes.map(note =>
-            note.tags.map( item =>
-                item.tag === currentTag
-                ?
-                    item.tag = tag
-                :   null
-            )
-        )
-        // setNotes(newNotes);
-
+        checkTagsNoteAC(id, tag, currentTag);
         if ( tags.some(item => item.id === id) ) {
-            changeCurrentTags(id, tag);
+            changeCurrentTagAC(id, tag)
             return;
         }
-        addTagsToStorage(tag)
+        addTagAC(tag);
     };
 
     const removeTag = (id, currentTagDel) => {
-        setTags(tags.filter(tag => tag.id !== id));
-        let newNotes = [...notes];
-        newNotes.map(note =>
-            note.tags = note.tags.filter( t => t.tag !== currentTagDel));
-        // setNotes(newNotes);
+        removeTagAC(id);
+        removeTagOfNoteAC(currentTagDel);
     };
 
     const editTag = (id, text) => {
@@ -167,23 +151,12 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, notes}) => {
         )
     };
 
-    const addTagsToStorage = (tag) => {
-        setTags(
-            tags.concat([
-                {
-                    id: Date.now(),
-                    tag
-                }
-            ]) 
-        );
-    };
-
     const changeCurrentTags = (id, tag) => {
         let newTags = [...tags];
         newTags.forEach(item => {
             if (item.id === id) item.tag = tag    
         });
-        setTags(newTags);
+        // setTags(newTags);
     };
 
     const removeTagNoteInfo = (id) => {
@@ -437,8 +410,9 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, notes}) => {
 };
 
 const mapStateToProps = state => ({
-    notes: getNote(state)
+    notes: getNote(state),
+    tags: getTags(state)
 });
 
-export default connect(mapStateToProps, {addNoteAC, removeNoteAC, changeNoteAC})(NotesContainer);
-// export default NotesContainer;
+export default connect(mapStateToProps, {addNoteAC, removeNoteAC, removeTagAC, addTagAC, checkTagsNoteAC,
+    changeCurrentTagAC, removeTagOfNoteAC, changeNoteAC})(NotesContainer);

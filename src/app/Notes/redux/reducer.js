@@ -1,4 +1,4 @@
-import {ADD_NOTE, EDIT_NOTE, REMOVE_NOTE} from './constants';
+import {ADD_NOTE, CHECKING_TAGS, EDIT_NOTE, REMOVE_NOTE, REMOVE_TAG_OF_NOTE} from './constants';
 import {getStorage} from "../../../utils/localStorage";
 
 
@@ -17,7 +17,7 @@ const createDate = () => {
 };
 
 const notesReducer = (state = initialState, action) => {
-    switch (action.type) { 
+    switch (action.type) {
         case ADD_NOTE:
             let date = createDate();
             return [
@@ -36,7 +36,6 @@ const notesReducer = (state = initialState, action) => {
         case EDIT_NOTE:
             let newDate = createDate();
             let newState = [...state];
-
             newState.forEach(note => {
                 if (note.id === action.action.id){
                     if (note.text !== action.action.text) note.date = newDate;
@@ -47,6 +46,22 @@ const notesReducer = (state = initialState, action) => {
                 }
             });
             return newState;
+        case CHECKING_TAGS:
+            let newState2 = [...state];
+            newState2.map(note =>
+                note.tags.map( item =>
+                    item.tag === action.action.currentTag
+                    ?
+                        item.tag = action.action.tag
+                    :   null
+                )
+            );
+            return newState2;
+        case REMOVE_TAG_OF_NOTE:
+            let newState3 = [...state];
+            newState3.map(note =>
+                note.tags = note.tags.filter( t => t.tag !== action.action.currentTagDel));
+            return newState2;
         default:
             return state;
     }
