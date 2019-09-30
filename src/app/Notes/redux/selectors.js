@@ -1,3 +1,3 @@
 export const getNote = (state) => {
-    return state.notes;
+    return state.notes.notes;
 }

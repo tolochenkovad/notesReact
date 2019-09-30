@@ -2,7 +2,10 @@ import {ADD_NOTE, CHECKING_TAGS, EDIT_NOTE, REMOVE_NOTE, REMOVE_TAG_OF_NOTE} fro
 import {getStorage} from "../../../utils/localStorage";
 
 
-let initialState = getStorage("notes") || [];
+let initialState = {
+    notes:  getStorage("notes") || []
+}
+
 
 const createDate = () => {
     let dataNote = new Date().toLocaleDateString();
@@ -20,23 +23,26 @@ const notesReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_NOTE:
             let date = createDate();
-            return [
+            return {
                 ...state,
-                    {
-                        id: Date.now(),
-                        text: action.action.text,
-                        tags: action.action.tagsNote,
-                        categories: action.action.categoriesNote,
-                        color: action.action.color,
-                        date: date
-                    }
-            ];
+                notes: [...state.notes, {
+                    id: Date.now(),
+                    text: action.action.text,
+                    tags: action.action.tagsNote,
+                    categories: action.action.categoriesNote,
+                    color: action.action.color,
+                    date: date
+                }]
+            };
         case REMOVE_NOTE:
-            return [...state].filter(note => note.id !== action.action.id);
+            return {
+                ...state,
+                notes: [...state.notes].filter(note => note.id !== action.action.id)
+            }
         case EDIT_NOTE:
             let newDate = createDate();
-            let newState = [...state];
-            newState.forEach(note => {
+            let newState = {...state};
+            newState.notes.forEach(note => {
                 if (note.id === action.action.id){
                     if (note.text !== action.action.text) note.date = newDate;
                     note.text = action.action.text
@@ -47,8 +53,8 @@ const notesReducer = (state = initialState, action) => {
             });
             return newState;
         case CHECKING_TAGS:
-            let newState2 = [...state];
-            newState2.map(note =>
+            let newState2 = {...state};
+            newState2.notes.map(note =>
                 note.tags.map( item =>
                     item.tag === action.action.currentTag
                     ?
@@ -58,10 +64,10 @@ const notesReducer = (state = initialState, action) => {
             );
             return newState2;
         case REMOVE_TAG_OF_NOTE:
-            let newState3 = [...state];
-            newState3.map(note =>
+            let newState3 = {...state};
+            newState3.notes.map(note =>
                 note.tags = note.tags.filter( t => t.tag !== action.action.currentTagDel));
-            return newState2;
+            return newState3;
         default:
             return state;
     }
