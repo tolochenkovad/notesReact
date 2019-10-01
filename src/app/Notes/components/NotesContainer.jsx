@@ -134,11 +134,7 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
     // tags func
     const addTag = (id, tag) => {
         checkTagsNoteAC(id, tag, currentTag);
-        if ( tags.some(item => item.id === id) ) {
-            changeCurrentTagAC(id, tag)
-            return;
-        }
-        addTagAC(tag);
+        addTagAC(id, tag);
     };
 
     const removeTag = (id, currentTagDel) => {

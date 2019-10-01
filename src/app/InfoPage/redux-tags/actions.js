@@ -8,7 +8,7 @@ import {
 } from "./constants";
 
 export const changeCurrentTagAC = (id, tag) => ({ type: CHANGE_CURRENT_TAG_SAGA, id, tag });
-export const addTagAC = (tag) => ({ type: ADD_TAG_SAGA, tag });
+export const addTagAC = (id, tag) => ({ type: ADD_TAG_SAGA, id, tag });
 export const removeTagAC = (id) => ({ type: REMOVE_TAG_SAGA, id });
 export const addTagOfNoteAC = (tag) => ({ type: ADD_TAG_OF_NOTE, tag });
 export const removeArrTagOfNoteAC = (id) => ({ type: REMOVE_ARR_TAG_OF_NOTE, id });
