@@ -1,3 +1,3 @@
 export const getTags = (state) => {
-    return state.tags;
+    return state.tags.tags;
 };
