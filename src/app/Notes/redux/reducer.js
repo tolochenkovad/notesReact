@@ -85,11 +85,12 @@ const notesReducer = (state = initialState, action) => {
             );
             return newState5;
         case REMOVE_TAG_OF_NOTE:
-            let newState3 = {...state};
-            newState3.notes.map(note =>
-                note.tags = note.tags.filter( t => t.tag !== action.action.currentTagDel));
-            return newState3;
-
+            return {
+                ...state,
+                notes: [...state.notes].filter(note =>
+                    note.tags = [...note.tags.filter( t => t.tag !== action.action.currentTag)]
+                )
+            };
         case REMOVE_CATEGORY_OF_NOTE:
             let newState4 = {...state};
             newState4.notes.map(note =>
