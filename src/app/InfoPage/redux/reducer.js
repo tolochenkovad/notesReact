@@ -3,9 +3,8 @@ import {
     ADD_TAG,
     ADD_TAG_OF_NOTE,
     CHANGE_CURRENT_TAG,
-    CHANGE_TAG_OF_NOTE,
-    REMOVE_TAG,
-    REMOVE_TAG_OF_NOTE
+    CHANGE_TAG_OF_NOTE, REMOVE_ARR_TAG_OF_NOTE,
+    REMOVE_TAG
 } from "./constants";
 
 
@@ -49,7 +48,7 @@ const tagsReducer = (state = initialState, action) => {
                     tag: action.tag
                 }]
             };
-        case REMOVE_TAG_OF_NOTE:
+        case REMOVE_ARR_TAG_OF_NOTE:
             return {
                 ...state,
                 tagsArrNote: [...state.tagsArrNote.filter(tag => tag.id !== action.id)]

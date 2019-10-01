@@ -8,15 +8,15 @@ import Filter from '../../Filter/Filter';
 import AddNote from './AddNote/AddNote';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
-import {addNoteAC, changeNoteAC, checkTagsNoteAC, removeNoteAC} from '../redux/actions';
+import {addNoteAC, changeNoteAC, checkTagsNoteAC, removeNoteAC, removeTagOfNoteAC} from '../redux/actions';
 import { connect } from 'react-redux';
 import {getNote} from "../redux/selectors";
 import {
     addTagAC,
     addTagOfNoteAC,
     changeCurrentTagAC,
-    changeTagOfNoteAC,
-    removeTagAC, removeTagOfNoteAC
+    changeTagOfNoteAC, removeArrTagOfNoteAC,
+    removeTagAC
 } from "../../InfoPage/redux/actions";
 import {getTags, getTagsOfNote} from "../../InfoPage/redux/selectors";
 
@@ -48,7 +48,7 @@ const useStyles = makeStyles( theme => ({
 }));
 
 const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNote, removeTagAC, addTagAC,
-                            checkTagsNoteAC, changeTagOfNoteAC, addTagOfNoteAC, removeTagOfNoteAC, changeCurrentTagAC, notes}) => {
+                            checkTagsNoteAC, changeTagOfNoteAC, removeArrTagOfNoteAC, addTagOfNoteAC, removeTagOfNoteAC, changeCurrentTagAC, notes}) => {
 
     const [isNoteInfo, setNoteInfo] = useState(false);
     const [noteValue, setNoteValue] = useState('');
@@ -159,7 +159,7 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
 
     const removeTagNoteInfo = (id) => {
         // setTagsArrNote(tagsArrNote.filter(tag => tag.id !== id))
-        removeTagOfNoteAC(id)
+        removeArrTagOfNoteAC(id)
     };
 
     const getActiveTag = (tag) => {
@@ -416,4 +416,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {addNoteAC, removeNoteAC, removeTagAC, addTagAC, checkTagsNoteAC,
-    changeCurrentTagAC, removeTagOfNoteAC, changeTagOfNoteAC, addTagOfNoteAC, changeNoteAC})(NotesContainer);
+    changeCurrentTagAC, removeTagOfNoteAC, removeArrTagOfNoteAC, changeTagOfNoteAC, addTagOfNoteAC, changeNoteAC})(NotesContainer);
