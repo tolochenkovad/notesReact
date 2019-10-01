@@ -1,5 +1,5 @@
 import {
-    ADD_TAG,
+    ADD_TAG, ADD_TAG_OF_NOTE, ADD_TAG_OF_NOTE_SAGA,
     ADD_TAG_SAGA,
     CHANGE_CURRENT_TAG,
     REMOVE_TAG,
@@ -7,7 +7,7 @@ import {
 } from "./constants";
 import { takeLatest, put, select } from "redux-saga/effects";
 import {setStorage} from "../../../utils/localStorage";
-import {getTags} from "./selectors";
+import {getTags, getTagsOfNote} from "./selectors";
 
 function* addTag(action) {
     const tags = yield select(getTags);
@@ -19,7 +19,16 @@ function* addTag(action) {
     }
     yield put({ type: ADD_TAG, action});
     const tags3 = yield select(getTags);
-    setStorage("tags", tags);
+    setStorage("tags", tags3);
+};
+
+function* addTagOfNote(action) {
+    const tagsArrNote = yield select(getTagsOfNote);
+    if ( tagsArrNote.some(item =>  item.tag === action.tag) ) {
+        alert('This tags is already added!');
+        return;
+    }
+    yield put({ type: ADD_TAG_OF_NOTE, action});
 };
 
 function* removeTag(action) {
@@ -31,6 +40,7 @@ function* removeTag(action) {
 
 function* tagsSaga() {
     yield takeLatest(ADD_TAG_SAGA, addTag);
+    yield takeLatest(ADD_TAG_OF_NOTE_SAGA, addTagOfNote);
     yield takeLatest(REMOVE_TAG_SAGA, removeTag);
 };
 

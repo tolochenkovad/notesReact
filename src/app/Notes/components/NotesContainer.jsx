@@ -152,10 +152,6 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
     };
 
     const addTagsArrOfNote = (tag) => {
-        if ( tagsArrNote.some(item => item.tag === tag) ) {
-            alert('This tags is already added!');
-            return;
-        }
         addTagOfNoteAC(tag);
     };
 

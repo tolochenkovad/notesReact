@@ -49,7 +49,7 @@ const tagsReducer = (state = initialState, action) => {
                 ...state,
                 tagsArrNote: [...state.tagsArrNote, {
                     id: Date.now(),
-                    tag: action.tag
+                    tag: action.action.tag
                 }]
             };
         case REMOVE_ARR_TAG_OF_NOTE:
