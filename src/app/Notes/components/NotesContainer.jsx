@@ -80,12 +80,12 @@ const useStyles = makeStyles( theme => ({
     }
 }));
 
-const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNote, removeTagAC, addTagAC,
+const NotesContainer = ({addNoteAC, removeNoteAC, tags, tagsArrNote, removeTagAC, addTagAC,
                             checkTagsNoteAC, changeTagOfNoteAC, currentIdTag, removeArrTagOfNoteAC, noteValue,
                             addTagOfNoteAC, removeTagOfNoteAC, changeNoteValueAC, tagValue, changeCurrentIdNoteAC,
                             currentIdNote, changeTagsValueAC, changeActiveTagAC, activeTag, changeCurrentIdTagAC,
-                            changeCurrentTagAC, currentTag, setCurrentTagAC, category, removeCategoryAC,
-                            changeCurrentCategoryAC, removeCategoryOfNoteAC, checkCategoriesNoteAC,
+                            currentTag, setCurrentTagAC, category, removeCategoryAC,
+                            removeCategoryOfNoteAC, checkCategoriesNoteAC,
                             addCategoryOfNoteAC, changeCategoryOfNoteAC, removeArrCategoryOfNoteAC, setCategoryValueAC,
                             addCategoryAC, categoryArrNote, setCurrentCategoryAC, parentCategory, setParentCategoryAC,
                             categoryValue, currentCategory, setActiveCategoryAC, activeCategory, currentIdCategory, setCurrentCategoryIdAC, notes}) => {
@@ -176,11 +176,7 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
 
     const addCategory = (id, categoryValue) => {
         checkCategoriesNoteAC(id, categoryValue, currentCategory);
-        if ( category.some(item => item.id === id) ) {
-            changeCurrentCategoryAC(id, categoryValue);
-            return;
-        }
-        addCategoryOfNoteAC(categoryValue);
+        addCategoryOfNoteAC(categoryValue, id);
     };
 
     
@@ -219,6 +215,8 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
 
     // };
 
+    // проблемы с редактированием Категорий в Инфо, вместо экшена ADD_CATEGORIES идет ADD_CATEGORIES_OF_NOTE
+
     const editCategory = (id, text) => {
         setCategoryValueAC(text)
         setCurrentCategoryIdAC(id)
@@ -233,10 +231,10 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
     }
 
     const getNeighboringCategory = (id, value, parent) => {
-        if ( category.some(item => item.categoryValue === value) ) {
-            alert('This category is already added!');
-            return;
-        }
+        // if ( category.some(item => item.categoryValue === value) ) {
+        //     alert('This category is already added!');
+        //     return;
+        // }
         addCategoryAC(id, value, parent);
     };
 
@@ -392,6 +390,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {addNoteAC, removeNoteAC, removeTagAC, addTagAC, checkTagsNoteAC,
     changeCurrentTagAC, removeTagOfNoteAC, changeNoteValueAC, removeArrTagOfNoteAC, changeTagOfNoteAC,
     addTagOfNoteAC, changeCurrentIdNoteAC, changeActiveTagAC, changeTagsValueAC, changeCurrentIdTagAC,
-    setCurrentTagAC, changeCurrentCategoryAC, checkCategoriesNoteAC, removeCategoryOfNoteAC,
+    setCurrentTagAC,checkCategoriesNoteAC, removeCategoryOfNoteAC,
     removeCategoryAC, addCategoryOfNoteAC, changeCategoryOfNoteAC, setCategoryValueAC, removeArrCategoryOfNoteAC,
     setParentCategoryAC, setCurrentCategoryAC, setCurrentCategoryIdAC, setActiveCategoryAC, addCategoryAC})(NotesContainer);
