@@ -1,5 +1,12 @@
 import {getStorage} from "../../../utils/localStorage";
-import {ADD_TAG, CHANGE_CURRENT_TAG, REMOVE_TAG} from "./constants";
+import {
+    ADD_TAG,
+    ADD_TAG_OF_NOTE,
+    CHANGE_CURRENT_TAG,
+    CHANGE_TAG_OF_NOTE,
+    REMOVE_TAG,
+    REMOVE_TAG_OF_NOTE
+} from "./constants";
 
 
 let initialState = {
@@ -7,7 +14,8 @@ let initialState = {
         {id: 1, tag: 'important'},
         {id: 2, tag: 'home'},
         {id: 3, tag: 'work'}
-        ]
+        ],
+    tagsArrNote:[]
 };
 
 const tagsReducer = (state = initialState, action) => {
@@ -32,6 +40,24 @@ const tagsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 tags: [...state.tags.filter(tag => tag.id !== action.action.id)]
+            }
+        case ADD_TAG_OF_NOTE:
+            return {
+                ...state,
+                tagsArrNote: [...state.tagsArrNote, {
+                    id: Date.now(),
+                    tag: action.tag
+                }]
+            };
+        case REMOVE_TAG_OF_NOTE:
+            return {
+                ...state,
+                tagsArrNote: [...state.tagsArrNote.filter(tag => tag.id !== action.id)]
+            };
+        case CHANGE_TAG_OF_NOTE:
+            return {
+                ...state,
+                tagsArrNote: [...action.tags]
             }
         default:
             return state;

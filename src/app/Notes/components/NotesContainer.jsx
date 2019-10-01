@@ -8,11 +8,17 @@ import Filter from '../../Filter/Filter';
 import AddNote from './AddNote/AddNote';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
-import {addNoteAC, changeNoteAC, checkTagsNoteAC, removeNoteAC, removeTagOfNoteAC} from '../redux/actions';
+import {addNoteAC, changeNoteAC, checkTagsNoteAC, removeNoteAC} from '../redux/actions';
 import { connect } from 'react-redux';
 import {getNote} from "../redux/selectors";
-import {addTagAC, changeCurrentTagAC, removeTagAC} from "../../InfoPage/redux/actions";
-import {getTags} from "../../InfoPage/redux/selectors";
+import {
+    addTagAC,
+    addTagOfNoteAC,
+    changeCurrentTagAC,
+    changeTagOfNoteAC,
+    removeTagAC, removeTagOfNoteAC
+} from "../../InfoPage/redux/actions";
+import {getTags, getTagsOfNote} from "../../InfoPage/redux/selectors";
 
 const useStyles = makeStyles( theme => ({
     notesContainer: {
@@ -41,8 +47,8 @@ const useStyles = makeStyles( theme => ({
     }
 }));
 
-const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, removeTagAC, addTagAC,
-                            checkTagsNoteAC, removeTagOfNoteAC, changeCurrentTagAC, notes}) => {
+const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNote, removeTagAC, addTagAC,
+                            checkTagsNoteAC, changeTagOfNoteAC, addTagOfNoteAC, removeTagOfNoteAC, changeCurrentTagAC, notes}) => {
 
     const [isNoteInfo, setNoteInfo] = useState(false);
     const [noteValue, setNoteValue] = useState('');
@@ -51,7 +57,6 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, removeTagA
     // tags state
     const [tagValue, setTagValue] = useState('');
     const [currentIdTag, setCurrentIdTag] = useState(null);
-    const [tagsArrNote, setTagsArrNote] = useState([]);
     const [activeTag, setActiveTag] = useState('');
     const [currentTag, setCurrentTag] = useState('');
 
@@ -94,7 +99,7 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, removeTagA
         setNoteInfo(true);
         setNoteValue(text);
         setCurrentIdNote(id);
-        setTagsArrNote(tags);
+        changeTagOfNoteAC(tags)
         setCategoryArrNote(categories);
         setColorValue(color);
     };
@@ -141,26 +146,20 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, removeTagA
             alert('This tags is already added!');
             return;
         }
-        setTagsArrNote(
-            tagsArrNote.concat([
-                {
-                    id: Date.now(),
-                    tag
-                }
-            ]) 
-        )
+        addTagOfNoteAC(tag);
     };
 
-    const changeCurrentTags = (id, tag) => {
-        let newTags = [...tags];
-        newTags.forEach(item => {
-            if (item.id === id) item.tag = tag    
-        });
-        // setTags(newTags);
-    };
+    // const changeCurrentTags = (id, tag) => {
+    //     let newTags = [...tags];
+    //     newTags.forEach(item => {
+    //         if (item.id === id) item.tag = tag
+    //     });
+    //     // setTags(newTags);
+    // };
 
     const removeTagNoteInfo = (id) => {
-        setTagsArrNote(tagsArrNote.filter(tag => tag.id !== id))
+        // setTagsArrNote(tagsArrNote.filter(tag => tag.id !== id))
+        removeTagOfNoteAC(id)
     };
 
     const getActiveTag = (tag) => {
@@ -304,7 +303,8 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, removeTagA
     const cleanValue = () => {
         setNoteValue('');
         setTagValue('');
-        setTagsArrNote([]);
+        // setTagsArrNote([]);
+        changeTagOfNoteAC([]);
         setCategoryArrNote([]);
         setColorValue('orange');
     };
@@ -411,8 +411,9 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, removeTagA
 
 const mapStateToProps = state => ({
     notes: getNote(state),
-    tags: getTags(state)
+    tags: getTags(state),
+    tagsArrNote: getTagsOfNote(state)
 });
 
 export default connect(mapStateToProps, {addNoteAC, removeNoteAC, removeTagAC, addTagAC, checkTagsNoteAC,
-    changeCurrentTagAC, removeTagOfNoteAC, changeNoteAC})(NotesContainer);
+    changeCurrentTagAC, removeTagOfNoteAC, changeTagOfNoteAC, addTagOfNoteAC, changeNoteAC})(NotesContainer);
