@@ -8,7 +8,6 @@ import {
     REMOVE_CATEGORY_SAGA
 } from "./constants";
 import {getCategories, getCategoriesArrNote} from "./selectors";
-import {getTagsOfNote} from "../redux-tags/selectors";
 
 function* removeCategory(action) {
     yield put({ type: REMOVE_CATEGORY, action});

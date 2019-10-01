@@ -9,7 +9,6 @@ import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import {
     addNoteAC, changeCurrentIdNoteAC,
-    changeNoteAC,
     changeNoteValueAC, checkCategoriesNoteAC,
     checkTagsNoteAC, removeCategoryOfNoteAC,
     removeNoteAC,
@@ -43,7 +42,6 @@ import {
     addCategoryAC,
     addCategoryOfNoteAC,
     changeCategoryOfNoteAC,
-    changeCurrentCategoryAC,
     removeArrCategoryOfNoteAC,
     removeCategoryAC,
     setActiveCategoryAC,
@@ -151,10 +149,6 @@ const NotesContainer = ({addNoteAC, removeNoteAC, tags, tagsArrNote, removeTagAC
         changeTagsValueAC(tag);
     };
 
-    const addTagsArrOfNote = (tag) => {
-        addTagOfNoteAC(tag);
-    };
-
     const removeTagNoteInfo = (id) => {
         removeArrTagOfNoteAC(id)
     };
@@ -176,10 +170,9 @@ const NotesContainer = ({addNoteAC, removeNoteAC, tags, tagsArrNote, removeTagAC
 
     const addCategory = (id, categoryValue) => {
         checkCategoriesNoteAC(id, categoryValue, currentCategory);
-        addCategoryOfNoteAC(categoryValue, id);
+        addCategoryAC(id, categoryValue)
     };
 
-    
     // const addCategoryArrOfNote = (currentCategory, id, parent) => {
     //     let currentId = id;
     //     let currentParent = parent;
@@ -214,8 +207,6 @@ const NotesContainer = ({addNoteAC, removeNoteAC, tags, tagsArrNote, removeTagAC
     //     // );
 
     // };
-
-    // проблемы с редактированием Категорий в Инфо, вместо экшена ADD_CATEGORIES идет ADD_CATEGORIES_OF_NOTE
 
     const editCategory = (id, text) => {
         setCategoryValueAC(text)
@@ -347,7 +338,7 @@ const NotesContainer = ({addNoteAC, removeNoteAC, tags, tagsArrNote, removeTagAC
                                         changeTag={changeTag}
                                         tagValue={tagValue}
                                         categoryValue={categoryValue}
-                                        addTagsArrOfNote={addTagsArrOfNote}
+                                        addTagsArrOfNote={addTagOfNoteAC}
                                         tagsArrNote={tagsArrNote}
                                         removeTagNoteInfo={removeTagNoteInfo}
                                         colorArr={colorArr}

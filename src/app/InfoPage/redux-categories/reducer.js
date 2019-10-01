@@ -38,7 +38,7 @@ const categoriesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 category: [...state.category].map(item => {
-                    if (item.id === action.action.id) item.categoryValue = action.action.text
+                    if (item.id === action.action.id) item.categoryValue = action.action.value
                     return item;
                 })
             };
