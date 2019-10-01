@@ -9,6 +9,7 @@
 # production
 /build
 jsconfig.json
+/.idea
 
 # misc
 .DS_Store
