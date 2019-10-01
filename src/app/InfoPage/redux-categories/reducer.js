@@ -4,12 +4,23 @@ import {
     ADD_CATEGORY_OF_NOTE,
     CHANGE_CATEGORY_OF_NOTE,
     CHANGE_CURRENT_CATEGORY,
-    REMOVE_CATEGORY
+    REMOVE_ARR_CATEGORY_OF_NOTE,
+    REMOVE_CATEGORY,
+    SET_ACTIVE_CATEGORY,
+    SET_CATEGORY_VALUE,
+    SET_CURRENT_CATEGORY,
+    SET_CURRENT_ID_CATEGORY,
+    SET_PARENT_CATEGORY
 } from "./constants";
 
 let initialState = {
     category: getStorage("categories") || [],
-    categoryArrNote: []
+    categoryArrNote: [],
+    categoryValue: '',
+    parentCategory: '',
+    currentCategory: '',
+    currentIdCategory: null,
+    activeCategory: ''
 };
 
 const categoriesReducer = (state = initialState, action) => {
@@ -73,6 +84,36 @@ const categoriesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 categoryArrNote: [...action.categories]
+            };
+        case REMOVE_ARR_CATEGORY_OF_NOTE:
+            return {
+                ...state,
+                categoryArrNote: [...state.categoryArrNote.filter(tag => tag.id !== action.id)]
+            };
+        case SET_CATEGORY_VALUE:
+            return {
+                ...state,
+                categoryValue: action.text
+            };
+        case SET_PARENT_CATEGORY:
+            return {
+                ...state,
+                parentCategory: action.value
+            };
+        case SET_CURRENT_CATEGORY:
+            return {
+                ...state,
+                currentCategory: action.currentCategory
+            };
+        case SET_CURRENT_ID_CATEGORY:
+            return {
+                ...state,
+                currentIdCategory: action.id
+            };
+        case SET_ACTIVE_CATEGORY:
+            return {
+                ...state,
+                activeCategory: action.category
             };
         default:
             return state;

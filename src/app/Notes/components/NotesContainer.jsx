@@ -32,13 +32,25 @@ import {
     getTagsOfNote,
     getTagValue
 } from "../../InfoPage/redux-tags/selectors";
-import {getCategories, getCategoriesArrNote} from "../../InfoPage/redux-categories/selectors";
+import {
+    getActiveCategory,
+    getCategories,
+    getCategoriesArrNote,
+    getCategoryValue, getCurrentCategory, getCurrentIdCategory,
+    getParentCategory
+} from "../../InfoPage/redux-categories/selectors";
 import {
     addCategoryAC,
     addCategoryOfNoteAC,
     changeCategoryOfNoteAC,
     changeCurrentCategoryAC,
-    removeCategoryAC
+    removeArrCategoryOfNoteAC,
+    removeCategoryAC,
+    setActiveCategoryAC,
+    setCategoryValueAC,
+    setCurrentCategoryAC,
+    setCurrentCategoryIdAC,
+    setParentCategoryAC
 } from "../../InfoPage/redux-categories/actions";
 
 const useStyles = makeStyles( theme => ({
@@ -74,18 +86,11 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
                             currentIdNote, changeTagsValueAC, changeActiveTagAC, activeTag, changeCurrentIdTagAC,
                             changeCurrentTagAC, currentTag, setCurrentTagAC, category, removeCategoryAC,
                             changeCurrentCategoryAC, removeCategoryOfNoteAC, checkCategoriesNoteAC,
-                            addCategoryOfNoteAC, changeCategoryOfNoteAC, addCategoryAC, categoryArrNote, notes}) => {
+                            addCategoryOfNoteAC, changeCategoryOfNoteAC, removeArrCategoryOfNoteAC, setCategoryValueAC,
+                            addCategoryAC, categoryArrNote, setCurrentCategoryAC, parentCategory, setParentCategoryAC,
+                            categoryValue, currentCategory, setActiveCategoryAC, activeCategory, currentIdCategory, setCurrentCategoryIdAC, notes}) => {
 
     const [isNoteInfo, setNoteInfo] = useState(false);
-
-    // categories state
-    // const [category, setCategory] = useState(getStorage("categories") || []);
-    const [parentCategory, setParentCategory] = useState('');
-    // const [categoryArrNote, setCategoryArrNote] = useState([]);
-    const [currentCategory, setCurrentCategory] = useState('');
-    const [categoryValue, setCategoryValue] = useState('');
-    const [currentIdCategory, setCurrentIdCategory] = useState(null);
-    const [activeCategory, setActiveCategory] = useState('');
 
     // colorTheme state
     const colorArr = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
@@ -238,16 +243,18 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
     // };
 
     const editCategory = (id, text) => {
-        setCategoryValue(text);
-        setCurrentIdCategory(id);
+        setCategoryValueAC(text)
+        // setCurrentIdCategory(id);
+        setCurrentCategoryIdAC(id)
     };
 
     const removeCategoryNoteInfo = (id) => {
-        // setCategoryArrNote(categoryArrNote.filter(category => category.id !==
+        removeArrCategoryOfNoteAC(id);
     };
 
     const getActiveCategory = category => {
-        setActiveCategory(category)
+        // setActiveCategory(category)
+        setActiveCategoryAC(category);
     }
 
     const getNeighboringCategory = (id, value, parent) => {
@@ -288,11 +295,13 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
     };
 
     const getCategoryBeforeEdit = currentCategory => {
-        setCurrentCategory(currentCategory)
+        // setCurrentCategory(currentCategory)
+        setCurrentCategoryAC(currentCategory)
     }
 
     const getParentCategory = (value) => {
-        setParentCategory(value);
+        // setParentCategory(value);
+        setParentCategoryAC(value)
     };
 
 
@@ -417,12 +426,17 @@ const mapStateToProps = state => ({
     activeTag: getActiveTag(state),
     currentTag: getCurrentTag(state),
     category: getCategories(state),
-    categoryArrNote: getCategoriesArrNote(state)
-
+    categoryArrNote: getCategoriesArrNote(state),
+    categoryValue: getCategoryValue(state),
+    parentCategory: getParentCategory(state),
+    currentCategory: getCurrentCategory(state),
+    currentIdCategory: getCurrentIdCategory(state),
+    activeCategory: getActiveCategory(state)
 });
 
 export default connect(mapStateToProps, {addNoteAC, removeNoteAC, removeTagAC, addTagAC, checkTagsNoteAC,
     changeCurrentTagAC, removeTagOfNoteAC, changeNoteValueAC, removeArrTagOfNoteAC, changeTagOfNoteAC,
     addTagOfNoteAC, changeCurrentIdNoteAC, changeActiveTagAC, changeTagsValueAC, changeCurrentIdTagAC,
     changeNoteAC, setCurrentTagAC, changeCurrentCategoryAC, checkCategoriesNoteAC, removeCategoryOfNoteAC,
-    removeCategoryAC, addCategoryOfNoteAC, changeCategoryOfNoteAC, addCategoryAC})(NotesContainer);
+    removeCategoryAC, addCategoryOfNoteAC, changeCategoryOfNoteAC, setCategoryValueAC, removeArrCategoryOfNoteAC,
+    setParentCategoryAC, setCurrentCategoryAC, setCurrentCategoryIdAC, setActiveCategoryAC, addCategoryAC})(NotesContainer);
