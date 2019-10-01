@@ -58,7 +58,7 @@ const notesReducer = (state = initialState, action) => {
                     note.text = action.action.text
                     note.tags = action.action.tagsNote
                     note.categories = action.action.categoriesNote
-                    note.color = action.action.colorNote
+                    note.color = action.action.color
                 }
             });
             return newState;

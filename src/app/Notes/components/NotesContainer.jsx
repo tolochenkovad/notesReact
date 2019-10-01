@@ -105,16 +105,8 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
     }, [category]);
 
     // notes func
-    const addNoteToStorage = (text, tagsNote, categoriesNote, color) => {
-        addNoteAC(text, tagsNote, categoriesNote, color);
-    };
-
     const addNote = (id, text, tagsNote, categoriesNote, colorNote) => {
-        if ( notes.some(note => note.id === id) ) {
-            changeNoteAC(id, text, tagsNote, categoriesNote, colorNote);
-            return;
-        };
-        addNoteToStorage(text, tagsNote, categoriesNote, colorNote);
+        addNoteAC(id, text, tagsNote, categoriesNote, colorNote);
     };
 
     const editNote = (id, text, tags, categories, color) => {
@@ -122,7 +114,6 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
         changeNoteValueAC(text);
         changeCurrentIdNoteAC(id)
         changeTagOfNoteAC(tags)
-        // setCategoryArrNote(categories);
         changeCategoryOfNoteAC(categories);
         setColorValue(color);
     };
@@ -185,12 +176,6 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
     };
 
 
-
-
-
-
-
-
     // categories func
     const removeCategory = (id, currentCategoryDel) => {
         removeCategoryAC(id);
@@ -244,7 +229,6 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
 
     const editCategory = (id, text) => {
         setCategoryValueAC(text)
-        // setCurrentIdCategory(id);
         setCurrentCategoryIdAC(id)
     };
 
@@ -253,7 +237,6 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
     };
 
     const getActiveCategory = category => {
-        // setActiveCategory(category)
         setActiveCategoryAC(category);
     }
 
@@ -262,15 +245,6 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
             alert('This category is already added!');
             return;
         }
-        // setCategory(
-        //     category.concat([
-        //         {
-        //             id,
-        //             categoryValue: value,
-        //             parent
-        //         }
-        //     ])
-        // );
         addCategoryAC(id, value, parent);
     };
 
@@ -280,27 +254,17 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
         newCategory.forEach(item => {
             if (item.categoryValue === parentCategory){
                 idParent = item.id;
-                // setCategory(
-                //     category.concat([
-                //         {
-                //             id,
-                //             categoryValue: value,
-                //             parent: idParent
-                //         }
-                //     ])
-                // );
+                addCategoryAC(id, value, idParent);
             }
         });
         return idParent;
     };
 
     const getCategoryBeforeEdit = currentCategory => {
-        // setCurrentCategory(currentCategory)
         setCurrentCategoryAC(currentCategory)
     }
 
     const getParentCategory = (value) => {
-        // setParentCategory(value);
         setParentCategoryAC(value)
     };
 
@@ -310,7 +274,6 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
         changeNoteValueAC('')
         changeTagsValueAC('');
         changeTagOfNoteAC([]);
-        // setCategoryArrNote([]);
         changeCategoryOfNoteAC([]);
         setColorValue('orange');
     };
@@ -437,6 +400,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {addNoteAC, removeNoteAC, removeTagAC, addTagAC, checkTagsNoteAC,
     changeCurrentTagAC, removeTagOfNoteAC, changeNoteValueAC, removeArrTagOfNoteAC, changeTagOfNoteAC,
     addTagOfNoteAC, changeCurrentIdNoteAC, changeActiveTagAC, changeTagsValueAC, changeCurrentIdTagAC,
-    changeNoteAC, setCurrentTagAC, changeCurrentCategoryAC, checkCategoriesNoteAC, removeCategoryOfNoteAC,
+    setCurrentTagAC, changeCurrentCategoryAC, checkCategoriesNoteAC, removeCategoryOfNoteAC,
     removeCategoryAC, addCategoryOfNoteAC, changeCategoryOfNoteAC, setCategoryValueAC, removeArrCategoryOfNoteAC,
     setParentCategoryAC, setCurrentCategoryAC, setCurrentCategoryIdAC, setActiveCategoryAC, addCategoryAC})(NotesContainer);
