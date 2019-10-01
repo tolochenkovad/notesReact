@@ -20,12 +20,19 @@ import { connect } from 'react-redux';
 import {getCurrentIdNote, getNote, getNoteValue} from "../redux/selectors";
 import {
     addTagAC,
-    addTagOfNoteAC,
+    addTagOfNoteAC, changeActiveTagAC, changeCurrentIdTagAC,
     changeCurrentTagAC,
-    changeTagOfNoteAC, removeArrTagOfNoteAC,
-    removeTagAC
+    changeTagOfNoteAC, changeTagsValueAC, removeArrTagOfNoteAC,
+    removeTagAC, setCurrentTagAC
 } from "../../InfoPage/redux/actions";
-import {getTags, getTagsOfNote} from "../../InfoPage/redux/selectors";
+import {
+    getActiveTag,
+    getCurrentIdTag,
+    getCurrentTag,
+    getTags,
+    getTagsOfNote,
+    getTagValue
+} from "../../InfoPage/redux/selectors";
 
 const useStyles = makeStyles( theme => ({
     notesContainer: {
@@ -55,16 +62,12 @@ const useStyles = makeStyles( theme => ({
 }));
 
 const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNote, removeTagAC, addTagAC,
-                            checkTagsNoteAC, changeTagOfNoteAC, removeArrTagOfNoteAC, noteValue, addTagOfNoteAC,
-                            removeTagOfNoteAC, changeNoteValueAC, changeCurrentIdNoteAC, currentIdNote, changeCurrentTagAC, notes}) => {
+                            checkTagsNoteAC, changeTagOfNoteAC, currentIdTag, removeArrTagOfNoteAC, noteValue,
+                            addTagOfNoteAC, removeTagOfNoteAC, changeNoteValueAC, tagValue, changeCurrentIdNoteAC,
+                            currentIdNote, changeTagsValueAC, changeActiveTagAC, activeTag, changeCurrentIdTagAC,
+                            changeCurrentTagAC, currentTag, setCurrentTagAC, notes}) => {
 
     const [isNoteInfo, setNoteInfo] = useState(false);
-
-    // tags state
-    const [tagValue, setTagValue] = useState('');
-    const [currentIdTag, setCurrentIdTag] = useState(null);
-    const [activeTag, setActiveTag] = useState('');
-    const [currentTag, setCurrentTag] = useState('');
 
     // categories state
     const [category, setCategory] = useState(getStorage("categories") || []);
@@ -139,12 +142,12 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
     };
 
     const editTag = (id, text) => {
-        setTagValue(text);
-        setCurrentIdTag(id);
+        changeTagsValueAC(text);
+        changeCurrentIdTagAC(id);
     };
 
     const changeTag = (tag) => {
-        setTagValue(tag)
+        changeTagsValueAC(tag);
     };
 
     const addTagsArrOfNote = (tag) => {
@@ -155,25 +158,16 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
         addTagOfNoteAC(tag);
     };
 
-    // const changeCurrentTags = (id, tag) => {
-    //     let newTags = [...tags];
-    //     newTags.forEach(item => {
-    //         if (item.id === id) item.tag = tag
-    //     });
-    //     // setTags(newTags);
-    // };
-
     const removeTagNoteInfo = (id) => {
-        // setTagsArrNote(tagsArrNote.filter(tag => tag.id !== id))
         removeArrTagOfNoteAC(id)
     };
 
     const getActiveTag = (tag) => {
-        setActiveTag(tag)
+        changeActiveTagAC(tag)
     };
 
     const getTagBeforeEdit = currentTag => {
-        setCurrentTag(currentTag)
+        setCurrentTagAC(currentTag);
     };
 
     // categories func
@@ -309,7 +303,8 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
     const cleanValue = () => {
         // setNoteValue('');
         changeNoteValueAC('')
-        setTagValue('');
+        // setTagValue('');
+        changeTagsValueAC('');
         changeTagOfNoteAC([]);
         setCategoryArrNote([]);
         setColorValue('orange');
@@ -418,11 +413,17 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
 const mapStateToProps = state => ({
     notes: getNote(state),
     noteValue: getNoteValue(state),
+    currentIdNote: getCurrentIdNote(state),
     tags: getTags(state),
     tagsArrNote: getTagsOfNote(state),
-    currentIdNote: getCurrentIdNote(state)
+    tagValue: getTagValue(state),
+    currentIdTag: getCurrentIdTag(state),
+    activeTag: getActiveTag(state),
+    currentTag: getCurrentTag(state)
+
 });
 
 export default connect(mapStateToProps, {addNoteAC, removeNoteAC, removeTagAC, addTagAC, checkTagsNoteAC,
     changeCurrentTagAC, removeTagOfNoteAC, changeNoteValueAC, removeArrTagOfNoteAC, changeTagOfNoteAC,
-    addTagOfNoteAC, changeCurrentIdNoteAC, changeNoteAC})(NotesContainer);
+    addTagOfNoteAC, changeCurrentIdNoteAC, changeActiveTagAC, changeTagsValueAC, changeCurrentIdTagAC,
+    changeNoteAC, setCurrentTagAC})(NotesContainer);
