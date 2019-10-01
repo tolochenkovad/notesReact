@@ -1,9 +1,9 @@
 import {
     ADD_NOTE,
     CHANGE_CURRENT_ID_NOTE,
-    CHANGE_NOTE_VALUE,
+    CHANGE_NOTE_VALUE, CHECKING_CATEGORY,
     CHECKING_TAGS,
-    EDIT_NOTE,
+    EDIT_NOTE, REMOVE_CATEGORY_OF_NOTE,
     REMOVE_NOTE,
     REMOVE_TAG_OF_NOTE
 } from './constants';
@@ -73,11 +73,28 @@ const notesReducer = (state = initialState, action) => {
                 )
             );
             return newState2;
+        case CHECKING_CATEGORY:
+            let newState5 = {...state};
+            newState5.notes.map(note =>
+                note.categories.map( item =>
+                    item.category === action.action.currentCategory
+                        ?
+                        item.category = action.action.categoryValue
+                        :   null
+                )
+            );
+            return newState5;
         case REMOVE_TAG_OF_NOTE:
             let newState3 = {...state};
             newState3.notes.map(note =>
                 note.tags = note.tags.filter( t => t.tag !== action.action.currentTagDel));
             return newState3;
+
+        case REMOVE_CATEGORY_OF_NOTE:
+            let newState4 = {...state};
+            newState4.notes.map(note =>
+                note.categories = note.categories.filter( t => t.category !== action.action.currentCategoryDel));
+            return newState4;
         case CHANGE_NOTE_VALUE:
             return {
                 ...state,

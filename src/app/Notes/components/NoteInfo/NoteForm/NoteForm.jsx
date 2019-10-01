@@ -257,7 +257,7 @@ const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnte
                                           }
                                         }
                                     }}
-                                    value={category[0].categoryValue}
+                                    value='choose category'
                                     className={classes.select}>
                             <MenuItem value="category">add category</MenuItem>
                             <MenuItem value="child">add child element</MenuItem>

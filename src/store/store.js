@@ -3,14 +3,16 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import notesReducer from '../app/Notes/redux/reducer';
 import rootSaga from '../sagas/sagas';
-import tagsReducer from "../app/InfoPage/redux/reducer";
+import tagsReducer from "../app/InfoPage/redux-tags/reducer";
+import categoriesReducer from "../app/InfoPage/redux-categories/reducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
 
 const reducers = combineReducers({
     notes: notesReducer,
-    tags: tagsReducer
+    tags: tagsReducer,
+    categories: categoriesReducer
 });
 
 const store = createStore( reducers, composeWithDevTools(applyMiddleware(sagaMiddleware)) );

@@ -6,7 +6,12 @@ import {
     REMOVE_NOTE,
     EDIT_NOTE_SAGA,
     EDIT_NOTE,
-    CHECKING_TAGS_SAGA, CHECKING_TAGS, REMOVE_TAG_OF_NOTE_SAGA, REMOVE_TAG_OF_NOTE
+    CHECKING_TAGS_SAGA,
+    CHECKING_TAGS,
+    REMOVE_TAG_OF_NOTE_SAGA,
+    REMOVE_TAG_OF_NOTE,
+    REMOVE_CATEGORY_OF_NOTE_SAGA,
+    REMOVE_CATEGORY_OF_NOTE, CHECKING_CATEGORY_SAGA, CHECKING_CATEGORY
 } from './constants';
 import {getNote} from "./selectors";
 import {setStorage} from "../../../utils/localStorage";
@@ -35,8 +40,20 @@ function* changeTagOfNote(action) {
     setStorage("notes", notes);
 };
 
+function* changeCategoryOfNote(action) {
+    yield put({ type: CHECKING_CATEGORY, action});
+    const notes = yield select(getNote);
+    setStorage("notes", notes);
+};
+
 function* removeTagOfNote(action) {
     yield put({ type: REMOVE_TAG_OF_NOTE, action});
+    const notes = yield select(getNote);
+    setStorage("notes", notes);
+};
+
+function* removeCategoryOfNote(action) {
+    yield put({ type: REMOVE_CATEGORY_OF_NOTE, action});
     const notes = yield select(getNote);
     setStorage("notes", notes);
 };
@@ -47,7 +64,9 @@ function* notesSaga() {
     yield takeLatest(REMOVE_NOTE_SAGA, removeNote);
     yield takeLatest(EDIT_NOTE_SAGA, changeNote);
     yield takeLatest(CHECKING_TAGS_SAGA, changeTagOfNote);
-    yield takeLatest(REMOVE_TAG_OF_NOTE_SAGA, changeTagOfNote);
+    yield takeLatest(CHECKING_CATEGORY_SAGA, changeCategoryOfNote);
+    yield takeLatest(REMOVE_TAG_OF_NOTE_SAGA, removeTagOfNote);
+    yield takeLatest(REMOVE_CATEGORY_OF_NOTE_SAGA, removeCategoryOfNote);
 
 };
 
