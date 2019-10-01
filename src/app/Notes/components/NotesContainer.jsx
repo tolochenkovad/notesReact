@@ -8,9 +8,16 @@ import Filter from '../../Filter/Filter';
 import AddNote from './AddNote/AddNote';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
-import {addNoteAC, changeNoteAC, checkTagsNoteAC, removeNoteAC, removeTagOfNoteAC} from '../redux/actions';
+import {
+    addNoteAC, changeCurrentIdNoteAC,
+    changeNoteAC,
+    changeNoteValueAC,
+    checkTagsNoteAC,
+    removeNoteAC,
+    removeTagOfNoteAC
+} from '../redux/actions';
 import { connect } from 'react-redux';
-import {getNote} from "../redux/selectors";
+import {getCurrentIdNote, getNote, getNoteValue} from "../redux/selectors";
 import {
     addTagAC,
     addTagOfNoteAC,
@@ -48,11 +55,10 @@ const useStyles = makeStyles( theme => ({
 }));
 
 const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNote, removeTagAC, addTagAC,
-                            checkTagsNoteAC, changeTagOfNoteAC, removeArrTagOfNoteAC, addTagOfNoteAC, removeTagOfNoteAC, changeCurrentTagAC, notes}) => {
+                            checkTagsNoteAC, changeTagOfNoteAC, removeArrTagOfNoteAC, noteValue, addTagOfNoteAC,
+                            removeTagOfNoteAC, changeNoteValueAC, changeCurrentIdNoteAC, currentIdNote, changeCurrentTagAC, notes}) => {
 
     const [isNoteInfo, setNoteInfo] = useState(false);
-    const [noteValue, setNoteValue] = useState('');
-    const [currentIdNote, setCurrentIdNote] = useState(null);
 
     // tags state
     const [tagValue, setTagValue] = useState('');
@@ -97,8 +103,8 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
 
     const editNote = (id, text, tags, categories, color) => {
         setNoteInfo(true);
-        setNoteValue(text);
-        setCurrentIdNote(id);
+        changeNoteValueAC(text);
+        changeCurrentIdNoteAC(id)
         changeTagOfNoteAC(tags)
         setCategoryArrNote(categories);
         setColorValue(color);
@@ -113,7 +119,7 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
     };
 
     const cleanId = () => {
-        setCurrentIdNote(null);
+        changeCurrentIdNoteAC(null)
     };
 
 
@@ -301,9 +307,9 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
 
     // other func
     const cleanValue = () => {
-        setNoteValue('');
+        // setNoteValue('');
+        changeNoteValueAC('')
         setTagValue('');
-        // setTagsArrNote([]);
         changeTagOfNoteAC([]);
         setCategoryArrNote([]);
         setColorValue('orange');
@@ -411,9 +417,12 @@ const NotesContainer = ({addNoteAC, removeNoteAC, changeNoteAC, tags, tagsArrNot
 
 const mapStateToProps = state => ({
     notes: getNote(state),
+    noteValue: getNoteValue(state),
     tags: getTags(state),
-    tagsArrNote: getTagsOfNote(state)
+    tagsArrNote: getTagsOfNote(state),
+    currentIdNote: getCurrentIdNote(state)
 });
 
 export default connect(mapStateToProps, {addNoteAC, removeNoteAC, removeTagAC, addTagAC, checkTagsNoteAC,
-    changeCurrentTagAC, removeTagOfNoteAC, removeArrTagOfNoteAC, changeTagOfNoteAC, addTagOfNoteAC, changeNoteAC})(NotesContainer);
+    changeCurrentTagAC, removeTagOfNoteAC, changeNoteValueAC, removeArrTagOfNoteAC, changeTagOfNoteAC,
+    addTagOfNoteAC, changeCurrentIdNoteAC, changeNoteAC})(NotesContainer);

@@ -1,9 +1,19 @@
-import {ADD_NOTE, CHECKING_TAGS, EDIT_NOTE, REMOVE_NOTE, REMOVE_TAG_OF_NOTE} from './constants';
+import {
+    ADD_NOTE,
+    CHANGE_CURRENT_ID_NOTE,
+    CHANGE_NOTE_VALUE,
+    CHECKING_TAGS,
+    EDIT_NOTE,
+    REMOVE_NOTE,
+    REMOVE_TAG_OF_NOTE
+} from './constants';
 import {getStorage} from "../../../utils/localStorage";
 
 
 let initialState = {
-    notes:  getStorage("notes") || []
+    notes:  getStorage("notes") || [],
+    noteValue: '',
+    currentIdNote: null
 }
 
 
@@ -68,6 +78,16 @@ const notesReducer = (state = initialState, action) => {
             newState3.notes.map(note =>
                 note.tags = note.tags.filter( t => t.tag !== action.action.currentTagDel));
             return newState3;
+        case CHANGE_NOTE_VALUE:
+            return {
+                ...state,
+                noteValue: action.text
+            };
+        case CHANGE_CURRENT_ID_NOTE:
+            return {
+                ...state,
+                currentIdNote: action.id
+            };
         default:
             return state;
     }
