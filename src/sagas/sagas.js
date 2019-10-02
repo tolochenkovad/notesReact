@@ -9,6 +9,6 @@ function* rootSaga() {
     spawn(tagsSaga),
     spawn(categoriesSaga),
   ]);
-};
+}
 
 export default rootSaga;

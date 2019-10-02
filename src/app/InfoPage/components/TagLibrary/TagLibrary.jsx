@@ -75,6 +75,6 @@ const TagLibrary = ({tags, getActiveFilterTag, onEditTag, isTagEdit,
 
 TagLibrary.propTypes = {
     tags: PropTypes.arrayOf(PropTypes.object)
-}
+};
 
 export default TagLibrary;

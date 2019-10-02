@@ -20,7 +20,7 @@ function* addTag(action) {
     yield put({ type: ADD_TAG, action});
     const tags3 = yield select(getTags);
     setStorage("tags", tags3);
-};
+}
 
 function* addTagOfNote(action) {
     const tagsArrNote = yield select(getTagsOfNote);
@@ -29,19 +29,19 @@ function* addTagOfNote(action) {
         return;
     }
     yield put({ type: ADD_TAG_OF_NOTE, action});
-};
+}
 
 function* removeTag(action) {
     yield put({ type: REMOVE_TAG, action});
     const tags = yield select(getTags);
     setStorage("tags", tags);
-};
+}
 
 
 function* tagsSaga() {
     yield takeLatest(ADD_TAG_SAGA, addTag);
     yield takeLatest(ADD_TAG_OF_NOTE_SAGA, addTagOfNote);
     yield takeLatest(REMOVE_TAG_SAGA, removeTag);
-};
+}
 
 export default tagsSaga;

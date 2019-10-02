@@ -35,7 +35,7 @@ const tagsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 tags: [...state.tags].map(item => {
-                    if (item.id === action.action.id) item.tag = action.action.tag
+                    if (item.id === action.action.id) item.tag = action.action.tag;
                     return item;
                 })
             };
@@ -43,7 +43,7 @@ const tagsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 tags: [...state.tags.filter(tag => tag.id !== action.action.id)]
-            }
+            };
         case ADD_TAG_OF_NOTE:
             return {
                 ...state,

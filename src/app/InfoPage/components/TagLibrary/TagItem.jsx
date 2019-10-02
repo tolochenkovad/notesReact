@@ -33,7 +33,7 @@ TagItem.propTypes = {
     addTag: PropTypes.func,
     onBlurFunc: PropTypes.func,
     tag:PropTypes.object
-}
+};
 
 
 export default TagItem;

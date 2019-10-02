@@ -106,7 +106,7 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
     };
 
     const cleanValue = () => {
-        actions.changeNoteValueAC('')
+        actions.changeNoteValueAC('');
         actions.changeTagsValueAC('');
         actions.changeTagOfNoteAC([]);
         actions.changeCategoryOfNoteAC([]);
@@ -115,7 +115,7 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
 
     const clickItem = (e) => {
         e.target.blur();
-        setNoteInfo(true)
+        setNoteInfo(true);
         cleanValue();
         actions.changeCurrentIdNoteAC(null)
     };

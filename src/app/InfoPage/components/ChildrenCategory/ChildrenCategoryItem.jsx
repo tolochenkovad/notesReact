@@ -32,6 +32,6 @@ ChildrenCategoryItem.propTypes = {
     currentIdCategory: PropTypes.number,
     getActiveFilterCategory: PropTypes.func,
     child: PropTypes.object
-}
+};
 
 export default ChildrenCategoryItem;

@@ -39,7 +39,7 @@ const useStyles = makeStyles( theme => ({
         display: 'flex',
         flexWrap: 'wrap'
     },
-    choosedСategory:{
+    choosedCategory:{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

@@ -24,10 +24,8 @@ const EditElement = ({elementValue, onBlurFun, addElement, id}) => {
         if (e.keyCode === 13 || e.keyCode === 27) {
             e.preventDefault();
             onBlurFun();
-            debugger;
             addElement(id, valueEl);
         }
-        return;
     };
 
     const classes = useStyles();

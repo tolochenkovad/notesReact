@@ -39,7 +39,7 @@ const categoriesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 category: [...state.category].map(item => {
-                    if (item.id === action.action.id) item.categoryValue = action.action.value
+                    if (item.id === action.action.id) item.categoryValue = action.action.value;
                     return item;
                 })
             };
@@ -47,7 +47,7 @@ const categoriesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 category: [...state.category.filter(category => category.id !== action.action.id)]
-            }
+            };
         case ADD_CATEGORY_OF_NOTE:
             let currentId = action.action.id;
             let currentParent = action.action.parent;
@@ -59,7 +59,7 @@ const categoriesReducer = (state = initialState, action) => {
                     currentParent = c.parent
                 }
                 return c;
-            })
+            });
             newCategoryArrNote.map(item => {
                     if (item.id === currentParent){
                         item.category = action.action.currentCategory;
@@ -120,7 +120,7 @@ const categoriesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 idParentCategory: action.parent
-            }
+            };
         default:
             return state;
     }

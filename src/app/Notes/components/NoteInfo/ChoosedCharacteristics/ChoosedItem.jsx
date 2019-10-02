@@ -17,7 +17,7 @@ const ChoosedItem = ({value, itemArr, removeFunc, classes, children}) => {
         }
         case 'category':{
             listClassBox = classes.categoryBox;
-            itemClassBox = classes.choosedСategory;
+            itemClassBox = classes.choosedCategory;
             break;
         }
         default: break;
