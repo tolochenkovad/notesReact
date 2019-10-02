@@ -205,7 +205,6 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
     const submitChildCategory = e => {
         if (e.keyCode === 13){
             let id = Date.now();
-            // addCategoryArrOfNote(e.target.value, id, addChildCategory(id, e.target.value));
             addChildCategory(id, e.target.value);
             addCategoryArrOfNote(e.target.value, id, idParentCategory);
             setParentChild(false);

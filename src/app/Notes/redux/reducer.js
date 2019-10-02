@@ -1,5 +1,5 @@
 import {
-    ADD_NOTE,
+    ADD_NOTE, CHANGE_COLOR_VALUE,
     CHANGE_CURRENT_ID_NOTE,
     CHANGE_NOTE_VALUE, CHECKING_CATEGORY,
     CHECKING_TAGS,
@@ -13,7 +13,9 @@ import {getStorage} from "../../../utils/localStorage";
 let initialState = {
     notes:  getStorage("notes") || [],
     noteValue: '',
-    currentIdNote: null
+    currentIdNote: null,
+    colorValue: 'orange',
+    colorArr: ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
 }
 
 
@@ -106,6 +108,11 @@ const notesReducer = (state = initialState, action) => {
                 ...state,
                 currentIdNote: action.id
             };
+        case CHANGE_COLOR_VALUE:
+            return {
+                ...state,
+                colorValue: action.color
+            }
         default:
             return state;
     }

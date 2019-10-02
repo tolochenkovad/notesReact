@@ -9,3 +9,11 @@ export const getNoteValue = (state) => {
 export const getCurrentIdNote = (state) => {
     return state.notes.currentIdNote;
 };
+
+export const getColorArr = (state) => {
+    return state.notes.colorArr;
+};
+
+export const getColorValue = (state) => {
+    return state.notes.colorValue;
+};
