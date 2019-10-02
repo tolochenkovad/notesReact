@@ -1,9 +1,13 @@
 import {
-    ADD_NOTE, CHANGE_COLOR_VALUE,
+    ADD_NOTE,
+    CHANGE_COLOR_VALUE,
     CHANGE_CURRENT_ID_NOTE,
-    CHANGE_NOTE_VALUE, CHANGE_SEARCH_VALUE, CHECKING_CATEGORY,
+    CHANGE_NOTE_VALUE,
+    CHANGE_SEARCH_VALUE,
+    CHECKING_CATEGORY,
     CHECKING_TAGS,
-    EDIT_NOTE, REMOVE_CATEGORY_OF_NOTE,
+    EDIT_NOTE,
+    REMOVE_CATEGORY_OF_NOTE,
     REMOVE_NOTE,
     REMOVE_TAG_OF_NOTE
 } from './constants';
@@ -17,19 +21,17 @@ let initialState = {
     colorValue: 'orange',
     searchValue: '',
     colorArr: ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
-}
-
+};
 
 const createDate = () => {
     let dataNote = new Date().toLocaleDateString();
     let timeNote = new Date().toLocaleTimeString().toString().substring(0,5);
     let currentDate = new Date();
     let curDate = `${dataNote}   ${timeNote}`;
-    let date = {
+    return {
         dateInt: currentDate,
         dateString: curDate
     };
-    return date;
 };
 
 const notesReducer = (state = initialState, action) => {
@@ -51,42 +53,48 @@ const notesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 notes: [...state.notes].filter(note => note.id !== action.action.id)
-            }
+            };
         case EDIT_NOTE:
             let newDate = createDate();
-            let newState = {...state};
-            newState.notes.forEach(note => {
-                if (note.id === action.action.id){
-                    if (note.text !== action.action.text) note.date = newDate;
-                    note.text = action.action.text
-                    note.tags = action.action.tagsNote
-                    note.categories = action.action.categoriesNote
-                    note.color = action.action.color
-                }
-            });
-            return newState;
+            return {
+                ...state,
+                notes: [...state.notes.map(note => {
+                    if (note.id === action.action.id){
+                        if (note.text !== action.action.text) note.date = newDate;
+                        note.text = action.action.text;
+                        note.tags = action.action.tagsNote;
+                        note.categories = action.action.categoriesNote;
+                        note.color = action.action.color;
+                    }
+                    return note;
+                })]
+            };
         case CHECKING_TAGS:
-            let newState2 = {...state};
-            newState2.notes.map(note =>
-                note.tags.map( item =>
-                    item.tag === action.action.currentTag
-                    ?
-                        item.tag = action.action.tag
-                    :   null
-                )
-            );
-            return newState2;
+            return {
+                ...state,
+                notes: [...state.notes.map(note => {
+                    note.tags.map( item =>
+                        item.tag === action.action.currentTag
+                            ?
+                            item.tag = action.action.tag
+                            :   null
+                    );
+                    return note;
+                })]
+            };
         case CHECKING_CATEGORY:
-            let newState5 = {...state};
-            newState5.notes.map(note =>
-                note.categories.map( item =>
-                    item.category === action.action.currentCategory
-                        ?
-                        item.category = action.action.categoryValue
-                        :   null
-                )
-            );
-            return newState5;
+            return {
+                ...state,
+                notes: [...state.notes.map(note => {
+                    note.categories.map( item =>
+                        item.category === action.action.currentCategory
+                            ?
+                            item.category = action.action.categoryValue
+                            :   null
+                    );
+                    return note;
+                })]
+            };
         case REMOVE_TAG_OF_NOTE:
             return {
                 ...state,
@@ -95,10 +103,13 @@ const notesReducer = (state = initialState, action) => {
                 )
             };
         case REMOVE_CATEGORY_OF_NOTE:
-            let newState4 = {...state};
-            newState4.notes.map(note =>
-                note.categories = note.categories.filter( t => t.category !== action.action.currentCategoryDel));
-            return newState4;
+            return {
+                ...state,
+                notes: [...state.notes.map(note =>{
+                        note.categories = note.categories.filter( t => t.category !== action.action.currentCategoryDel);
+                        return note;
+                    })]
+            };
         case CHANGE_NOTE_VALUE:
             return {
                 ...state,
@@ -113,12 +124,12 @@ const notesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 colorValue: action.color
-            }
+            };
         case CHANGE_SEARCH_VALUE:
             return {
                 ...state,
                 searchValue: action.value
-            }
+            };
         default:
             return state;
     }
