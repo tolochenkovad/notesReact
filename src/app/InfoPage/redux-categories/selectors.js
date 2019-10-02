@@ -26,4 +26,8 @@ export const getActiveCategory = (state) => {
     return state.categories.activeCategory;
 };
 
+export const getIdParentCategory = (state) => {
+    return state.categories.idParentCategory;
+};
+
 

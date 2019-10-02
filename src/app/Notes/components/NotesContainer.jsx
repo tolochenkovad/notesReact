@@ -35,12 +35,12 @@ import {
     getActiveCategory,
     getCategories,
     getCategoriesArrNote,
-    getCategoryValue, getCurrentCategory, getCurrentIdCategory,
+    getCategoryValue, getCurrentCategory, getCurrentIdCategory, getIdParentCategory,
     getParentCategory
 } from "../../InfoPage/redux-categories/selectors";
 import {
     addCategoryAC,
-    addCategoryOfNoteAC,
+    addCategoryOfNoteAC, addChildCategoryAC,
     changeCategoryOfNoteAC,
     removeArrCategoryOfNoteAC,
     removeCategoryAC,
@@ -83,10 +83,11 @@ const NotesContainer = ({addNoteAC, removeNoteAC, tags, tagsArrNote, removeTagAC
                             addTagOfNoteAC, removeTagOfNoteAC, changeNoteValueAC, tagValue, changeCurrentIdNoteAC,
                             currentIdNote, changeTagsValueAC, changeActiveTagAC, activeTag, changeCurrentIdTagAC,
                             currentTag, setCurrentTagAC, category, removeCategoryAC,
-                            removeCategoryOfNoteAC, checkCategoriesNoteAC,
-                            addCategoryOfNoteAC, changeCategoryOfNoteAC, removeArrCategoryOfNoteAC, setCategoryValueAC,
-                            addCategoryAC, categoryArrNote, setCurrentCategoryAC, parentCategory, setParentCategoryAC,
-                            categoryValue, currentCategory, setActiveCategoryAC, activeCategory, currentIdCategory, setCurrentCategoryIdAC, notes}) => {
+                            removeCategoryOfNoteAC, checkCategoriesNoteAC, addCategoryOfNoteAC, changeCategoryOfNoteAC,
+                            removeArrCategoryOfNoteAC, setCategoryValueAC, addChildCategoryAC, addCategoryAC,
+                            categoryArrNote, setCurrentCategoryAC, parentCategory, setParentCategoryAC,
+                            categoryValue, currentCategory, setActiveCategoryAC, activeCategory, currentIdCategory,
+                            idParentCategory, setCurrentCategoryIdAC, notes}) => {
 
     const [isNoteInfo, setNoteInfo] = useState(false);
 
@@ -168,7 +169,7 @@ const NotesContainer = ({addNoteAC, removeNoteAC, tags, tagsArrNote, removeTagAC
         removeCategoryOfNoteAC(currentCategoryDel);
     };
 
-    const addCategory = (id, categoryValue) => {
+    const editCategoryItem = (id, categoryValue) => {
         checkCategoriesNoteAC(id, categoryValue, currentCategory);
         addCategoryAC(id, categoryValue)
     };
@@ -219,26 +220,10 @@ const NotesContainer = ({addNoteAC, removeNoteAC, tags, tagsArrNote, removeTagAC
 
     const getActiveCategory = category => {
         setActiveCategoryAC(category);
-    }
-
-    const getNeighboringCategory = (id, value, parent) => {
-        // if ( category.some(item => item.categoryValue === value) ) {
-        //     alert('This category is already added!');
-        //     return;
-        // }
-        addCategoryAC(id, value, parent);
     };
 
-    const getChildCategory = (id, value) => {
-        let idParent = null;
-        let newCategory = [...category];
-        newCategory.forEach(item => {
-            if (item.categoryValue === parentCategory){
-                idParent = item.id;
-                addCategoryAC(id, value, idParent);
-            }
-        });
-        return idParent;
+    const addChildCategory = (id, value) => {
+        addChildCategoryAC(id, value);
     };
 
     const getCategoryBeforeEdit = currentCategory => {
@@ -287,7 +272,7 @@ const NotesContainer = ({addNoteAC, removeNoteAC, tags, tagsArrNote, removeTagAC
                       editTag={editTag}
                       editCategory={editCategory}
                       addTag={addTag}
-                      addCategory={addCategory}
+                      editCategoryItem={editCategoryItem}
                       currentIdTag={currentIdTag}
                       currentIdCategory={currentIdCategory}
                       getActiveTag={getActiveTag}
@@ -344,10 +329,11 @@ const NotesContainer = ({addNoteAC, removeNoteAC, tags, tagsArrNote, removeTagAC
                                         colorArr={colorArr}
                                         colorValue={colorValue}
                                         getColorValue={getColorValue}
-                                        getNeighboringCategory={getNeighboringCategory}
+                                        addCategory={addCategoryAC}
                                         category={category}
+                                        idParentCategory={idParentCategory}
                                         getParentCategory={getParentCategory}
-                                        getChildCategory={getChildCategory}
+                                        addChildCategory={addChildCategory}
                                         categoryArrNote={categoryArrNote}
                                         addCategoryArrOfNote={addCategoryOfNoteAC}
                                         removeCategoryNoteInfo={removeCategoryNoteInfo}
@@ -375,7 +361,8 @@ const mapStateToProps = state => ({
     parentCategory: getParentCategory(state),
     currentCategory: getCurrentCategory(state),
     currentIdCategory: getCurrentIdCategory(state),
-    activeCategory: getActiveCategory(state)
+    activeCategory: getActiveCategory(state),
+    idParentCategory: getIdParentCategory(state)
 });
 
 export default connect(mapStateToProps, {addNoteAC, removeNoteAC, removeTagAC, addTagAC, checkTagsNoteAC,
@@ -383,4 +370,4 @@ export default connect(mapStateToProps, {addNoteAC, removeNoteAC, removeTagAC, a
     addTagOfNoteAC, changeCurrentIdNoteAC, changeActiveTagAC, changeTagsValueAC, changeCurrentIdTagAC,
     setCurrentTagAC,checkCategoriesNoteAC, removeCategoryOfNoteAC,
     removeCategoryAC, addCategoryOfNoteAC, changeCategoryOfNoteAC, setCategoryValueAC, removeArrCategoryOfNoteAC,
-    setParentCategoryAC, setCurrentCategoryAC, setCurrentCategoryIdAC, setActiveCategoryAC, addCategoryAC})(NotesContainer);
+    setParentCategoryAC, setCurrentCategoryAC, addChildCategoryAC, setCurrentCategoryIdAC, setActiveCategoryAC, addCategoryAC})(NotesContainer);

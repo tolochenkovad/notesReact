@@ -9,7 +9,7 @@ import {
     SET_ACTIVE_CATEGORY,
     SET_CATEGORY_VALUE,
     SET_CURRENT_CATEGORY,
-    SET_CURRENT_ID_CATEGORY,
+    SET_CURRENT_ID_CATEGORY, SET_ID_PARENT,
     SET_PARENT_CATEGORY
 } from "./constants";
 
@@ -20,7 +20,8 @@ let initialState = {
     parentCategory: '',
     currentCategory: '',
     currentIdCategory: null,
-    activeCategory: ''
+    activeCategory: '',
+    idParentCategory: null
 };
 
 const categoriesReducer = (state = initialState, action) => {
@@ -115,6 +116,11 @@ const categoriesReducer = (state = initialState, action) => {
                 ...state,
                 activeCategory: action.category
             };
+        case SET_ID_PARENT:
+            return {
+                ...state,
+                idParentCategory: action.parent
+            }
         default:
             return state;
     }

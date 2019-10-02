@@ -12,7 +12,7 @@ const useStyles = makeStyles( theme => ({
 }));
 
 const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag, 
-    currentIdCategory, addTag, addCategory, editTag, getActiveTag, 
+    currentIdCategory, addTag, editCategoryItem, editTag, getActiveTag,
     getActiveCategory, getTagBeforeEdit, removeCategory, 
     getCategoryBeforeEdit, editCategory, tree}) => {
 
@@ -64,7 +64,7 @@ const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag,
                             isEditIcon={isEditIcon}
                             currentIdCategory={currentIdCategory}
                             categoryValue={categoryValue}
-                            addCategory={addCategory}
+                            editCategoryItem={editCategoryItem}
                             onBlurFunc={onBlurFunc}
                             removeCategory={removeCategory}
            />

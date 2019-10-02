@@ -22,8 +22,8 @@ const useStyles = makeStyles( theme => ({
 
 const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, 
     noteValue, changeTag, addTagsArrOfNote, tagsArrNote, removeTagNoteInfo, 
-    colorArr, getColorValue, colorValue, getNeighboringCategory, category, 
-    getParentCategory, getChildCategory, categoryArrNote, addCategoryArrOfNote, 
+    colorArr, getColorValue, colorValue, addCategory, category,
+    getParentCategory, addChildCategory, categoryArrNote, idParentCategory, addCategoryArrOfNote,
     removeCategoryNoteInfo}) => {
 
     const useInputValue = () => {
@@ -189,7 +189,7 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
         if (e.keyCode === 13){
             let id = Date.now();
             let parent = null;
-            getNeighboringCategory(id, e.target.value, parent);
+            addCategory(id, e.target.value, parent);
             addCategoryArrOfNote(e.target.value, id, parent);
             e.target.value="";
             setNeighboringCategory(false);
@@ -205,7 +205,9 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
     const submitChildCategory = e => {
         if (e.keyCode === 13){
             let id = Date.now();
-            addCategoryArrOfNote(e.target.value, id, getChildCategory(id, e.target.value));
+            // addCategoryArrOfNote(e.target.value, id, addChildCategory(id, e.target.value));
+            addChildCategory(id, e.target.value);
+            addCategoryArrOfNote(e.target.value, id, idParentCategory);
             setParentChild(false);
             refTextarea.current.focus();
         }
@@ -259,10 +261,10 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
                         delCategory={delCategory}
             />
 
-            <ChoosedCharacteristics  tagsArrNote={tagsArrNote}
-                                  categoryArrNote={categoryArrNote}
-                                  delTag={delTag}
-                                  delCategory={delCategory}
+            <ChoosedCharacteristics   tagsArrNote={tagsArrNote}
+                                      categoryArrNote={categoryArrNote}
+                                      delTag={delTag}
+                                      delCategory={delCategory}
             />
         </Grid>
     )
@@ -282,7 +284,7 @@ NoteInfoContainer.propTypes = {
     colorArr: PropTypes.array,
     getColorValue: PropTypes.func,
     colorValue: PropTypes.string,
-    getNeighboringCategory: PropTypes.func,
+    addCategory: PropTypes.func,
     category: PropTypes.arrayOf(PropTypes.object),
     getParentCategory: PropTypes.func,
     getChildCategory: PropTypes.func,

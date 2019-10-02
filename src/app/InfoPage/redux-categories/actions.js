@@ -1,6 +1,6 @@
 import {
     ADD_CATEGORY_OF_NOTE_SAGA,
-    ADD_CATEGORY_SAGA,
+    ADD_CATEGORY_SAGA, ADD_CHILD_CATEGORY_SAGA,
     CHANGE_CATEGORY_OF_NOTE,
     REMOVE_ARR_CATEGORY_OF_NOTE,
     REMOVE_CATEGORY_SAGA,
@@ -21,3 +21,4 @@ export const setParentCategoryAC = (value) => ({ type: SET_PARENT_CATEGORY, valu
 export const setCurrentCategoryAC = (currentCategory) => ({ type: SET_CURRENT_CATEGORY, currentCategory });
 export const setCurrentCategoryIdAC = (id) => ({ type: SET_CURRENT_ID_CATEGORY, id });
 export const setActiveCategoryAC = (category) => ({ type: SET_ACTIVE_CATEGORY, category });
+export const addChildCategoryAC = (id, value) => ({ type: ADD_CHILD_CATEGORY_SAGA, id, value });
