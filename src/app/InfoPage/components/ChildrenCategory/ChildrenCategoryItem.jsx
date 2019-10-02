@@ -5,7 +5,7 @@ import EditElement from '../EditElement/EditElement';
 import Grid from '@material-ui/core/Grid';
 
 const ChildrenCategoryItem = ({getActiveFilterCategory, onEditCategory, isEditIcon, currentIdCategory,
-    categoryValue, addCategory, onBlurFunc, removeCategory, classes, child}) => {
+    categoryValue, editCategoryItem, onBlurFunc, removeCategory, classes, child}) => {
 
     return(
         <Grid onClick={getActiveFilterCategory} className={classes.category}>
@@ -13,7 +13,7 @@ const ChildrenCategoryItem = ({getActiveFilterCategory, onEditCategory, isEditIc
             {
                 isEditIcon && currentIdCategory === child.id
                     ? 
-                        <EditElement elementValue={categoryValue} id={child.id} addElement={addCategory} onBlurFun={onBlurFunc} />
+                        <EditElement elementValue={categoryValue} id={child.id} addElement={editCategoryItem} onBlurFun={onBlurFunc} />
                     : 
                         child.categoryValue
             }

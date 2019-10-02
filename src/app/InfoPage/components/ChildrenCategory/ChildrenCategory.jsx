@@ -46,8 +46,8 @@ const useStyles = makeStyles( theme => ({
     }
 }));
 
-const ChildrenCategory = ({children, removeCategory, isEditIcon, 
-    addCategory, onEditCategory, categoryValue, onBlurFunc, 
+const ChildrenCategory = ({children, removeCategory, isEditIcon,
+                              editCategoryItem, onEditCategory, categoryValue, onBlurFunc,
     currentIdCategory, getActiveFilterCategory}) => {
 
     const classes = useStyles();
@@ -64,7 +64,7 @@ const ChildrenCategory = ({children, removeCategory, isEditIcon,
                                                   isEditIcon={isEditIcon}
                                                   currentIdCategory={currentIdCategory}
                                                   categoryValue={categoryValue}
-                                                  addCategory={addCategory}
+                                                  editCategoryItem={editCategoryItem}
                                                   onBlurFunc={onBlurFunc}
                                                   removeCategory={removeCategory}
                                                   classes={classes}
@@ -73,7 +73,7 @@ const ChildrenCategory = ({children, removeCategory, isEditIcon,
                             {
                                 child.children && 
                                 <ChildrenCategory children={child.children} removeCategory={removeCategory} 
-                                isEditIcon={isEditIcon} addCategory={addCategory} onBlurFunc={onBlurFunc} 
+                                isEditIcon={isEditIcon} editCategoryItem={editCategoryItem} onBlurFunc={onBlurFunc}
                                 categoryValue={categoryValue} getActiveFilterCategory={getActiveFilterCategory} 
                                 currentIdCategory={currentIdCategory} onEditCategory={onEditCategory} />
                             }
@@ -85,7 +85,7 @@ const ChildrenCategory = ({children, removeCategory, isEditIcon,
                                                 isEditIcon={isEditIcon}
                                                 currentIdCategory={currentIdCategory}
                                                 categoryValue={categoryValue}
-                                                addCategory={addCategory}
+                                                editCategoryItem={editCategoryItem}
                                                 onBlurFunc={onBlurFunc}
                                                 removeCategory={removeCategory}
                                                 child={child}
