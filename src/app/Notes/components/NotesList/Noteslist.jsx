@@ -15,7 +15,7 @@ const useStyles = makeStyles( theme => ({
 const NotesList = ({ notes, removeNote, editNote, getActiveTag, 
     getActiveCategory, activeTag, activeCategory, searchValue}) => {
 
-    let newNotes = [...notes].sort( (a, b) =>  new Date(a.date.dateInt) - new Date(b.date.dateInt)).reverse();
+    let newNotes = [...notes].sort( (a, b) =>  new Date(a.date) - new Date(b.date)).reverse();
 
     const classes = useStyles();
 
@@ -66,7 +66,7 @@ const NotesList = ({ notes, removeNote, editNote, getActiveTag,
            
         </List>
     )
-}
+};
 
 NotesList.propTypes = {
     notes: PropTypes.arrayOf(PropTypes.object),
@@ -77,6 +77,6 @@ NotesList.propTypes = {
     activeTag: PropTypes.string,
     activeCategory: PropTypes.string,
     searchValue: PropTypes.string
-}
+};
 
 export default NotesList;

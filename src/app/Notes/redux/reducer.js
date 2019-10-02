@@ -12,6 +12,7 @@ import {
     REMOVE_TAG_OF_NOTE
 } from './constants';
 import {getStorage} from "../../../utils/localStorage";
+import moment from "moment";
 
 
 let initialState = {
@@ -23,21 +24,10 @@ let initialState = {
     colorArr: ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
 };
 
-const createDate = () => {
-    let dataNote = new Date().toLocaleDateString();
-    let timeNote = new Date().toLocaleTimeString().toString().substring(0,5);
-    let currentDate = new Date();
-    let curDate = `${dataNote}   ${timeNote}`;
-    return {
-        dateInt: currentDate,
-        dateString: curDate
-    };
-};
-
 const notesReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_NOTE:
-            let date = createDate();
+            let date = moment().format('lll');
             return {
                 ...state,
                 notes: [...state.notes, {
@@ -55,7 +45,7 @@ const notesReducer = (state = initialState, action) => {
                 notes: [...state.notes].filter(note => note.id !== action.action.id)
             };
         case EDIT_NOTE:
-            let newDate = createDate();
+            let newDate = moment().format('lll');
             return {
                 ...state,
                 notes: [...state.notes.map(note => {

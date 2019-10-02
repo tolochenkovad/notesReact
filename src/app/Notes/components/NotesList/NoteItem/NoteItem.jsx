@@ -135,7 +135,7 @@ const NoteItem = ({ id, note, color, date, removeNote, editNote, tags, categorie
                         }
                 </List> 
                 <Grid className={classes.dateBox}>
-                    <Typography variant="body2" className={classes.date}>{date.dateString}</Typography>
+                    <Typography variant="body2" className={classes.date}>{date}</Typography>
                 </Grid>
         </ListItem>
     )
