@@ -17,3 +17,7 @@ export const getColorArr = (state) => {
 export const getColorValue = (state) => {
     return state.notes.colorValue;
 };
+
+export const getSearchValue = (state) => {
+    return state.notes.searchValue;
+};

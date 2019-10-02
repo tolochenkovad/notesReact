@@ -1,7 +1,7 @@
 import {
     ADD_NOTE, CHANGE_COLOR_VALUE,
     CHANGE_CURRENT_ID_NOTE,
-    CHANGE_NOTE_VALUE, CHECKING_CATEGORY,
+    CHANGE_NOTE_VALUE, CHANGE_SEARCH_VALUE, CHECKING_CATEGORY,
     CHECKING_TAGS,
     EDIT_NOTE, REMOVE_CATEGORY_OF_NOTE,
     REMOVE_NOTE,
@@ -15,6 +15,7 @@ let initialState = {
     noteValue: '',
     currentIdNote: null,
     colorValue: 'orange',
+    searchValue: '',
     colorArr: ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
 }
 
@@ -112,6 +113,11 @@ const notesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 colorValue: action.color
+            }
+        case CHANGE_SEARCH_VALUE:
+            return {
+                ...state,
+                searchValue: action.value
             }
         default:
             return state;

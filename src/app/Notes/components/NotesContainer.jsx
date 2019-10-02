@@ -9,13 +9,13 @@ import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import {
     addNoteAC, changeColorValueAC, changeCurrentIdNoteAC,
-    changeNoteValueAC, checkCategoriesNoteAC,
+    changeNoteValueAC, changeSearchValueAC, checkCategoriesNoteAC,
     checkTagsNoteAC, removeCategoryOfNoteAC,
     removeNoteAC,
     removeTagOfNoteAC
 } from '../redux/actions';
 import { connect } from 'react-redux';
-import {getColorArr, getColorValue, getCurrentIdNote, getNote, getNoteValue} from "../redux/selectors";
+import {getColorArr, getColorValue, getCurrentIdNote, getNote, getNoteValue, getSearchValue} from "../redux/selectors";
 import {
     addTagAC,
     addTagOfNoteAC, changeActiveTagAC, changeCurrentIdTagAC,
@@ -86,12 +86,11 @@ const NotesContainer = ({addNoteAC, removeNoteAC, tags, tagsArrNote, removeTagAC
                             removeArrCategoryOfNoteAC, setCategoryValueAC, addChildCategoryAC, addCategoryAC,
                             categoryArrNote, setCurrentCategoryAC, setParentCategoryAC,
                             categoryValue, currentCategory, setActiveCategoryAC, activeCategory, currentIdCategory,
-                            idParentCategory, setCurrentCategoryIdAC, changeColorValueAC, colorValue, colorArr,notes}) => {
+                            idParentCategory, setCurrentCategoryIdAC, changeSearchValueAC, searchValue, changeColorValueAC, colorValue, colorArr,notes}) => {
 
     const [isNoteInfo, setNoteInfo] = useState(false);
 
     // other state
-    const [searchValue, setSeacrhValue] = useState('');
     const [tree, setTree] = useState([]);
 
     useEffect( () => {
@@ -207,7 +206,6 @@ const NotesContainer = ({addNoteAC, removeNoteAC, tags, tagsArrNote, removeTagAC
     };
 
     const getColorValue = (color) => {
-        // setColorValue(color)
         changeColorValueAC(color)
     };
 
@@ -221,7 +219,7 @@ const NotesContainer = ({addNoteAC, removeNoteAC, tags, tagsArrNote, removeTagAC
     //
 
     const getSeacrhValue = (value) => {
-        setSeacrhValue(value)
+        changeSearchValueAC(value)
     };
 
     const classes = useStyles();
@@ -326,6 +324,7 @@ const mapStateToProps = state => ({
     activeCategory: getActiveCategory(state),
     idParentCategory: getIdParentCategory(state),
     colorValue: getColorValue(state),
+    searchValue: getSearchValue(state),
     colorArr: getColorArr(state)
 });
 
@@ -334,5 +333,5 @@ export default connect(mapStateToProps, {addNoteAC, removeNoteAC, removeTagAC, a
     addTagOfNoteAC, changeCurrentIdNoteAC, changeActiveTagAC, changeTagsValueAC, changeCurrentIdTagAC,
     setCurrentTagAC,checkCategoriesNoteAC, removeCategoryOfNoteAC,
     removeCategoryAC, addCategoryOfNoteAC, changeCategoryOfNoteAC, setCategoryValueAC, removeArrCategoryOfNoteAC,
-    setParentCategoryAC, setCurrentCategoryAC, changeColorValueAC, addChildCategoryAC, setCurrentCategoryIdAC, setActiveCategoryAC,
+    setParentCategoryAC, setCurrentCategoryAC, changeSearchValueAC, changeColorValueAC, addChildCategoryAC, setCurrentCategoryIdAC, setActiveCategoryAC,
     addCategoryAC})(NotesContainer);
