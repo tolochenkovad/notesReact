@@ -71,7 +71,7 @@ const categoriesReducer = (state = initialState, action) => {
             );
 
             if ( [...state.categoryArrNote].some(item => item.category === action.action.currentCategory) ) {
-                return;
+                return {...state};
             }
             return {
                 ...state,

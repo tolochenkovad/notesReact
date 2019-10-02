@@ -38,7 +38,7 @@ function* addCategoryOfNote(action) {
     if ( categoryArrNote.some(item =>  item.category === action.currentCategory) ) {
         alert('This category is already added!');
         return;
-    }
+    };
     yield put({ type: ADD_CATEGORY_OF_NOTE, action});
 };
 
