@@ -66,10 +66,6 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
         setTree(buildTree(category));
     }, [category]);
 
-    const addNote = (id, text, tagsNote, categoriesNote, colorNote) => {
-        actions.addNoteAC(id, text, tagsNote, categoriesNote, colorNote);
-    };
-
     const editNote = (id, text, tags, categories, color) => {
         setNoteInfo(true);
         actions.changeNoteValueAC(text);
@@ -77,18 +73,6 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
         actions.changeTagOfNoteAC(tags);
         actions.changeCategoryOfNoteAC(categories);
         actions.changeColorValueAC(color);
-    };
-
-    const removeNote = (id) => {
-        actions.removeNoteAC(id);
-    };
-
-    const changeNoteInfo = (bool) => {
-        setNoteInfo(bool)
-    };
-
-    const cleanId = () => {
-        actions.changeCurrentIdNoteAC(null)
     };
 
     const addTag = (id, tag) => {
@@ -106,24 +90,6 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
         actions.changeCurrentIdTagAC(id);
     };
 
-    const changeTag = (tag) => {
-        actions.changeTagsValueAC(tag);
-    };
-
-    const removeTagNoteInfo = (id) => {
-        actions.removeArrTagOfNoteAC(id)
-    };
-
-    const getActiveTag = (tag) => {
-        actions.changeActiveTagAC(tag)
-    };
-
-    const getTagBeforeEdit = currentTag => {
-        actions.setCurrentTagAC(currentTag);
-    };
-
-
-    // categories func
     const removeCategory = (id, currentCategoryDel) => {
         actions.removeCategoryAC(id);
         actions.removeCategoryOfNoteAC(currentCategoryDel);
@@ -139,26 +105,6 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
         actions.setCurrentCategoryIdAC(id)
     };
 
-    const removeCategoryNoteInfo = (id) => {
-        actions.removeArrCategoryOfNoteAC(id);
-    };
-
-    const getActiveCategory = category => {
-        actions.setActiveCategoryAC(category);
-    };
-
-    const addChildCategory = (id, value) => {
-        actions.addChildCategoryAC(id, value);
-    };
-
-    const getCategoryBeforeEdit = currentCategory => {
-        actions.setCurrentCategoryAC(currentCategory)
-    }
-
-    const getParentCategory = (value) => {
-        actions.setParentCategoryAC(value)
-    };
-
     const cleanValue = () => {
         actions.changeNoteValueAC('')
         actions.changeTagsValueAC('');
@@ -167,19 +113,11 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
         actions.changeColorValueAC('orange');
     };
 
-    const getColorValue = (color) => {
-        actions.changeColorValueAC(color)
-    };
-
     const clickItem = (e) => {
         e.target.blur();
-        changeNoteInfo(true);
+        setNoteInfo(true)
         cleanValue();
-        cleanId();
-    };
-
-    const getSeacrhValue = (value) => {
-        actions.changeSearchValueAC(value)
+        actions.changeCurrentIdNoteAC(null)
     };
 
     const classes = useStyles();
@@ -195,11 +133,11 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
                       editCategoryItem={editCategoryItem}
                       currentIdTag={currentIdTag}
                       currentIdCategory={currentIdCategory}
-                      getActiveTag={getActiveTag}
-                      getActiveCategory={getActiveCategory}
+                      getActiveTag={actions.changeActiveTagAC}
+                      getActiveCategory={actions.setActiveCategoryAC}
                       category={category}
-                      getTagBeforeEdit={getTagBeforeEdit}
-                      getCategoryBeforeEdit={getCategoryBeforeEdit}
+                      getTagBeforeEdit={actions.setCurrentTagAC}
+                      getCategoryBeforeEdit={actions.setCurrentCategoryAC}
                       removeCategory={removeCategory}
                       tree={tree}
                       removeTag={removeTag}/>
@@ -209,9 +147,9 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
                 <Filter activeTag={activeTag}
                         activeCategory={activeCategory}
                         searchValue={searchValue}
-                        getActiveTag={getActiveTag}
-                        getSeacrhValue={getSeacrhValue}
-                        getActiveCategory={getActiveCategory}
+                        getActiveTag={actions.changeActiveTagAC}
+                        getSeacrhValue={actions.changeSearchValueAC}
+                        getActiveCategory={actions.setActiveCategoryAC}
                 />
                 
                 <AddNote clickItem={clickItem} />
@@ -220,9 +158,9 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
                 notes.length
                 ? 
                     <NotesList  notes={notes} 
-                                removeNote={removeNote} 
-                                getActiveTag={getActiveTag}
-                                getActiveCategory={getActiveCategory}
+                                removeNote={actions.removeNoteAC}
+                                getActiveTag={actions.changeActiveTagAC}
+                                getActiveCategory={actions.setActiveCategoryAC}
                                 activeTag={activeTag}
                                 activeCategory={activeCategory}
                                 searchValue={searchValue}
@@ -235,28 +173,28 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
             {
                 isNoteInfo 
                 ? 
-                    <NoteInfoContainer  addNote={addNote}
+                    <NoteInfoContainer  addNote={actions.addNoteAC}
                                         addTag={addTag}
                                         tags={tags}
-                                        changeNoteInfo={changeNoteInfo}
+                                        changeNoteInfo={setNoteInfo}
                                         currentIdNote={currentIdNote}
-                                        changeTag={changeTag}
+                                        changeTag={actions.changeTagsValueAC}
                                         tagValue={tagValue}
                                         categoryValue={categoryValue}
                                         addTagsArrOfNote={actions.addTagOfNoteAC}
                                         tagsArrNote={tagsArrNote}
-                                        removeTagNoteInfo={removeTagNoteInfo}
+                                        removeTagNoteInfo={actions.removeArrTagOfNoteAC}
                                         colorArr={colorArr}
                                         colorValue={colorValue}
-                                        getColorValue={getColorValue}
+                                        getColorValue={ actions.changeColorValueAC}
                                         addCategory={actions.addCategoryAC}
                                         category={category}
                                         idParentCategory={idParentCategory}
-                                        getParentCategory={getParentCategory}
-                                        addChildCategory={addChildCategory}
+                                        getParentCategory={actions.setParentCategoryAC}
+                                        addChildCategory={actions.addChildCategoryAC}
                                         categoryArrNote={categoryArrNote}
                                         addCategoryArrOfNote={actions.addCategoryOfNoteAC}
-                                        removeCategoryNoteInfo={removeCategoryNoteInfo}
+                                        removeCategoryNoteInfo={actions.removeArrCategoryOfNoteAC}
                                         noteValue={noteValue}
                     />
                 :   null
@@ -287,4 +225,6 @@ const mapStateToProps = state => ({
     colorArr: getColorArr(state)
 });
 
-export default connect(mapStateToProps, (dispatch) => ({actions: bindActionCreators({...tagsActionCreatores, ...noteActionCreatores, ...categoriesActionCreatores}, dispatch)}))(NotesContainer);
+export default connect(mapStateToProps, (dispatch) => ({actions: bindActionCreators({
+        ...tagsActionCreatores, ...noteActionCreatores, ...categoriesActionCreatores
+    }, dispatch)}))(NotesContainer);
