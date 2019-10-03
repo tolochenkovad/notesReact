@@ -6,6 +6,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import CategoryItem from './CategoryItem';
 import { makeStyles } from '@material-ui/styles';
+import {FormattedMessage} from "react-intl";
 
 const useStyles = makeStyles( theme => ({
     headline:{
@@ -56,7 +57,9 @@ const CategoryLibrary = ({tree, getActiveFilterCategory, onEditCategory, isEditI
 
     return (
         <>
-            <Typography variant="h3" className={classes.headline}>Category library</Typography>
+            <Typography variant="h3" className={classes.headline}>
+                <FormattedMessage id="categoryInfoComponent.title" defaultMessage="Default message" />
+            </Typography>
                 <List className={classes.categoryList}>
                     {
                         tree.map( item => item.children && item.parent === null 

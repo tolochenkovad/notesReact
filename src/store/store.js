@@ -5,6 +5,7 @@ import notesReducer from '../app/Notes/redux/reducer';
 import rootSaga from '../sagas/sagas';
 import tagsReducer from "../app/InfoPage/redux-tags/reducer";
 import categoriesReducer from "../app/InfoPage/redux-categories/reducer";
+import localeReducer from "../app/Translator/localereducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -12,7 +13,8 @@ const sagaMiddleware = createSagaMiddleware();
 const reducers = combineReducers({
     notes: notesReducer,
     tags: tagsReducer,
-    categories: categoriesReducer
+    categories: categoriesReducer,
+    locale: localeReducer
 });
 
 const store = createStore( reducers, composeWithDevTools(applyMiddleware(sagaMiddleware)) );

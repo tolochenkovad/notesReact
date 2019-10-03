@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import TextField  from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/styles';
+import {FormattedMessage} from "react-intl";
 
 const useStyles = makeStyles( theme => ({
     filter:{
@@ -46,11 +47,19 @@ const Filter = ({activeTag, activeCategory, searchValue,
                 activeTag  === '' && activeCategory  === ''
                 ? 
                     <FormControl component="form" className={classes.filter} onSubmit={e => e.preventDefault()}>
-                        <TextField  type="text"
-                                    value={searchValue}
-                                    onChange={e => getSeacrhValue(e.target.value)} 
-                                    className={classes.search}
-                                    placeholder="Search" />  
+                        <FormattedMessage id="filterPlaceholder.text" defaultMessage="Default message">
+                            {
+                                placeholderText => (
+                                    <TextField  type="text"
+                                                value={searchValue}
+                                                onChange={e => getSeacrhValue(e.target.value)}
+                                                className={classes.search}
+                                                placeholder={placeholderText}
+                                    />
+                                )
+                            }
+                        </FormattedMessage>
+
                     </FormControl>
                     
                 :   

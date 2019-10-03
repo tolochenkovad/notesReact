@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import TagItem from './TagItem';
 import { makeStyles } from '@material-ui/styles';
+import {FormattedMessage} from "react-intl";
 
 const useStyles = makeStyles( theme => ({
     headline:{
@@ -42,14 +43,16 @@ const useStyles = makeStyles( theme => ({
 }));
 
 
-const TagLibrary = ({tags, getActiveFilterTag, onEditTag, isTagEdit, 
+const TagLibrary = ({tags, getActiveFilterTag, onEditTag, isTagEdit,
     currentIdTag, tagValue, removeTag, addTag, onBlurFunc}) => {
 
     const classes = useStyles();
 
     return(
         <>
-            <Typography variant="h2" className={classes.headline}>Tag library</Typography>
+            <Typography variant="h2" className={classes.headline}>
+                <FormattedMessage id="tagInfoComponent.title" defaultMessage="Default message" />
+            </Typography>
                 <List className={classes.tagsList}>
                     {
                         tags.map( (tag, index) =>

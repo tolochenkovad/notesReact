@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/styles';
+import {FormattedMessage} from "react-intl";
 
 const useStyles = makeStyles( theme => ({
     addNote: {
@@ -42,12 +43,19 @@ const AddNote = ({clickItem}) => {
     return(
         <Grid className={classes.addNote}>
                 <i className={clsx(classes.icon, 'fas fa-plus')} />
-                <Grid
-                    className = {classes.textarea}
-                    onClick = {clickItem}
-                    component="input"
-                    placeholder = "Click to add note"
-                />
+            <FormattedMessage id="addNotePlaceholder.text" defaultMessage="Default message">
+                {
+                    placeholderText => (
+                        <Grid
+                            className = {classes.textarea}
+                            onClick = {clickItem}
+                            component="input"
+                            placeholder = {placeholderText}
+                        />
+                    )
+                }
+            </FormattedMessage>
+
         </Grid>
     )
 };

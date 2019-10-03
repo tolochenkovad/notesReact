@@ -11,7 +11,7 @@ const useStyles = makeStyles( theme => ({
     }
 }));
 
-const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag, 
+const Info = ({tags, removeTag, tagValue, categoryValue, currentIdTag,
     currentIdCategory, addTag, editCategoryItem, editTag, getActiveTag,
     getActiveCategory, getTagBeforeEdit, removeCategory, 
     getCategoryBeforeEdit, editCategory, tree}) => {
