@@ -30,7 +30,7 @@ const useStyles = makeStyles( theme => ({
             position: 'absolute',
             left: 0,
             bottom: 0,
-            transform: 'Translator(-30px)'
+            transform: 'translator(-30px)'
         },
         '&:hover':{
             background: 'white'

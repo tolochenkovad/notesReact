@@ -5,7 +5,7 @@ import notesReducer from '../app/Notes/redux/reducer';
 import rootSaga from '../sagas/sagas';
 import tagsReducer from "../app/InfoPage/redux-tags/reducer";
 import categoriesReducer from "../app/InfoPage/redux-categories/reducer";
-import localeReducer from "../app/Translator/localereducer";
+import localeReducer from "../utils/translator/localereducer";
 
 const sagaMiddleware = createSagaMiddleware();
 

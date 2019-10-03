@@ -4,8 +4,8 @@ import Header from './app/Header/Header';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {connect} from "react-redux";
 import {IntlProvider} from "react-intl";
-import languageObject from "./app/Translator/messages";
-import {changeLocale} from "./app/Translator/localereducer";
+import languageObject from "./utils/translator/messages";
+import {changeLocale} from "./utils/translator/localereducer";
 
 const App = ({locale, changeLocale}) => (
     <IntlProvider locale={locale} messages={languageObject[locale]}>
