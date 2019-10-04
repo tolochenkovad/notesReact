@@ -35,7 +35,7 @@ const tagsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 tags: [...state.tags].map(item => {
-                    if (item.id === action.action.id) item.tag = action.action.tag;
+                    if (item.id === action.action.id || item.tag === action.action.tag) item.tag = action.action.tag;
                     return item;
                 })
             };

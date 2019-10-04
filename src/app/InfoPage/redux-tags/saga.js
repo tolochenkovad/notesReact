@@ -11,7 +11,9 @@ import {getTags, getTagsOfNote} from "./selectors";
 
 function* addTag(action) {
     const tags = yield select(getTags);
-    if ( tags.some(item => item.id === action.id) ) {
+    debugger;
+    if ( tags.some(item => item.id === action.id || item.tag === action.tag )) {
+        debugger;
         yield put({ type: CHANGE_CURRENT_TAG, action});
         const tags2 = yield select(getTags);
         setStorage("tags", tags2);
