@@ -19,9 +19,9 @@ let initialState = {
     notes:  getStorage("notes") || [],
     noteValue: '',
     currentIdNote: null,
-    colorValue: 'orange',
+    colorValue: '#fdcb6e',
     searchValue: '',
-    colorArr: ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
+    colorArr: ['#ff7675', '#fdcb6e', '#EE5A24', '#00b894', '#74b9ff', '#9980FA']
 };
 
 const notesReducer = (state = initialState, action) => {

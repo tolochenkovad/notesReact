@@ -69,7 +69,7 @@ const useStyles = makeStyles( theme => ({
     color:{
         width: theme.spacing(13.75),
         height: theme.spacing(3.75),
-        background: 'yellow',
+        background: '#74b9ff',
         fontSize: theme.spacing(2.5)
     },
     categoryWrap:{
@@ -122,7 +122,7 @@ const useStyles = makeStyles( theme => ({
         alignItems: 'flex-start'
     },
     btn:{
-        width: theme.spacing(25),
+        width: '20%',
         background: '#a15b34',
         position: 'absolute',
         bottom: '-1%',

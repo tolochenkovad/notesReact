@@ -66,6 +66,7 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
         setTree(buildTree(category));
     }, [category]);
 
+
     const editNote = (id, text, tags, categories, color) => {
         setNoteInfo(true);
         actions.changeNoteValueAC(text);
@@ -110,7 +111,7 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
         actions.changeTagsValueAC('');
         actions.changeTagOfNoteAC([]);
         actions.changeCategoryOfNoteAC([]);
-        actions.changeColorValueAC('orange');
+        actions.changeColorValueAC('#fdcb6e');
     };
 
     const clickItem = (e) => {
