@@ -75,9 +75,11 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
     };
 
     const onPressEnter = e => {
-        if (e.keyCode === 13 || e.keyCode === 27) {
+        if (e.keyCode === 13) {
             e.preventDefault();
             refBtn.current.click();
+            changeNoteInfo(false);
+        } else if (e.keyCode === 27) {
             changeNoteInfo(false);
         }
     };
