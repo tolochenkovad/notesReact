@@ -2,10 +2,13 @@ import React from 'react';
 import NotesContainer from './app/Notes/components/NotesContainer';
 import Header from './app/Header/Header';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {IntlProvider} from "react-intl";
 import languageObject from "./utils/translator/messages";
 import {changeLocale} from "./utils/translator/localereducer";
+import store from "./store/store";
+import {ThemeProvider} from "@material-ui/styles";
+import theme from "./lib/material-ui/theme";
 
 const App = ({locale, changeLocale}) => (
     <IntlProvider locale={locale} messages={languageObject[locale]}>
@@ -19,4 +22,18 @@ const mapStateToProps = (state) => ({
     locale: state.locale.locale
 });
 
-export default connect(mapStateToProps, {changeLocale})(App);
+const AppContainer =  connect(mapStateToProps, {changeLocale})(App);
+
+const MyApp = () => (
+    <Provider store={store}>
+        <ThemeProvider theme={theme}>
+            <AppContainer />
+        </ThemeProvider>
+    </Provider>
+);
+
+export default MyApp;
+
+
+
+
