@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 import {FormattedMessage} from "react-intl";
 
-const useStyles = makeStyles( theme => ({
+const useStyles = makeStyles(theme => ({
     addNote: {
         position: 'relative',
         borderBottom: '1px solid #ededed'
     },
-    textarea:{ 
+    textarea: {
         fontFamily: '"Montserrat", sans-serif',
         fontSize: theme.spacing(2.5),
         padding: 0,
@@ -28,7 +28,7 @@ const useStyles = makeStyles( theme => ({
         textShadow: '0 0 0 black',
         cursor: 'pointer'
     },
-    icon:{
+    icon: {
         position: 'absolute',
         fontSize: theme.spacing(3),
         top: theme.spacing(3.75),
@@ -40,17 +40,17 @@ const useStyles = makeStyles( theme => ({
 const AddNote = ({clickItem}) => {
     const classes = useStyles();
 
-    return(
+    return (
         <Grid className={classes.addNote}>
-                <i className={clsx(classes.icon, 'fas fa-plus')} />
+            <i className={clsx(classes.icon, 'fas fa-plus')}/>
             <FormattedMessage id="addNotePlaceholder.text" defaultMessage="Default message">
                 {
                     placeholderText => (
                         <Grid
-                            className = {classes.textarea}
-                            onClick = {clickItem}
+                            className={classes.textarea}
+                            onClick={clickItem}
                             component="input"
-                            placeholder = {placeholderText}
+                            placeholder={placeholderText}
                         />
                     )
                 }

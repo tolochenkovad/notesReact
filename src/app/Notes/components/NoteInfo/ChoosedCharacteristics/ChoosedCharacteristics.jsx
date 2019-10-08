@@ -2,21 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import ChoosedItem from './ChoosedItem';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 
-const useStyles = makeStyles( theme => ({
-    characteristics:{
+const useStyles = makeStyles(theme => ({
+    characteristics: {
         background: '#e0d8d8',
         width: '60%'
     },
-    tagsBox:{
+    tagsBox: {
         margin: 0,
         padding: theme.spacing(2.5),
-        listStyle: 'none',   
+        listStyle: 'none',
         display: 'flex',
         flexWrap: 'wrap'
     },
-    choosedTag:{
+    choosedTag: {
         background: '#baa4a4',
         padding: theme.spacing(0.625, 2.5),
         borderRadius: theme.spacing(1.875),
@@ -25,21 +25,21 @@ const useStyles = makeStyles( theme => ({
         marginTop: theme.spacing(1.25),
         width: 'auto'
     },
-    tagName:{
+    tagName: {
         marginLeft: theme.spacing(1.25)
     },
-    iconDel:{
+    iconDel: {
         marginLeft: theme.spacing(1.25),
         cursor: 'pointer'
     },
-    categoryBox:{
+    categoryBox: {
         margin: 0,
         padding: theme.spacing(0, 2.5, 2.5, 2.5),
-        listStyle: 'none',   
+        listStyle: 'none',
         display: 'flex',
         flexWrap: 'wrap'
     },
-    choosedCategory:{
+    choosedCategory: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -58,20 +58,20 @@ const ChoosedCharacteristics = ({tagsArrNote, categoryArrNote, delTag, delCatego
 
     const classes = useStyles();
 
-    return(
+    return (
         <Grid className={classes.characteristics}>
 
-            <ChoosedItem     itemArr={tagsArrNote} 
-                             value={'tag'}
-                             classes={classes}
-                             removeFunc={delTag}>
-                <i className="fas fa-paperclip fa-xs" />
+            <ChoosedItem itemArr={tagsArrNote}
+                         value={'tag'}
+                         classes={classes}
+                         removeFunc={delTag}>
+                <i className="fas fa-paperclip fa-xs"/>
             </ChoosedItem>
-            
-            <ChoosedItem     itemArr={categoryArrNote} 
-                             value={'category'} 
-                             classes={classes}
-                             removeFunc={delCategory}
+
+            <ChoosedItem itemArr={categoryArrNote}
+                         value={'category'}
+                         classes={classes}
+                         removeFunc={delCategory}
             />
         </Grid>
     )

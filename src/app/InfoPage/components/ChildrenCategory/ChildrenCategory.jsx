@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import ChildrenCategoryItem from './ChildrenCategoryItem';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 
-const useStyles = makeStyles( theme => ({
-    childBox:{
+const useStyles = makeStyles(theme => ({
+    childBox: {
         marginBottom: theme.spacing(1.25),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start'
     },
-    childWrap:{
+    childWrap: {
         display: 'flex'
     },
-    category:{
+    category: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -24,7 +24,7 @@ const useStyles = makeStyles( theme => ({
         margin: theme.spacing(0, 2.5),
         position: 'relative',
         marginBottom: theme.spacing(1.25),
-        '&:before':{
+        '&:before': {
             content: '=>',
             color: 'black',
             position: 'absolute',
@@ -32,32 +32,34 @@ const useStyles = makeStyles( theme => ({
             bottom: 0,
             transform: 'translator(-30px)'
         },
-        '&:hover':{
+        '&:hover': {
             background: 'white'
         }
     },
-    iconDel:{
+    iconDel: {
         marginLeft: theme.spacing(1.25),
         cursor: 'pointer'
     },
-    iconEdit:{
+    iconEdit: {
         marginRight: theme.spacing(1.25),
         cursor: 'pointer'
     }
 }));
 
-const ChildrenCategory = ({children, removeCategory, isEditIcon,
+const ChildrenCategory = ({
+                              children, removeCategory, isEditIcon,
                               editCategoryItem, onEditCategory, categoryValue, onBlurFunc,
-    currentIdCategory, getActiveFilterCategory}) => {
+                              currentIdCategory, getActiveFilterCategory
+                          }) => {
 
     const classes = useStyles();
-    
-    return(
+
+    return (
         <Grid className={classes.childBox}>
             {
-                children.map(child => 
-                    child.children 
-                    ? 
+                children.map(child =>
+                    child.children
+                        ?
                         <Grid className={classes.childWrap} key={child.id}>
                             <ChildrenCategoryItem getActiveFilterCategory={getActiveFilterCategory}
                                                   onEditCategory={onEditCategory}
@@ -69,30 +71,35 @@ const ChildrenCategory = ({children, removeCategory, isEditIcon,
                                                   removeCategory={removeCategory}
                                                   classes={classes}
                                                   child={child}
-                            /> 
+                            />
                             {
-                                child.children && 
-                                <ChildrenCategory children={child.children} removeCategory={removeCategory} 
-                                isEditIcon={isEditIcon} editCategoryItem={editCategoryItem} onBlurFunc={onBlurFunc}
-                                categoryValue={categoryValue} getActiveFilterCategory={getActiveFilterCategory} 
-                                currentIdCategory={currentIdCategory} onEditCategory={onEditCategory} />
+                                child.children &&
+                                <ChildrenCategory children={child.children}
+                                                  removeCategory={removeCategory}
+                                                  isEditIcon={isEditIcon}
+                                                  editCategoryItem={editCategoryItem}
+                                                  onBlurFunc={onBlurFunc}
+                                                  categoryValue={categoryValue}
+                                                  getActiveFilterCategory={getActiveFilterCategory}
+                                                  currentIdCategory={currentIdCategory}
+                                                  onEditCategory={onEditCategory}/>
                             }
 
                         </Grid>
-                    :
-                        <ChildrenCategoryItem   getActiveFilterCategory={getActiveFilterCategory}
-                                                onEditCategory={onEditCategory}
-                                                isEditIcon={isEditIcon}
-                                                currentIdCategory={currentIdCategory}
-                                                categoryValue={categoryValue}
-                                                editCategoryItem={editCategoryItem}
-                                                onBlurFunc={onBlurFunc}
-                                                removeCategory={removeCategory}
-                                                child={child}
-                                                classes={classes}
-                                                key={child.id}
-                        /> 
-                    )    
+                        :
+                        <ChildrenCategoryItem getActiveFilterCategory={getActiveFilterCategory}
+                                              onEditCategory={onEditCategory}
+                                              isEditIcon={isEditIcon}
+                                              currentIdCategory={currentIdCategory}
+                                              categoryValue={categoryValue}
+                                              editCategoryItem={editCategoryItem}
+                                              onBlurFunc={onBlurFunc}
+                                              removeCategory={removeCategory}
+                                              child={child}
+                                              classes={classes}
+                                              key={child.id}
+                        />
+                )
             }
         </Grid>
     )

@@ -4,21 +4,36 @@ import clsx from 'clsx';
 import EditElement from '../EditElement/EditElement';
 import Grid from '@material-ui/core/Grid';
 
-const ChildrenCategoryItem = ({getActiveFilterCategory, onEditCategory, isEditIcon, currentIdCategory,
-    categoryValue, editCategoryItem, onBlurFunc, removeCategory, classes, child}) => {
+const ChildrenCategoryItem = ({
+                                  getActiveFilterCategory, onEditCategory, isEditIcon, currentIdCategory,
+                                  categoryValue, editCategoryItem, onBlurFunc, removeCategory, classes, child
+                              }) => {
 
-    return(
+    const onClickEditCategory = () => {
+        onEditCategory(child.id, child.categoryValue)
+    };
+
+    const onClickRemoveCategory = () => {
+        removeCategory(child.id, child.categoryValue)
+    };
+
+    return (
         <Grid onClick={getActiveFilterCategory} className={classes.category}>
-            <i onClick={() => onEditCategory(child.id, child.categoryValue)} className={clsx(classes.iconEdit, 'fas fa-edit')} />
+            <i onClick={onClickEditCategory}
+               className={clsx(classes.iconEdit, 'fas fa-edit')}/>
             {
                 isEditIcon && currentIdCategory === child.id
-                    ? 
-                        <EditElement elementValue={categoryValue} id={child.id} addElement={editCategoryItem} onBlurFun={onBlurFunc} />
-                    : 
-                        child.categoryValue
+                    ?
+                    <EditElement elementValue={categoryValue}
+                                 id={child.id}
+                                 addElement={editCategoryItem}
+                                 onBlurFun={onBlurFunc}/>
+                    :
+                    child.categoryValue
             }
-            <i onClick={() => removeCategory(child.id, child.categoryValue)} className={clsx(classes.iconDel, 'fas fa-times')} />
-         </Grid> 
+            <i onClick={onClickRemoveCategory}
+               className={clsx(classes.iconDel, 'fas fa-times')}/>
+        </Grid>
     )
 };
 
