@@ -18,10 +18,10 @@ function* removeCategory(action) {
 
 function* addCategory(action) {
     const category = yield select(getCategories);
-    if ( category.some(item => item.categoryValue === action.value) ) {
+    if ( category.some(item => item.categoryValue === action.payload.value) ) {
         alert('This category is already added!');
         return false;
-    }else if ( category.some(item => item.id === action.id) ) {
+    }else if ( category.some(item => item.id === action.payload.id) ) {
         yield put({ type: CHANGE_CURRENT_CATEGORY, action});
         const category2 = yield select(getCategories);
         setStorage("categories", category2);
@@ -35,7 +35,7 @@ function* addCategory(action) {
 
 function* addCategoryOfNote(action) {
     const categoryArrNote = yield select(getCategoriesArrNote);
-    if ( categoryArrNote.some(item =>  item.category === action.currentCategory) ) {
+    if ( categoryArrNote.some(item =>  item.category === action.payload.currentCategory) ) {
         alert('This category is already added!');
         return;
     }
@@ -45,17 +45,18 @@ function* addCategoryOfNote(action) {
 function* addChildCategory(action) {
     const category = yield select(getCategories);
     const parentCategory = yield select(getParentCategory);
-
     let parent = null;
-    let newCategory = [...category];
+    const newCategory = [...category];
     newCategory.forEach(item => {
         if (item.categoryValue === parentCategory){
             parent = item.id;
-            let {id, value} = action;
-            store.dispatch({ type: ADD_CATEGORY_SAGA, id, value, parent})
+            const {payload} = action;
+            payload.parent = parent;
+            store.dispatch({ type: ADD_CATEGORY_SAGA, payload})
         }
     });
-    yield put({ type: SET_ID_PARENT, parent});
+    const payload =  parent;
+    yield put({ type: SET_ID_PARENT, payload});
 }
 
 function* categoriesSaga() {
