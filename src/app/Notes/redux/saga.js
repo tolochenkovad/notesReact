@@ -15,45 +15,45 @@ import {
 import {getNote} from "./selectors";
 import {setStorage} from "../../../utils/localStorage";
 
-function* addNote(action) {
+function* addNote({payload}) {
     const notes = yield select(getNote);
-    if (notes.some(note => note.id === action.payload.id)) {
-        yield put({type: EDIT_NOTE, action});
+    if (notes.some(note => note.id === payload.id)) {
+        yield put({type: EDIT_NOTE, payload});
         const notes2 = yield select(getNote);
         setStorage("notes", notes2);
         return;
     }
-    yield put({type: ADD_NOTE, action});
+    yield put({type: ADD_NOTE, payload});
     let newNotes = yield select(getNote);
     setStorage("notes", newNotes);
 }
 
-function* removeNote(action) {
-    yield put({type: REMOVE_NOTE, action});
+function* removeNote({payload}) {
+    yield put({type: REMOVE_NOTE, payload});
     const notes = yield select(getNote);
     setStorage("notes", notes);
 }
 
-function* changeTagOfNote(action) {
-    yield put({type: CHECKING_TAGS, action});
+function* changeTagOfNote({payload}) {
+    yield put({type: CHECKING_TAGS, payload});
     const notes = yield select(getNote);
     setStorage("notes", notes);
 }
 
-function* changeCategoryOfNote(action) {
-    yield put({type: CHECKING_CATEGORY, action});
+function* changeCategoryOfNote({payload}) {
+    yield put({type: CHECKING_CATEGORY, payload});
     const notes = yield select(getNote);
     setStorage("notes", notes);
 }
 
-function* removeTagOfNote(action) {
-    yield put({type: REMOVE_TAG_OF_NOTE, action});
+function* removeTagOfNote({payload}) {
+    yield put({type: REMOVE_TAG_OF_NOTE, payload});
     const notes = yield select(getNote);
     setStorage("notes", notes);
 }
 
-function* removeCategoryOfNote(action) {
-    yield put({type: REMOVE_CATEGORY_OF_NOTE, action});
+function* removeCategoryOfNote({payload}) {
+    yield put({type: REMOVE_CATEGORY_OF_NOTE, payload});
     const notes = yield select(getNote);
     setStorage("notes", notes);
 }
