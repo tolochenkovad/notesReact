@@ -11,7 +11,8 @@ import {getCategories, getCategoriesArrNote, getParentCategory} from "./selector
 import store from '../../../store/store';
 
 function* removeCategory(action) {
-    yield put({ type: REMOVE_CATEGORY, action});
+    const {payload} = action;
+    yield put({ type: REMOVE_CATEGORY, payload});
     const categories = yield select(getCategories);
     setStorage("categories", categories);
 }
@@ -22,12 +23,14 @@ function* addCategory(action) {
         alert('This category is already added!');
         return false;
     }else if ( category.some(item => item.id === action.payload.id) ) {
-        yield put({ type: CHANGE_CURRENT_CATEGORY, action});
+        const {payload} = action;
+        yield put({ type: CHANGE_CURRENT_CATEGORY, payload});
         const category2 = yield select(getCategories);
         setStorage("categories", category2);
         return false;
     } else {
-        yield put({ type: ADD_CATEGORY, action});
+        const {payload} = action;
+        yield put({ type: ADD_CATEGORY, payload});
         const categories = yield select(getCategories);
         setStorage("categories", categories);
     }
@@ -38,8 +41,9 @@ function* addCategoryOfNote(action) {
     if ( categoryArrNote.some(item =>  item.category === action.payload.currentCategory) ) {
         alert('This category is already added!');
         return;
-    }
-    yield put({ type: ADD_CATEGORY_OF_NOTE, action});
+    };
+    const {payload} = action;
+    yield put({ type: ADD_CATEGORY_OF_NOTE, payload});
 }
 
 function* addChildCategory(action) {
