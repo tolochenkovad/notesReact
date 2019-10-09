@@ -6,8 +6,16 @@ import rootSaga from '../sagas/sagas';
 import tagsReducer from "../app/InfoPage/redux-tags/reducer";
 import categoriesReducer from "../app/InfoPage/redux-categories/reducer";
 import localeReducer from "../utils/translator/localereducer";
+import storage from 'redux-persist/lib/storage';
+import { persistStore, persistReducer } from 'redux-persist'
 
 const sagaMiddleware = createSagaMiddleware();
+
+const persistConfig = {
+    key: 'root',
+    storage,
+    blacklist: ['locale']
+};
 
 
 const reducers = combineReducers({
@@ -17,7 +25,11 @@ const reducers = combineReducers({
     locale: localeReducer
 });
 
-const store = createStore( reducers, composeWithDevTools(applyMiddleware(sagaMiddleware)) );
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+const store = createStore( persistedReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)) );
+
+export let persistor = persistStore(store);
 
 sagaMiddleware.run(rootSaga);
 

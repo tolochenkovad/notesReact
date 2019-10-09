@@ -1,4 +1,3 @@
-import {getStorage} from "../../../utils/localStorage";
 import {
     ADD_CATEGORY,
     ADD_CATEGORY_OF_NOTE,
@@ -14,7 +13,7 @@ import {
 } from "./constants";
 
 let initialState = {
-    category: getStorage("categories") || [],
+    category: [],
     categoryArrNote: [],
     categoryValue: '',
     parentCategory: '',

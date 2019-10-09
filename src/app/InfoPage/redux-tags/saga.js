@@ -6,20 +6,15 @@ import {
     REMOVE_TAG_SAGA
 } from "./constants";
 import {takeLatest, put, select} from "redux-saga/effects";
-import {setStorage} from "../../../utils/localStorage";
 import {getTags, getTagsOfNote} from "./selectors";
 
 function* addTag({payload}) {
     const tags = yield select(getTags);
     if (tags.some(item => item.id === payload.id || item.tag === payload.tag)) {
         yield put({type: CHANGE_CURRENT_TAG, payload});
-        const tags2 = yield select(getTags);
-        setStorage("tags", tags2);
         return;
     }
     yield put({type: ADD_TAG, payload});
-    const tags3 = yield select(getTags);
-    setStorage("tags", tags3);
 }
 
 function* addTagOfNote({payload}) {
@@ -33,8 +28,6 @@ function* addTagOfNote({payload}) {
 
 function* removeTag({payload}) {
     yield put({type: REMOVE_TAG, payload});
-    const tags = yield select(getTags);
-    setStorage("tags", tags);
 }
 
 

@@ -11,12 +11,11 @@ import {
     REMOVE_NOTE,
     REMOVE_TAG_OF_NOTE
 } from './constants';
-import {getStorage} from "../../../utils/localStorage";
 import moment from "moment";
 
 
 let initialState = {
-    notes: getStorage("notes") || [],
+    notes: [],
     noteValue: '',
     currentIdNote: null,
     colorValue: '#fdcb6e',

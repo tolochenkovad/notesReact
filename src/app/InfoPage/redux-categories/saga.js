@@ -1,5 +1,4 @@
 import { takeLatest, put, select } from "redux-saga/effects";
-import {setStorage} from "../../../utils/localStorage";
 import {
     ADD_CATEGORY, ADD_CATEGORY_OF_NOTE, ADD_CATEGORY_OF_NOTE_SAGA,
     ADD_CATEGORY_SAGA, ADD_CHILD_CATEGORY_SAGA,
@@ -12,8 +11,6 @@ import store from '../../../store/store';
 
 function* removeCategory({payload}) {
     yield put({ type: REMOVE_CATEGORY, payload});
-    const categories = yield select(getCategories);
-    setStorage("categories", categories);
 }
 
 function* addCategory({payload}) {
@@ -23,13 +20,9 @@ function* addCategory({payload}) {
         return false;
     }else if ( category.some(item => item.id === payload.id) ) {
         yield put({ type: CHANGE_CURRENT_CATEGORY, payload});
-        const category2 = yield select(getCategories);
-        setStorage("categories", category2);
         return false;
     } else {
         yield put({ type: ADD_CATEGORY, payload});
-        const categories = yield select(getCategories);
-        setStorage("categories", categories);
     }
 }
 

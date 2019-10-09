@@ -1,4 +1,3 @@
-import {getStorage} from "../../../utils/localStorage";
 import {
     ADD_TAG,
     ADD_TAG_OF_NOTE, CHANGE_ACTIVE_TAG, CHANGE_CURRENT_ID_TAG,
@@ -9,7 +8,7 @@ import {
 
 
 let initialState = {
-    tags: getStorage("tags") || [
+    tags: [
         {id: 1, tag: 'important'},
         {id: 2, tag: 'home'},
         {id: 3, tag: 'work'}
