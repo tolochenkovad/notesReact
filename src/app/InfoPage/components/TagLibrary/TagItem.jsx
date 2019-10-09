@@ -4,21 +4,31 @@ import EditElement from '../EditElement/EditElement';
 import clsx from 'clsx';
 import ListItem from '@material-ui/core/ListItem';
 
-const TagItem = ({getActiveFilterTag, onEditTag, tag, isTagEdit, currentIdTag,
-    tagValue, addTag, onBlurFunc, classes, removeTag}) => {
+const TagItem = ({
+                     getActiveFilterTag, onEditTag, tag, isTagEdit, currentIdTag,
+                     tagValue, addTag, onBlurFunc, classes, removeTag
+                 }) => {
 
-    return(
+    const onClickEditTag = () => {
+        onEditTag(tag.id, tag.tag)
+    };
+
+    const onClickRemoveTag = () => {
+        removeTag(tag.id, tag.tag)
+    };
+
+    return (
         <ListItem onClick={getActiveFilterTag} className={classes.tag}>
-            <i onClick={() => onEditTag(tag.id, tag.tag)} className={clsx(classes.iconEdit, 'fas fa-edit')} />
+            <i onClick={onClickEditTag} className={clsx(classes.iconEdit, 'fas fa-edit')}/>
             {
                 isTagEdit && currentIdTag === tag.id
-                    ? 
-                        <EditElement elementValue={tagValue} id={tag.id} addElement={addTag} onBlurFun={onBlurFunc} />
-                    : 
-                        tag.tag
+                    ?
+                    <EditElement elementValue={tagValue} id={tag.id} addElement={addTag} onBlurFun={onBlurFunc}/>
+                    :
+                    tag.tag
             }
-            <i onClick={() => removeTag(tag.id, tag.tag)} className={clsx(classes.iconDel, 'fas fa-times')} />
-        </ListItem>   
+            <i onClick={onClickRemoveTag} className={clsx(classes.iconDel, 'fas fa-times')}/>
+        </ListItem>
     )
 };
 
@@ -32,7 +42,7 @@ TagItem.propTypes = {
     tagValue: PropTypes.string,
     addTag: PropTypes.func,
     onBlurFunc: PropTypes.func,
-    tag:PropTypes.object
+    tag: PropTypes.object
 };
 
 

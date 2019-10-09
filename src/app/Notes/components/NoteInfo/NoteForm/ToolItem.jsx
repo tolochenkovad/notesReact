@@ -10,30 +10,31 @@ const ToolItem = ({name, handleClick, classes}) => {
     let itemClass = '';
     let iconClass = '';
 
-    switch(name){
-        case 'tag':{
+    switch (name) {
+        case 'tag': {
             wrapClass = classes.tagWrap;
             itemClass = classes.tag;
             iconClass = classes.icon;
             break;
         }
-        case 'color':{
+        case 'color': {
             wrapClass = classes.colorWrap;
             itemClass = classes.color;
             iconClass = classes.icon;
             break;
         }
-        case 'category':{
+        case 'category': {
             wrapClass = classes.categoryWrap;
             itemClass = classes.category;
             iconClass = classes.categoryIcon;
             break;
         }
-        default: break;
+        default:
+            break;
     }
 
-    return(
-        <ListItem  className={wrapClass} onClick={handleClick}>
+    return (
+        <ListItem className={wrapClass} onClick={handleClick}>
             <Grid className={itemClass}>
                 <i className={clsx(iconClass, 'fas fa-plus')}><span>{name}</span></i>
             </Grid>
@@ -44,7 +45,7 @@ const ToolItem = ({name, handleClick, classes}) => {
 
 ToolItem.propTypes = {
     classes: PropTypes.object,
-    name:PropTypes.string,
+    name: PropTypes.string,
     handleClick: PropTypes.func
 
 };

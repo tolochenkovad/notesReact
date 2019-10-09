@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import NoteForm from './NoteForm/NoteForm';
 import ChoosedCharacteristics from './ChoosedCharacteristics/ChoosedCharacteristics';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 
-const useStyles = makeStyles( theme => ({
-   wrap:{
+const useStyles = makeStyles(theme => ({
+    wrap: {
         position: 'fixed',
         top: 0,
         right: 0,
@@ -17,14 +17,16 @@ const useStyles = makeStyles( theme => ({
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 10
-   }
+    }
 }));
 
-const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNote, 
-    noteValue, changeTag, addTagsArrOfNote, tagsArrNote, removeTagNoteInfo, 
-    colorArr, getColorValue, colorValue, addCategory, category,
-    getParentCategory, addChildCategory, categoryArrNote, idParentCategory, addCategoryArrOfNote,
-    removeCategoryNoteInfo}) => {
+const NoteInfoContainer = ({
+                               addNote, tags, addTag, changeNoteInfo, currentIdNote,
+                               noteValue, changeTag, addTagsArrOfNote, tagsArrNote, removeTagNoteInfo,
+                               colorArr, getColorValue, colorValue, addCategory, category,
+                               getParentCategory, addChildCategory, categoryArrNote, idParentCategory, addCategoryArrOfNote,
+                               removeCategoryNoteInfo
+                           }) => {
 
     const useInputValue = () => {
         const [value, setValue] = useState(noteValue);
@@ -91,7 +93,7 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
             setCategory(false);
             refTextarea.current.focus();
         }
-        
+
     };
 
     const onBlurFunc = () => {
@@ -116,7 +118,7 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
         getColorValue(value);
         setColorPicker(false);
         e.target.value = '';
-        refTextarea.current.focus();   
+        refTextarea.current.focus();
     };
 
     // tags func
@@ -137,11 +139,11 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
         e.target.value = '';
         setShowTag(false);
         refTextarea.current.focus();
-        
+
     };
 
     const submitHandlerTag = e => {
-        if (e.keyCode === 13){
+        if (e.keyCode === 13) {
             addTag(Date.now(), e.target.value);
             addTagsArrOfNote(e.target.value);
             setShowInputTag(false);
@@ -173,7 +175,7 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
         if (value === 'child') setChildCategory(true);
         if (value !== '' && value !== 'category' && value !== 'child') addCategoryArrOfNote(value);
         e.target.value = '';
-        refTextarea.current.focus();   
+        refTextarea.current.focus();
     };
 
     const clickParentCategory = e => {
@@ -182,28 +184,28 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
         getParentCategory(value);
         e.target.value = '';
         setChildCategory(false);
-        setParentChild(true);    
+        setParentChild(true);
     };
 
     const submitCategory = e => {
-        if (e.keyCode === 13){
+        if (e.keyCode === 13) {
             let id = Date.now();
             let parent = null;
             addCategory(id, e.target.value, parent);
             addCategoryArrOfNote(e.target.value, id, parent);
-            e.target.value="";
+            e.target.value = "";
             setNeighboringCategory(false);
             refTextarea.current.focus();
         }
         if (e.keyCode === 27) {
             setNeighboringCategory(false);
-            e.target.value="";
+            e.target.value = "";
             refTextarea.current.focus();
         }
     };
 
     const submitChildCategory = e => {
-        if (e.keyCode === 13){
+        if (e.keyCode === 13) {
             let id = Date.now();
             addChildCategory(id, e.target.value);
             addCategoryArrOfNote(e.target.value, id, idParentCategory);
@@ -222,48 +224,48 @@ const NoteInfoContainer = ({ addNote, tags, addTag, changeNoteInfo, currentIdNot
     };
 
     const classes = useStyles();
-    
+
     return (
         <Grid container={true} className={classes.wrap}>
-            <NoteForm   refForm={refForm} 
-                        tags={tags} 
-                        showTag={showTag} 
-                        showColorPicker={showColorPicker} 
-                        showInputTag={showInputTag}
-                        clickTag={clickTag} 
-                        refTextarea={refTextarea} 
-                        refBtn={refBtn}
-                        textarea={textarea}
-                        onFocusFunc={onFocusFunc} 
-                        onPressEnter={onPressEnter} 
-                        onPressTag={onPressTag}
-                        onPressColor={onPressColor}
-                        onPressCategory={onPressCategory} 
-                        submitHandler={submitHandler}
-                        onKeyFunc={onKeyFunc} 
-                        submitHandlerTag={submitHandlerTag} 
-                        onBlurFunc={onBlurFunc} 
-                        clickColor={clickColor}
-                        colorArr={colorArr}
-                        showCategory={showCategory} 
-                        clickCategory={clickCategory} 
-                        category={category} 
-                        isNeighboringCategory={isNeighboringCategory} 
-                        submitCategory={submitCategory}
-                        isChildCategory={isChildCategory} 
-                        clickParentCategory={clickParentCategory} 
-                        isParentHasChild={isParentHasChild} 
-                        submitChildCategory={submitChildCategory}
-                        tagsArrNote={tagsArrNote}
-                        delTag={delTag}
-                        categoryArrNote={categoryArrNote}
-                        delCategory={delCategory}
+            <NoteForm refForm={refForm}
+                      tags={tags}
+                      showTag={showTag}
+                      showColorPicker={showColorPicker}
+                      showInputTag={showInputTag}
+                      clickTag={clickTag}
+                      refTextarea={refTextarea}
+                      refBtn={refBtn}
+                      textarea={textarea}
+                      onFocusFunc={onFocusFunc}
+                      onPressEnter={onPressEnter}
+                      onPressTag={onPressTag}
+                      onPressColor={onPressColor}
+                      onPressCategory={onPressCategory}
+                      submitHandler={submitHandler}
+                      onKeyFunc={onKeyFunc}
+                      submitHandlerTag={submitHandlerTag}
+                      onBlurFunc={onBlurFunc}
+                      clickColor={clickColor}
+                      colorArr={colorArr}
+                      showCategory={showCategory}
+                      clickCategory={clickCategory}
+                      category={category}
+                      isNeighboringCategory={isNeighboringCategory}
+                      submitCategory={submitCategory}
+                      isChildCategory={isChildCategory}
+                      clickParentCategory={clickParentCategory}
+                      isParentHasChild={isParentHasChild}
+                      submitChildCategory={submitChildCategory}
+                      tagsArrNote={tagsArrNote}
+                      delTag={delTag}
+                      categoryArrNote={categoryArrNote}
+                      delCategory={delCategory}
             />
 
-            <ChoosedCharacteristics   tagsArrNote={tagsArrNote}
-                                      categoryArrNote={categoryArrNote}
-                                      delTag={delTag}
-                                      delCategory={delCategory}
+            <ChoosedCharacteristics tagsArrNote={tagsArrNote}
+                                    categoryArrNote={categoryArrNote}
+                                    delTag={delTag}
+                                    delCategory={delCategory}
             />
         </Grid>
     )

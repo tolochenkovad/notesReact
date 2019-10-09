@@ -9,28 +9,33 @@ const ChoosedItem = ({value, itemArr, removeFunc, classes, children}) => {
     let listClassBox = '';
     let itemClassBox = '';
 
-    switch(value){
-        case 'tag':{
+    switch (value) {
+        case 'tag': {
             listClassBox = classes.tagsBox;
             itemClassBox = classes.choosedTag;
             break;
         }
-        case 'category':{
+        case 'category': {
             listClassBox = classes.categoryBox;
             itemClassBox = classes.choosedCategory;
             break;
         }
-        default: break;
+        default:
+            break;
     }
 
-    return(
+    const onClickRemove = (item) => {
+        removeFunc(item.id)
+    };
+
+    return (
         <List className={listClassBox}>
             {
                 itemArr.map(item =>
                     <ListItem key={item.id} className={itemClassBox}>
                         {children}
-                        <Typography variant="body2" className={classes.tagName} >{item[`${value}`]}</Typography>
-                        <i onClick={() => removeFunc(item.id)} className={clsx(classes.iconDel, 'fas fa-times')} />
+                        <Typography variant="body2" className={classes.tagName}>{item[`${value}`]}</Typography>
+                        <i onClick={() => onClickRemove(item)} className={clsx(classes.iconDel, 'fas fa-times')}/>
                     </ListItem>
                 )
             }
@@ -39,11 +44,11 @@ const ChoosedItem = ({value, itemArr, removeFunc, classes, children}) => {
 };
 
 ChoosedItem.propTypes = {
-    value:PropTypes.string,
-    itemArr:PropTypes.array,
-    listClassBox:PropTypes.string,
-    itemClassBox:PropTypes.string,
-    itemClassName:PropTypes.string,
+    value: PropTypes.string,
+    itemArr: PropTypes.array,
+    listClassBox: PropTypes.string,
+    itemClassBox: PropTypes.string,
+    itemClassName: PropTypes.string,
     removeFunc: PropTypes.func
 };
 

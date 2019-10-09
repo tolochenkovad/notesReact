@@ -4,21 +4,32 @@ import clsx from 'clsx';
 import EditElement from '../EditElement/EditElement';
 import Grid from '@material-ui/core/Grid';
 
-const CategoryItem = ({getActiveFilterCategory, onEditCategory, isEditIcon, currentIdCategory, categoryValue,
-                          editCategoryItem, onBlurFunc, removeCategory, classes, item}) => {
+const CategoryItem = ({
+                          getActiveFilterCategory, onEditCategory, isEditIcon, currentIdCategory, categoryValue,
+                          editCategoryItem, onBlurFunc, removeCategory, classes, item
+                      }) => {
 
-    return(
-        <Grid onClick={getActiveFilterCategory} className={classes.category} >
-            <i onClick={() => onEditCategory(item.id, item.categoryValue)} className={clsx(classes.iconEdit, 'fas fa-edit')} />
+    const onClickEditCategory = () => {
+        onEditCategory(item.id, item.categoryValue)
+    };
+
+    const onClickRemoveCategory = () => {
+        removeCategory(item.id, item.categoryValue)
+    };
+
+    return (
+        <Grid onClick={getActiveFilterCategory} className={classes.category}>
+            <i onClick={onClickEditCategory} className={clsx(classes.iconEdit, 'fas fa-edit')}/>
             {
-            isEditIcon && currentIdCategory === item.id
-                ? 
-                    <EditElement elementValue={categoryValue} id={item.id} addElement={editCategoryItem} onBlurFun={onBlurFunc} />
-                : 
+                isEditIcon && currentIdCategory === item.id
+                    ?
+                    <EditElement elementValue={categoryValue} id={item.id} addElement={editCategoryItem}
+                                 onBlurFun={onBlurFunc}/>
+                    :
                     item.categoryValue
             }
 
-            <i onClick={() => removeCategory(item.id, item.categoryValue)} className={clsx(classes.iconDel, 'fas fa-times')} />
+            <i onClick={onClickRemoveCategory} className={clsx(classes.iconDel, 'fas fa-times')}/>
         </Grid>
     )
 };

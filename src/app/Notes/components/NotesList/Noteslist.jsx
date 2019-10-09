@@ -1,33 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import NoteItem from './NoteItem/NoteItem';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 import List from '@material-ui/core/List';
 
-const useStyles = makeStyles( theme => ({
-    notesList:{
+const useStyles = makeStyles(theme => ({
+    notesList: {
         margin: 0,
         padding: 0,
         listStyle: 'none'
     }
 }));
 
-const NotesList = ({ notes, removeNote, editNote, getActiveTag, 
-    getActiveCategory, activeTag, activeCategory, searchValue}) => {
+const NotesList = ({
+                       notes, removeNote, editNote, getActiveTag,
+                       getActiveCategory, activeTag, activeCategory, searchValue
+                   }) => {
 
-    let newNotes = [...notes].sort( (a, b) =>  new Date(a.date) - new Date(b.date)).reverse();
+    let newNotes = [...notes].sort((a, b) => new Date(a.date) - new Date(b.date)).reverse();
 
     const classes = useStyles();
 
     return (
         <List className={classes.notesList}>
             {
-                activeTag !== '' || activeCategory  !== ''
-                ?
+                activeTag !== '' || activeCategory !== ''
+                    ?
                     newNotes.map(note =>
                         note.tags.some(t => t.tag === activeTag) ||
                         note.categories.some(t => t.category === activeCategory)
-                        ?
+                            ?
                             <NoteItem
                                 note={note.text}
                                 id={note.id}
@@ -41,29 +43,29 @@ const NotesList = ({ notes, removeNote, editNote, getActiveTag,
                                 getActiveCategory={getActiveCategory}
                                 getActiveTag={getActiveTag}
                             />
-                        :   null
+                            : null
                     )
 
-                :   newNotes.map(note => note.text.toLowerCase().includes( searchValue.toLowerCase() )
+                    : newNotes.map(note => note.text.toLowerCase().includes(searchValue.toLowerCase())
                     ?
-                        <NoteItem
-                                note={note.text}
-                                id={note.id}
-                                key={note.id}
-                                tags={note.tags}
-                                categories={note.categories}
-                                color={note.color}
-                                date={note.date}
-                                removeNote={removeNote}
-                                editNote={editNote}
-                                getActiveCategory={getActiveCategory}
-                                getActiveTag={getActiveTag}
-                        />
-                    :   null
+                    <NoteItem
+                        note={note.text}
+                        id={note.id}
+                        key={note.id}
+                        tags={note.tags}
+                        categories={note.categories}
+                        color={note.color}
+                        date={note.date}
+                        removeNote={removeNote}
+                        editNote={editNote}
+                        getActiveCategory={getActiveCategory}
+                        getActiveTag={getActiveTag}
+                    />
+                    : null
                     )
-                
+
             }
-           
+
         </List>
     )
 };

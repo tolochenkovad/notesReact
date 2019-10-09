@@ -1,4 +1,3 @@
-import {getStorage} from "../../../utils/localStorage";
 import {
     ADD_TAG,
     ADD_TAG_OF_NOTE, CHANGE_ACTIVE_TAG, CHANGE_CURRENT_ID_TAG,
@@ -9,12 +8,12 @@ import {
 
 
 let initialState = {
-    tags: getStorage("tags") || [
+    tags: [
         {id: 1, tag: 'important'},
         {id: 2, tag: 'home'},
         {id: 3, tag: 'work'}
-        ],
-    tagsArrNote:[],
+    ],
+    tagsArrNote: [],
     tagValue: '',
     currentIdTag: null,
     activeTag: '',
@@ -25,62 +24,65 @@ const tagsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_TAG:
             return {
-            ...state,
+                ...state,
                 tags: [...state.tags, {
                     id: Date.now(),
-                    tag: action.action.tag
+                    tag: action.payload.tag
                 }]
             };
         case CHANGE_CURRENT_TAG:
             return {
                 ...state,
                 tags: [...state.tags].map(item => {
-                    if (item.id === action.action.id || item.tag === action.action.tag) item.tag = action.action.tag;
+                    if (item.id === action.payload.id ||
+                        item.tag === action.payload.tag) {
+                        item.tag = action.payload.tag;
+                    }
                     return item;
                 })
             };
         case REMOVE_TAG:
             return {
                 ...state,
-                tags: [...state.tags.filter(tag => tag.id !== action.action.id)]
+                tags: [...state.tags.filter(tag => tag.id !== action.payload)]
             };
         case ADD_TAG_OF_NOTE:
             return {
                 ...state,
                 tagsArrNote: [...state.tagsArrNote, {
                     id: Date.now(),
-                    tag: action.action.tag
+                    tag: action.payload
                 }]
             };
         case REMOVE_ARR_TAG_OF_NOTE:
             return {
                 ...state,
-                tagsArrNote: [...state.tagsArrNote.filter(tag => tag.id !== action.id)]
+                tagsArrNote: [...state.tagsArrNote.filter(tag => tag.id !== action.payload)]
             };
         case CHANGE_TAG_OF_NOTE:
             return {
                 ...state,
-                tagsArrNote: [...action.tags]
+                tagsArrNote: [...action.payload]
             };
         case CHANGE_TAG_VALUE:
             return {
                 ...state,
-                tagValue: action.tag
+                tagValue: action.payload
             };
         case CHANGE_CURRENT_ID_TAG:
             return {
                 ...state,
-                currentIdTag: action.id
+                currentIdTag: action.payload
             };
         case CHANGE_ACTIVE_TAG:
             return {
                 ...state,
-                activeTag: action.tag
+                activeTag: action.payload
             };
         case SET_CURRENT_TAG:
             return {
                 ...state,
-                currentTag: action.currentTag
+                currentTag: action.payload
             };
         default:
             return state;

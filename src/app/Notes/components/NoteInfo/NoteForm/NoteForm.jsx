@@ -7,14 +7,14 @@ import ToolItem from './ToolItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 
-const useStyles = makeStyles( theme => ({
-    noteInfo:{
+const useStyles = makeStyles(theme => ({
+    noteInfo: {
         position: 'relative',
         width: '60%'
     },
-    textarea:{
+    textarea: {
         position: 'relative',
         padding: theme.spacing(2.5),
         border: 'none',
@@ -27,7 +27,7 @@ const useStyles = makeStyles( theme => ({
         resize: 'none',
         outline: 'none',
     },
-    infoList:{
+    infoList: {
         margin: 0,
         listStyle: 'none',
         padding: 0,
@@ -36,65 +36,65 @@ const useStyles = makeStyles( theme => ({
         display: 'flex',
         alignItems: 'flex-start'
     },
-    tagWrap:{
-            cursor: 'pointer',
-            position: 'relative',    
-            margin: theme.spacing(0, 2.5),
-            padding: 0,
-            width: 'auto'
+    tagWrap: {
+        cursor: 'pointer',
+        position: 'relative',
+        margin: theme.spacing(0, 2.5),
+        padding: 0,
+        width: 'auto'
     },
-    tag:{
+    tag: {
         width: theme.spacing(13.75),
         height: theme.spacing(3.75),
         background: '#baa4a4',
         borderRadius: theme.spacing(1.875),
         fontSize: theme.spacing(2.5)
     },
-    icon:{
+    icon: {
         fontSize: theme.spacing(2.5),
         position: 'absolute',
         top: '15%',
         left: '15%',
-        '& span':{
+        '& span': {
             marginLeft: theme.spacing(1.25),
         }
     },
-    colorWrap:{
-            cursor: 'pointer',
-            position: 'relative',
-            marginRight: theme.spacing(2.5),
-            padding: 0,
-            width: 'auto'
+    colorWrap: {
+        cursor: 'pointer',
+        position: 'relative',
+        marginRight: theme.spacing(2.5),
+        padding: 0,
+        width: 'auto'
     },
-    color:{
+    color: {
         width: theme.spacing(13.75),
         height: theme.spacing(3.75),
         background: '#74b9ff',
         fontSize: theme.spacing(2.5)
     },
-    categoryWrap:{
+    categoryWrap: {
         cursor: 'pointer',
         position: 'relative',
         padding: 0,
-        width: 'auto'  
+        width: 'auto'
     },
-    category:{
+    category: {
         width: theme.spacing(14.375),
         height: theme.spacing(3.75),
         border: '1px solid black'
     },
-    categoryIcon:{
+    categoryIcon: {
         fontSize: theme.spacing(2.5),
         position: 'absolute',
         top: '15%',
         left: '7%',
-        '& span':{
+        '& span': {
             marginLeft: theme.spacing(1.25),
         }
     },
-    select:{
+    select: {
         background: '#978989',
-        marginTop:0,
+        marginTop: 0,
         width: theme.spacing(52.5),
         border: 'none',
         position: 'absolute',
@@ -104,11 +104,11 @@ const useStyles = makeStyles( theme => ({
         fontSize: theme.spacing(2.5),
         zIndex: 11
     },
-    formBox:{
+    formBox: {
         position: 'absolute',
-        bottom: '-4%'  
+        bottom: '-4%'
     },
-    input:{
+    input: {
         height: theme.spacing(6.25),
         left: 0,
         borderBottom: 0,
@@ -121,210 +121,212 @@ const useStyles = makeStyles( theme => ({
         justifyContent: 'center',
         alignItems: 'flex-start'
     },
-    btn:{
+    btn: {
         width: '20%',
         background: '#a15b34',
         position: 'absolute',
         bottom: '-1%',
         right: '5%'
     },
-    menu:{
+    menu: {
         padding: 0
     },
-    inputText:{
+    inputText: {
         fontSize: theme.spacing(3.75),
         height: '100%',
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'flex-start'
     }
- }));
+}));
 
 
-const NoteForm = ({refForm, submitHandler, refTextarea, onFocusFunc, onPressEnter,
-    textarea, onPressTag, onPressColor, onPressCategory, showTag, clickTag,
-    onKeyFunc, tags, showInputTag, submitHandlerTag, onBlurFunc, showColorPicker,
-    clickColor, colorArr, showCategory, clickCategory, category, isNeighboringCategory,
-    submitCategory, isChildCategory, clickParentCategory, isParentHasChild, 
-    submitChildCategory, refBtn}) => {
+const NoteForm = ({
+                      refForm, submitHandler, refTextarea, onFocusFunc, onPressEnter,
+                      textarea, onPressTag, onPressColor, onPressCategory, showTag, clickTag,
+                      onKeyFunc, tags, showInputTag, submitHandlerTag, onBlurFunc, showColorPicker,
+                      clickColor, colorArr, showCategory, clickCategory, category, isNeighboringCategory,
+                      submitCategory, isChildCategory, clickParentCategory, isParentHasChild,
+                      submitChildCategory, refBtn
+                  }) => {
 
     const classes = useStyles();
 
-    return(
+    return (
         <Grid className={classes.noteInfo}>
             <FormControl ref={refForm} fullWidth={true} component="form" onSubmit={submitHandler}>
-                <TextField  ref={refTextarea}
-                            InputProps={{ disableUnderline: true, className:classes.inputText}}
-                            autoFocus
-                            onFocus={onFocusFunc} 
-                            onKeyDown={onPressEnter}
-                            className={classes.textarea}
-                            {...textarea.bind} />
+                <TextField ref={refTextarea}
+                           InputProps={{disableUnderline: true, className: classes.inputText}}
+                           autoFocus
+                           onFocus={onFocusFunc}
+                           onKeyDown={onPressEnter}
+                           className={classes.textarea}
+                           {...textarea.bind} />
 
-            <List className={classes.infoList}>
-                <ToolItem   handleClick={onPressTag}
-                            name='tag'
-                            classes={classes}
-                />
-                <ToolItem   handleClick={onPressColor}
-                            name='color'
-                            classes={classes}
-                />
-                <ToolItem   handleClick={onPressCategory}
-                            name='category'
-                            classes={classes}
-                />
-            </List>
+                <List className={classes.infoList}>
+                    <ToolItem handleClick={onPressTag}
+                              name='tag'
+                              classes={classes}
+                    />
+                    <ToolItem handleClick={onPressColor}
+                              name='color'
+                              classes={classes}
+                    />
+                    <ToolItem handleClick={onPressCategory}
+                              name='category'
+                              classes={classes}
+                    />
+                </List>
 
                 {
                     showTag
-                    ?
+                        ?
 
-                        <TextField  onChange={clickTag} 
-                                    onKeyDown={onKeyFunc} 
-                                    select
-                                    InputProps={{ disableUnderline: true}}
-                                    className={classes.select}
-                                    SelectProps={{
-                                        MenuProps: {
-                                          MenuListProps:{
-                                              className: classes.menu
-                                          }
-                                        }
-                                    }}
-                                    value = {tags[0].tag}>
-                        {
-                            tags.map(tag =>
-                                <MenuItem key={tag.id} value={tag.tag}>{tag.tag}</MenuItem>
-                            )
-                        }
+                        <TextField onChange={clickTag}
+                                   onKeyDown={onKeyFunc}
+                                   select
+                                   InputProps={{disableUnderline: true}}
+                                   className={classes.select}
+                                   SelectProps={{
+                                       MenuProps: {
+                                           MenuListProps: {
+                                               className: classes.menu
+                                           }
+                                       }
+                                   }}
+                                   value={tags[0].tag}>
+                            {
+                                tags.map(tag =>
+                                    <MenuItem key={tag.id} value={tag.tag}>{tag.tag}</MenuItem>
+                                )
+                            }
                             <MenuItem value="add">...create your tag</MenuItem>
                         </TextField>
-                    :   null
+                        : null
                 }
 
                 {
                     showInputTag
-                    ?  
+                        ?
                         <Grid className={classes.formBox}>
-                            <TextField 
-                                className={classes.input} 
+                            <TextField
+                                className={classes.input}
                                 onKeyDown={submitHandlerTag}
-                                InputProps={{ disableUnderline: true}}
+                                InputProps={{disableUnderline: true}}
                                 onBlur={onBlurFunc}
                                 autoFocus={true}
                                 type="text"/>
                         </Grid>
-                    :   null
+                        : null
                 }
 
                 {
                     showColorPicker
-                    ?
-                        <TextField  select
-                                    InputProps={{ disableUnderline: true}}
-                                    onChange={clickColor} 
-                                    onKeyDown={onKeyFunc} 
-                                    value=''
-                                    SelectProps={{
-                                        MenuProps: {
-                                          MenuListProps:{
-                                              className: classes.menu
-                                          }
-                                        }
-                                      }}
-                                    className={classes.select}>
+                        ?
+                        <TextField select
+                                   InputProps={{disableUnderline: true}}
+                                   onChange={clickColor}
+                                   onKeyDown={onKeyFunc}
+                                   value=''
+                                   SelectProps={{
+                                       MenuProps: {
+                                           MenuListProps: {
+                                               className: classes.menu
+                                           }
+                                       }
+                                   }}
+                                   className={classes.select}>
                             {
                                 colorArr.map((color, index) =>
-                                <MenuItem key={index} style={ {background: `${color}`} } value={color} /> 
+                                    <MenuItem key={index} style={{background: `${color}`}} value={color}/>
                                 )
                             }
                         </TextField>
-                    :   null
+                        : null
                 }
 
                 {
                     showCategory
-                    ?  
-                        <TextField  select
-                                    InputProps={{ disableUnderline: true}}
-                                    onChange={clickCategory} 
-                                    onKeyDown={onKeyFunc} 
-                                    SelectProps={{
-                                        MenuProps: {
-                                          MenuListProps:{
-                                              className: classes.menu
-                                          }
-                                        }
-                                    }}
-                                    value='choose category'
-                                    className={classes.select}>
+                        ?
+                        <TextField select
+                                   InputProps={{disableUnderline: true}}
+                                   onChange={clickCategory}
+                                   onKeyDown={onKeyFunc}
+                                   SelectProps={{
+                                       MenuProps: {
+                                           MenuListProps: {
+                                               className: classes.menu
+                                           }
+                                       }
+                                   }}
+                                   value='choose category'
+                                   className={classes.select}>
                             <MenuItem value="category">add category</MenuItem>
                             <MenuItem value="child">add child element</MenuItem>
                             {
-                                category.map(c => 
-                                    <MenuItem key={c.id} value={c.categoryValue}>=> {c.categoryValue}</MenuItem>   
+                                category.map(c =>
+                                    <MenuItem key={c.id} value={c.categoryValue}>=> {c.categoryValue}</MenuItem>
                                 )
                             }
                         </TextField>
-                    :   null
+                        : null
                 }
 
                 {
                     isNeighboringCategory
-                    ?  
+                        ?
                         <Grid className={classes.formBox}>
-                            <TextField className={classes.input} 
-                                onKeyDown={submitCategory}
-                                InputProps={{ disableUnderline: true}}
-                                onBlur={onBlurFunc}
-                                autoFocus={true}
-                                type="text"/>
+                            <TextField className={classes.input}
+                                       onKeyDown={submitCategory}
+                                       InputProps={{disableUnderline: true}}
+                                       onBlur={onBlurFunc}
+                                       autoFocus={true}
+                                       type="text"/>
                         </Grid>
-                    :   null
+                        : null
                 }
 
                 {
                     isChildCategory
-                    ?  
-                        <TextField  select
-                                    InputProps={{ disableUnderline: true}}
-                                    onChange={clickParentCategory} 
-                                    onKeyDown={onKeyFunc} 
-                                    SelectProps={{
-                                        MenuProps: {
-                                          MenuListProps:{
-                                              className: classes.menu
-                                          }
-                                        }
-                                    }}
-                                    value=''
-                                    className={classes.select}>
+                        ?
+                        <TextField select
+                                   InputProps={{disableUnderline: true}}
+                                   onChange={clickParentCategory}
+                                   onKeyDown={onKeyFunc}
+                                   SelectProps={{
+                                       MenuProps: {
+                                           MenuListProps: {
+                                               className: classes.menu
+                                           }
+                                       }
+                                   }}
+                                   value=''
+                                   className={classes.select}>
                             {
                                 category.map(item =>
                                     <MenuItem key={item.id} value={item.categoryValue}>{item.categoryValue}</MenuItem>
                                 )
                             }
                         </TextField>
-                    :   null
+                        : null
                 }
 
                 {
                     isParentHasChild
-                    ?
+                        ?
                         <Grid className={classes.formBox}>
-                            <TextField className={classes.input} 
-                                onKeyDown={submitChildCategory}
-                                InputProps={{ disableUnderline: true}}
-                                autoFocus={true}
-                                onBlur={onBlurFunc}
-                                type="text"/>
+                            <TextField className={classes.input}
+                                       onKeyDown={submitChildCategory}
+                                       InputProps={{disableUnderline: true}}
+                                       autoFocus={true}
+                                       onBlur={onBlurFunc}
+                                       type="text"/>
                         </Grid>
-                    :   null
+                        : null
                 }
                 <Button variant="contained" ref={refBtn} className={classes.btn} type="submit">Submit</Button>
-                </FormControl>  
-            </Grid>
+            </FormControl>
+        </Grid>
     )
 };
 
@@ -355,9 +357,8 @@ NoteForm.propTypes = {
     isChildCategory: PropTypes.bool,
     clickParentCategory: PropTypes.func,
     isParentHasChild: PropTypes.bool,
-    submitChildCategory: PropTypes.func  
+    submitChildCategory: PropTypes.func
 };
-
 
 
 export default NoteForm;

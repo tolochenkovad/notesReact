@@ -1,4 +1,4 @@
-import { takeLatest, put, select } from "redux-saga/effects";
+import {takeLatest, put, select} from "redux-saga/effects";
 import {
     ADD_NOTE_SAGA,
     ADD_NOTE,
@@ -13,49 +13,34 @@ import {
     REMOVE_CATEGORY_OF_NOTE, CHECKING_CATEGORY_SAGA, CHECKING_CATEGORY
 } from './constants';
 import {getNote} from "./selectors";
-import {setStorage} from "../../../utils/localStorage";
 
-function* addNote(action) {
+function* addNote({payload}) {
     const notes = yield select(getNote);
-    if ( notes.some(note => note.id === action.id) ) {
-        yield put({ type: EDIT_NOTE, action});
-        const notes2 = yield select(getNote);
-        setStorage("notes", notes2);
+    if (notes.some(note => note.id === payload.id)) {
+        yield put({type: EDIT_NOTE, payload});
         return;
     }
-    yield put({ type: ADD_NOTE, action});
-    let newNotes = yield select(getNote);
-    setStorage("notes", newNotes);
+    yield put({type: ADD_NOTE, payload});
 }
 
-function* removeNote(action) {
-    yield put({ type: REMOVE_NOTE, action});
-    const notes = yield select(getNote);
-    setStorage("notes", notes);
+function* removeNote({payload}) {
+    yield put({type: REMOVE_NOTE, payload});
 }
 
-function* changeTagOfNote(action) {
-    yield put({ type: CHECKING_TAGS, action});
-    const notes = yield select(getNote);
-    setStorage("notes", notes);
+function* changeTagOfNote({payload}) {
+    yield put({type: CHECKING_TAGS, payload});
 }
 
-function* changeCategoryOfNote(action) {
-    yield put({ type: CHECKING_CATEGORY, action});
-    const notes = yield select(getNote);
-    setStorage("notes", notes);
+function* changeCategoryOfNote({payload}) {
+    yield put({type: CHECKING_CATEGORY, payload});
 }
 
-function* removeTagOfNote(action) {
-    yield put({ type: REMOVE_TAG_OF_NOTE, action});
-    const notes = yield select(getNote);
-    setStorage("notes", notes);
+function* removeTagOfNote({payload}) {
+    yield put({type: REMOVE_TAG_OF_NOTE, payload});
 }
 
-function* removeCategoryOfNote(action) {
-    yield put({ type: REMOVE_CATEGORY_OF_NOTE, action});
-    const notes = yield select(getNote);
-    setStorage("notes", notes);
+function* removeCategoryOfNote({payload}) {
+    yield put({type: REMOVE_CATEGORY_OF_NOTE, payload});
 }
 
 

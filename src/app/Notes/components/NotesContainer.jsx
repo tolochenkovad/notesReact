@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import NotesList from './NotesList/Noteslist';
 import NoteInfoContainer from './NoteInfo/NoteInfoContainer';
 import Info from '../../InfoPage/components/Info';
-import { buildTree } from '../../../utils/makeTree';
+import {buildTree} from '../../../utils/makeTree';
 import Filter from '../../Filter/Filter';
 import AddNote from './AddNote/AddNote';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import * as noteActionCreatores from '../redux/actions';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {getColorArr, getColorValue, getCurrentIdNote, getNote, getNoteValue, getSearchValue} from "../redux/selectors";
 import * as tagsActionCreatores from '../../InfoPage/redux-tags/actions';
 import {
@@ -28,7 +28,7 @@ import {
 import * as categoriesActionCreatores from '../../InfoPage/redux-categories/actions';
 import {bindActionCreators} from "redux";
 
-const useStyles = makeStyles( theme => ({
+const useStyles = makeStyles(theme => ({
     notesContainer: {
         padding: theme.spacing(0, 2.5, 2.5, 2.5)
     },
@@ -36,7 +36,7 @@ const useStyles = makeStyles( theme => ({
         width: '30%',
         background: '#ececec'
     },
-    notes:{
+    notes: {
         width: '65%'
     },
     '@media (max-width: 992px)': {
@@ -48,21 +48,23 @@ const useStyles = makeStyles( theme => ({
             order: 2,
             marginTop: '30px'
         },
-        notes:{
+        notes: {
             width: '100%'
-            
+
         }
     }
 }));
 
-const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tagValue, currentIdTag, activeTag,
+const NotesContainer = ({
+                            notes, noteValue, currentIdNote, tags, tagsArrNote, tagValue, currentIdTag, activeTag,
                             currentTag, category, categoryArrNote, categoryValue, currentCategory, currentIdCategory,
-                            activeCategory, idParentCategory, colorValue, searchValue, colorArr, actions }) => {
+                            activeCategory, idParentCategory, colorValue, searchValue, colorArr, actions
+                        }) => {
 
     const [isNoteInfo, setNoteInfo] = useState(false);
     const [tree, setTree] = useState([]);
 
-    useEffect( () => {
+    useEffect(() => {
         setTree(buildTree(category));
     }, [category]);
 
@@ -125,7 +127,7 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
     return (
         <Grid container={true} justify="space-between" className={classes.notesContainer}>
             <Grid item={true} className={classes.info}>
-                <Info tags={tags} 
+                <Info tags={tags}
                       tagValue={tagValue}
                       categoryValue={categoryValue}
                       editTag={editTag}
@@ -152,53 +154,53 @@ const NotesContainer = ({notes, noteValue, currentIdNote, tags, tagsArrNote, tag
                         getSeacrhValue={actions.changeSearchValueAC}
                         getActiveCategory={actions.setActiveCategoryAC}
                 />
-                
-                <AddNote clickItem={clickItem} />
+
+                <AddNote clickItem={clickItem}/>
 
                 {
-                notes.length
-                ? 
-                    <NotesList  notes={notes} 
-                                removeNote={actions.removeNoteAC}
-                                getActiveTag={actions.changeActiveTagAC}
-                                getActiveCategory={actions.setActiveCategoryAC}
-                                activeTag={activeTag}
-                                activeCategory={activeCategory}
-                                searchValue={searchValue}
-                                editNote={editNote}
-                />
-                :   null
+                    notes.length
+                        ?
+                        <NotesList notes={notes}
+                                   removeNote={actions.removeNoteAC}
+                                   getActiveTag={actions.changeActiveTagAC}
+                                   getActiveCategory={actions.setActiveCategoryAC}
+                                   activeTag={activeTag}
+                                   activeCategory={activeCategory}
+                                   searchValue={searchValue}
+                                   editNote={editNote}
+                        />
+                        : null
                 }
-            </Grid>  
-            
+            </Grid>
+
             {
-                isNoteInfo 
-                ? 
-                    <NoteInfoContainer  addNote={actions.addNoteAC}
-                                        addTag={addTag}
-                                        tags={tags}
-                                        changeNoteInfo={setNoteInfo}
-                                        currentIdNote={currentIdNote}
-                                        changeTag={actions.changeTagsValueAC}
-                                        tagValue={tagValue}
-                                        categoryValue={categoryValue}
-                                        addTagsArrOfNote={actions.addTagOfNoteAC}
-                                        tagsArrNote={tagsArrNote}
-                                        removeTagNoteInfo={actions.removeArrTagOfNoteAC}
-                                        colorArr={colorArr}
-                                        colorValue={colorValue}
-                                        getColorValue={ actions.changeColorValueAC}
-                                        addCategory={actions.addCategoryAC}
-                                        category={category}
-                                        idParentCategory={idParentCategory}
-                                        getParentCategory={actions.setParentCategoryAC}
-                                        addChildCategory={actions.addChildCategoryAC}
-                                        categoryArrNote={categoryArrNote}
-                                        addCategoryArrOfNote={actions.addCategoryOfNoteAC}
-                                        removeCategoryNoteInfo={actions.removeArrCategoryOfNoteAC}
-                                        noteValue={noteValue}
+                isNoteInfo
+                    ?
+                    <NoteInfoContainer addNote={actions.addNoteAC}
+                                       addTag={addTag}
+                                       tags={tags}
+                                       changeNoteInfo={setNoteInfo}
+                                       currentIdNote={currentIdNote}
+                                       changeTag={actions.changeTagsValueAC}
+                                       tagValue={tagValue}
+                                       categoryValue={categoryValue}
+                                       addTagsArrOfNote={actions.addTagOfNoteAC}
+                                       tagsArrNote={tagsArrNote}
+                                       removeTagNoteInfo={actions.removeArrTagOfNoteAC}
+                                       colorArr={colorArr}
+                                       colorValue={colorValue}
+                                       getColorValue={actions.changeColorValueAC}
+                                       addCategory={actions.addCategoryAC}
+                                       category={category}
+                                       idParentCategory={idParentCategory}
+                                       getParentCategory={actions.setParentCategoryAC}
+                                       addChildCategory={actions.addChildCategoryAC}
+                                       categoryArrNote={categoryArrNote}
+                                       addCategoryArrOfNote={actions.addCategoryOfNoteAC}
+                                       removeCategoryNoteInfo={actions.removeArrCategoryOfNoteAC}
+                                       noteValue={noteValue}
                     />
-                :   null
+                    : null
             }
         </Grid>
     )
@@ -226,6 +228,8 @@ const mapStateToProps = state => ({
     colorArr: getColorArr(state)
 });
 
-export default connect(mapStateToProps, (dispatch) => ({actions: bindActionCreators({
+export default connect(mapStateToProps, (dispatch) => ({
+    actions: bindActionCreators({
         ...tagsActionCreatores, ...noteActionCreatores, ...categoriesActionCreatores
-    }, dispatch)}))(NotesContainer);
+    }, dispatch)
+}))(NotesContainer);
