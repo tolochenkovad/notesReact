@@ -28,16 +28,16 @@ const tagsReducer = (state = initialState, action) => {
                 ...state,
                 tags: [...state.tags, {
                     id: Date.now(),
-                    tag: action.action.payload.tag
+                    tag: action.payload.tag
                 }]
             };
         case CHANGE_CURRENT_TAG:
             return {
                 ...state,
                 tags: [...state.tags].map(item => {
-                    if (item.id === action.action.payload.id ||
-                        item.tag === action.action.payload.tag) {
-                        item.tag = action.action.payload.tag;
+                    if (item.id === action.payload.id ||
+                        item.tag === action.payload.tag) {
+                        item.tag = action.payload.tag;
                     }
                     return item;
                 })
@@ -45,14 +45,14 @@ const tagsReducer = (state = initialState, action) => {
         case REMOVE_TAG:
             return {
                 ...state,
-                tags: [...state.tags.filter(tag => tag.id !== action.action.payload)]
+                tags: [...state.tags.filter(tag => tag.id !== action.payload)]
             };
         case ADD_TAG_OF_NOTE:
             return {
                 ...state,
                 tagsArrNote: [...state.tagsArrNote, {
                     id: Date.now(),
-                    tag: action.action.payload
+                    tag: action.payload
                 }]
             };
         case REMOVE_ARR_TAG_OF_NOTE:
