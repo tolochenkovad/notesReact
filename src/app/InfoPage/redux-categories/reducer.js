@@ -118,7 +118,7 @@ const categoriesReducer = (state = initialState, action) => {
         case SET_ID_PARENT:
             return {
                 ...state,
-                idParentCategory: action.payload
+                idParentCategory: action.payload.parent
             };
         default:
             return state;
