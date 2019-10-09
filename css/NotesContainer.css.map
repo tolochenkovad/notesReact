@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,eAAe,CAAA;EACX,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,aAAa;EAC9B,OAAO,EAAE,MAAM;CASlB;;AARI,AAAD,2BAAa,CAAA;EACT,KAAK,EAAE,GAAG;EACV,UAAU,EAAE,MAAM;EAClB,MAAM,EAAE,KAAK;CAChB;;AACA,AAAD,sBAAQ,CAAA;EACJ,KAAK,EAAE,GAAG;CACb",
-    "sources": [
-        "../src/components/NotesContainer.scss"
-    ],
-    "names": [],
-    "file": "NotesContainer.css"
-}
